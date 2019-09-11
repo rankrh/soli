@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# ide
+*.vs
+*.idea
+*.sqlite
+*.suo
+
 # Distribution / packaging
 .Python
 build/
@@ -115,3 +121,7 @@ dmypy.json
 
 # config
 soliConfig.ini
+.vs/slnx.sqlite
+.vs/soli/v15/.suo
+.vs/slnx.sqlite
+

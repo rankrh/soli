@@ -1,14 +1,12 @@
-from plot import Plot
-
 class Garden:
     def __init__(
-        self,
-        plots,
-        spacing,
-        length,
-        width
+            self,
+            plots,
+            spacing,
+            length,
+            width
     ):
-        this.plots = plots
-        this.spacing = spacing
-        this.length = length
-        this.width = width
+        self.plots = plots
+        self.spacing = spacing
+        self.length = length
+        self.width = width
