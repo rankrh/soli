@@ -1,42 +1,43 @@
 def packRectangle(radius, x, y):
-	packs = {"triangle": trianglePacking(radius, x, y), "square": squarePacking(radius, x, y)}
 
+	packs = [squarePacking(radius, x, y), trianglePacking(radius, x, y)]
+	
 	return packs
 
-def trianglePacking(radius, x, y):
-	longRowY = radius
-	shortRowY = 1.464 * radius
-	oneMoreRowY = 1.732 * radius
-
-	longRowX = x // (2 * radius)
-	remainder = x % (2 * radius)
-
-	if remainder >= radius:
-		shortRowX = longRowX
-	else:
-		shortRowX = longRowX - 1
-
-	if y < (2 * radius):
-		total = 0
-		longRows = 0
-		shortRows = 0
-		rows = 0
-	else:
-		y -= (2 * radius)
-
-		rows = y // oneMoreRowY + 1
-		longRows = rows // 2 + 1
-		shortRows = rows - longRows
-
-		total = longRows * longRowX + shortRows * shortRowX
-	return {"total":total, "numLongRows": longRows, "inLongRows": longRowX, "numShortRows": shortRows, "inShortRows": shortRowX, "numRows": rows}
-
 def squarePacking(radius, x, y):
-	row = x // (radius * 2)
-	col = y // (radius * 2)
 
-	total = row * col
-	return {"total":total, "inLongRows": row, "numLongRows": col}
+	rows = int(x // (radius * 2))
+	cols = int(y // (radius * 2))
+
+	total = rows * cols
+	coordinates = list()
+	for x in range(rows):
+		for y in range(cols):
+			coordinate = ((2 * x * radius) + radius, (2 * y * radius) + radius)
+			coordinates.append(coordinate)
+
+	return {"total":total} #, "coordinates": coordinates}
+
+def trianglePacking(radius, x, y):
+	if x < y:
+		x, y = y, x
+
+	longX = int(x // (2 * radius))
+	shortX = int((x - radius) // (2 * radius))
+
+	doubleRows = int((y - 1.732) // (3.464 * radius))
+	remainder = y- (doubleRows * 3.464 * radius)
+	longY = shortY = doubleRows
+	if remainder >= (2 * radius):
+		longY += 1
+
+	total = longX * longY + shortX * shortY
+
+	coordinates = list()
+
+	return {"total": total} #, "coordinates": coordinates}
+
+
 
 if __name__ == "__main__":
-	print(packRectangle(0.5, 1, 10000))
+	print(packRectangle(3.5, 27, 700))
