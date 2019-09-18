@@ -1,15 +1,42 @@
-def packCircle(numCircles, circleRadius):
-	smallToLarge = {
-		1: 1, 2:2, 3: 2.154, 4: 2.414, 5: 2.701, 6: 3, 7: 3, 8: 3.304, 9: 3.613,
-		10: 3.813, 11: 3.923, 12:4.029, 13: 4.236, 14: 4.328, 15: 4.521,
-		16: 4.615, 17: 4.792, 18: 4.792, 19: 4.863, 20: 5.122}
+def packRectangle(radius, x, y):
+	packs = {"triangle": trianglePacking(radius, x, y), "square": squarePacking(radius, x, y)}
 
-	if numCircles <= 20:
-		return smallToLarge[circles] * circleRadius
+	return packs
+
+def trianglePacking(radius, x, y):
+	longRowY = radius
+	shortRowY = 1.464 * radius
+	oneMoreRowY = 1.732 * radius
+
+	longRowX = x // (2 * radius)
+	remainder = x % (2 * radius)
+
+	if remainder >= radius:
+		shortRowX = longRowX
 	else:
-		return
+		shortRowX = longRowX - 1
 
+	if y < (2 * radius):
+		total = 0
+		longRows = 0
+		shortRows = 0
+		rows = 0
+	else:
+		y -= (2 * radius)
 
-def packRectangle(numCircles, circleRadius, widthToHeight):
-	x = (numCircles * widthToHeight).round()
-	y = numCircles / x
+		rows = y // oneMoreRowY + 1
+		longRows = rows // 2 + 1
+		shortRows = rows - longRows
+
+		total = longRows * longRowX + shortRows * shortRowX
+	return {"total":total, "numLongRows": longRows, "inLongRows": longRowX, "numShortRows": shortRows, "inShortRows": shortRowX, "numRows": rows}
+
+def squarePacking(radius, x, y):
+	row = x // (radius * 2)
+	col = y // (radius * 2)
+
+	total = row * col
+	return {"total":total, "inLongRows": row, "numLongRows": col}
+
+if __name__ == "__main__":
+	print(packRectangle(0.5, 1, 10000))
