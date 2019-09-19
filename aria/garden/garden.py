@@ -3,10 +3,13 @@ class Garden:
             self,
             plots,
             spacing,
-            length,
-            width
+            boundaries,
+            north
     ):
+
+        validateGarden(*boundaries)
+
         self.plots = plots
         self.spacing = spacing
-        self.length = length
-        self.width = width
+        self.boundaries = boundaries
+        self.north = north

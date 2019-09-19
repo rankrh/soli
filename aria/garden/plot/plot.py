@@ -18,8 +18,21 @@ class Plot:
         self.boundaries = orderCoordinates(*boundaries)
         self.crop = crop
         self.cropPositions = self.placeCrops()
+        self.numberOfPlants = len(self.cropPositions)
+        self.totalYield = self.getTotalYield()
+        self.gallonsPerWeek = self.getGallonsPerWeek()
         
     def placeCrops(self):
-        
+
         if self.shape == "rectangle":
             return packRectangle(self.crop.radius, self.boundaries)
+    
+    def getTotalYield(self):
+
+        total = self.crop.yieldPerPlant * self.numberOfPlants
+        return total
+    
+    def getGallonsPerWeek(self):
+
+        water = self.crop.gallonsPerWeek * self.numberOfPlants
+        return water
