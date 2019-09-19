@@ -1,6 +1,5 @@
 from services.validation.coordValidation import *
 
-
 class Plot:
     def __init__(
             self,

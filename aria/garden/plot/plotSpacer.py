@@ -9,5 +9,3 @@ rectangle = Plot(
     bottomRight=(2, 1))
 
 print(rectangle.crop)
-
-
