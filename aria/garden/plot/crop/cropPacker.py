@@ -1,15 +1,43 @@
-def packCircle(numCircles, circleRadius):
-	smallToLarge = {
-		1: 1, 2:2, 3: 2.154, 4: 2.414, 5: 2.701, 6: 3, 7: 3, 8: 3.304, 9: 3.613,
-		10: 3.813, 11: 3.923, 12:4.029, 13: 4.236, 14: 4.328, 15: 4.521,
-		16: 4.615, 17: 4.792, 18: 4.792, 19: 4.863, 20: 5.122}
+def packRectangle(radius, x, y):
 
-	if numCircles <= 20:
-		return smallToLarge[circles] * circleRadius
-	else:
-		return
+	packs = [squarePacking(radius, x, y), trianglePacking(radius, x, y)]
+	
+	return packs
+
+def squarePacking(radius, x, y):
+
+	rows = int(x // (radius * 2))
+	cols = int(y // (radius * 2))
+
+	total = rows * cols
+	coordinates = list()
+	for x in range(rows):
+		for y in range(cols):
+			coordinate = ((2 * x * radius) + radius, (2 * y * radius) + radius)
+			coordinates.append(coordinate)
+
+	return {"total":total} #, "coordinates": coordinates}
+
+def trianglePacking(radius, x, y):
+	if x < y:
+		x, y = y, x
+
+	longX = int(x // (2 * radius))
+	shortX = int((x - radius) // (2 * radius))
+
+	doubleRows = int((y - 1.732) // (3.464 * radius))
+	remainder = y- (doubleRows * 3.464 * radius)
+	longY = shortY = doubleRows
+	if remainder >= (2 * radius):
+		longY += 1
+
+	total = longX * longY + shortX * shortY
+
+	coordinates = list()
+
+	return {"total": total} #, "coordinates": coordinates}
 
 
-def packRectangle(numCircles, circleRadius, widthToHeight):
-	x = (numCircles * widthToHeight).round()
-	y = numCircles / x
+
+if __name__ == "__main__":
+	print(packRectangle(3.5, 27, 700))
