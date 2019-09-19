@@ -1,11 +1,12 @@
-from plot.plot import Plot
+from plot import Plot
+from crop.crop import Crop
 
-rectangle = Plot(
-    crop="corn",
+plot = Plot(
+    crop=Crop(
+        radius=1,
+        gallonsPerWeek=1),
     shape="rectangle",
-    topRight=(1, 1),
-    topLeft=(0, 0),
-    bottomLeft=(1, 2),
-    bottomRight=(2, 1))
+    boundaries=[(0, 0), (100, 0), (0, 100), (100, 100)])
 
-print(rectangle.crop)
+
+print(plot.cropPositions)

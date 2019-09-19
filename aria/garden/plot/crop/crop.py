@@ -1,4 +1,4 @@
 class Crop:
-    def __init__(self, spacing, gallonsPerWeek):
-        self.spacing = spacing
+    def __init__(self, radius, gallonsPerWeek):
+        self.radius = radius
         self.gallonsPerWeek = gallonsPerWeek

@@ -1,4 +1,6 @@
-from services.validation.coordValidation import *
+from soli.services.validation.plotValidator import validatePlot
+from soli.services.validation.coordinateValidator import orderCoordinates
+from crop.cropPacker import packRectangle
 
 class Plot:
     def __init__(
@@ -7,35 +9,17 @@ class Plot:
             shape,
             center=None,
             radius=None,
-            topRight=None,
-            topLeft=None,
-            bottomLeft=None,
-            bottomRight=None):
-
-        if shape not in ['circle', 'rectangle']:
-            raise ValueError(
-                'Invalid shape.  Valid shapes are "circle" or "rectangle"'
-            )
+            boundaries=None):
+        
+        validatePlot(crop, shape, center, radius, boundaries)
 
         self.shape = shape
-        if self.shape == 'circle':
-            if radius is None:
-                raise ValueError(
-                    'You must set the radius for circles'
-                )
-
-            if center is None or type(center) != tuple:
-                raise ValueError(
-                    'You must set the center coordinate for circles'
-                )
-
-            self.center = validateCoordinates(center)
-            self.radius = radius
-
-        else:
-            if topRight is None or topLeft is None or bottomLeft is None or bottomRight is None:
-                raise ValueError(
-                    'You must set all four corners for rectangles'
-                )
-            self.topLeft, self.topRight, self.bottomRight, self.bottomLeft = validateCoordinates(topLeft, topRight, bottomRight, bottomLeft)
+        self.center = center
+        self.boundaries = orderCoordinates(*boundaries)
         self.crop = crop
+        self.cropPositions = self.placeCrops()
+        
+    def placeCrops(self):
+        
+        if self.shape == "rectangle":
+            return packRectangle(self.crop.radius, self.boundaries)
