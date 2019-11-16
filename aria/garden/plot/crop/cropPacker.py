@@ -7,10 +7,9 @@ def packRectangle(radius, coordinates, angle=None):
     square = squarePacking(radius, length, width)
     triangle = trianglePacking(radius, length, width)
     
-    if len(square) >= len(triangle):
-        return rotatePlot(square, angle)
-    else:
-        return rotatePlot(triangle, angle)
+    pack = square if len(square) >= len(triangle) else triangle
+    
+    return rotatePlot(pack, angle)
 
 
 def getDimensions(coordinates):
@@ -22,9 +21,7 @@ def getDimensions(coordinates):
 
 
 def squarePacking(radius, x, y):
-    if x < y:
-        x, y = y, x
-
+    if x < y:  x, y = y, x
 
     rows = int(x // (radius * 2))
     cols = int(y // (radius * 2))

@@ -1,13 +1,13 @@
 class Garden:
     def __init__(
             self,
-            plots,
-            spacing,
-            boundaries,
-            north
+            plots=None,
+            spacing=None,
+            boundaries=None,
+            north=None
     ):
 
-        validateGarden(*boundaries)
+        #validateGarden(*boundaries)
 
         self.plots = plots
         self.spacing = spacing

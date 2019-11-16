@@ -1,16 +1,9 @@
-from plot import Plot
-from crop.crop import Crop
+from generateTestPlot import generateTestPlot
+from soli.aria.garden.garden import Garden
 
-corn = Crop(
-    radius=6,
-    gallonsPerWeek=1,
-    height=72,
-    yieldPerPlant=64)
+plots = generateTestPlot()
 
-plot = Plot(
-    crop=corn,
-    shape="rectangle",
-    boundaries=[(0, 0), (120, 120), (0, 120), (120, 0)])
+plots.sort(key=lambda plot: plot.crop.height, reverse=True)
+for plot in plots:
+    print(plot.crop.height)
 
-print(plot.totalYield)
-print(plot.gallonsPerWeek)
