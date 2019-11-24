@@ -1,9 +1,9 @@
 import numpy as np
 
 
-def packRectangle(radius, coordinates, angle=None):
+def packRectangle(radius, length, width, angle=None):
     
-    length, width = getDimensions(coordinates)
+    #length, width = getDimensions(coordinates)
     square = squarePacking(radius, length, width)
     triangle = trianglePacking(radius, length, width)
     
@@ -79,3 +79,14 @@ def rotatePlot(coordinates, angle):
         newCoordinates.append((x, y))
         
     return np.round(newCoordinates, 1)
+
+def getCoordinatesFromLengthAndWidth(length, width):
+    return [(0, 0), (0, length), (width, length), (width, 0)]
+
+cabbages = packRectangle(6, 2*12, 9*12)
+print(cabbages)
+print(len(cabbages))
+
+eggplant = packRectangle(12, 24, 48)
+print(eggplant)
+print(len(eggplant))
