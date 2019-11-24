@@ -22,13 +22,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = '*izm*+1@5g-3w6%2l0n4e^8y0e*@5dp4mki2ev2-^c8(@9krc$'
 def getSecret():
     try:
         return os.environ["SOLI_SECRET"]
     except KeyError:
         raise ImproperlyConfigured("Secret key missing or invalid")
-
 
 SECRET_KEY = getSecret()
 
@@ -37,10 +35,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
 # Application definition
 
 INSTALLED_APPS = [
-    'aria',
+    'aria.apps.AriaConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,6 +78,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'soli.wsgi.application'
 
+
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
@@ -114,6 +114,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -126,6 +127,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
