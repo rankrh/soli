@@ -125,3 +125,9 @@ soliConfig.ini
 .vs/soli/v15/.suo
 .vs/slnx.sqlite
 
+# django migrations
+
+aria/migrations/
+*.sqlite
+*.suo
+
