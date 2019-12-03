@@ -1,13 +1,13 @@
 from django.db import models
 from ..validation import cropchoices
 from django.core.validators import MinValueValidator, MaxValueValidator
+from .species import Species
 
 
 class Crop(models.Model):
     crop = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=309)
-    species = models.CharField(max_length=30)
-    genus = models.CharField(max_length=30)
+    variety = models.CharField(max_length=50)
+    taxonomy = models.ForeignKey(Species, on_delete=models.CASCADE)
     height = models.SmallIntegerField(
         null=True,
         validators=[MinValueValidator(1, "All crops must have a height greater than zero centimeters")]

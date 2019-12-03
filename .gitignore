@@ -120,6 +120,7 @@ dmypy.json
 .pyre/
 
 # config
+adminConfig.txt
 soliConfig.ini
 .vs/slnx.sqlite
 .vs/soli/v15/.suo
@@ -127,7 +128,8 @@ soliConfig.ini
 
 # django migrations
 
-aria/migrations/
+manage.py
 *.sqlite
 *.suo
+
 
