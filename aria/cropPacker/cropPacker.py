@@ -1,82 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.spatial import ConvexHull, KDTree
 from scipy.ndimage.interpolation import rotate
 from shapely.geometry import Point
-
-class Polygon:
-    def __init__(self, coordinates):
-        self.coordinates = np.asarray(coordinates)
-        self.pointClosestToOrigin = self.getPointClosestToOrigin()
-    
-    
-    def getPointClosestToOrigin(self):
-        return self.coordinates[KDTree(self.coordinates).query([0, 0])[1]]
-        
-    def smallestBoundingRectangle(self):
-        """
-        Find the smallest bounding rectangle for a set of points.
-        Returns a set of points representing the corners of the bounding box.
-        :param points: an nx2 matrix of coordinates
-        :rval: an nx2 matrix of coordinates
-        """
-        pi2 = np.pi / 2.
-    
-        # get the convex hull for the points
-        hull_points = self.coordinates[ConvexHull(self.coordinates).vertices]
-    
-        # calculate edge angles
-        #edges = np.zeros((len(hull_points) - 1, 2))
-        edges = hull_points[1:] - hull_points[:-1]
-    
-        #angles = np.zeros((len(edges)))
-        angles = np.arctan2(edges[:, 1], edges[:, 0])
-    
-        angles = np.abs(np.mod(angles, pi2))
-        angles = np.unique(angles)
-    
-        # find rotation matrices
-        # XXX both work
-        rotations = np.vstack([
-            np.cos(angles),
-            np.cos(angles - pi2),
-            np.cos(angles + pi2),
-            np.cos(angles)]).T
-        #     rotations = np.vstack([
-        #         np.cos(angles),
-        #         -np.sin(angles),
-        #         np.sin(angles),
-        #         np.cos(angles)]).T
-        rotations = rotations.reshape((-1, 2, 2))
-    
-        # apply rotations to the hull
-        rot_points = np.dot(rotations, hull_points.T)
-    
-        # find the bounding points
-        min_x = np.nanmin(rot_points[:, 0], axis=1)
-        max_x = np.nanmax(rot_points[:, 0], axis=1)
-        min_y = np.nanmin(rot_points[:, 1], axis=1)
-        max_y = np.nanmax(rot_points[:, 1], axis=1)
-    
-        # find the box with the best area
-        areas = (max_x - min_x) * (max_y - min_y)
-        best_idx = np.argmin(areas)
-    
-        # return the best box
-        x1 = max_x[best_idx]
-        x2 = min_x[best_idx]
-        y1 = max_y[best_idx]
-        y2 = min_y[best_idx]
-        r = rotations[best_idx]
-    
-        rval = np.zeros((4, 2))
-        rval[0] = np.dot([x1, y2], r)
-        rval[1] = np.dot([x2, y2], r)
-        rval[2] = np.dot([x2, y1], r)
-        rval[3] = np.dot([x1, y1], r)
-    
-        return Rectangle(rval)
-    
+from polygon import Polygon
+from rectangle import Rectangle
+from geometry import rotateAroundOrigin
     
 def squarePacking(radius, rectangle):
 
@@ -96,49 +24,6 @@ def squarePacking(radius, rectangle):
             coordinates.append(coordinate)
             
     return np.asarray(coordinates)
-
-
-class Rectangle(Polygon):
-    def __init__(self, coordinates):
-        ## TODO: Check if is rectangle
-        super().__init__(coordinates)
-        self.dimensions = getRectangleDimensions(coordinates)
-        self.length, self.width = max(self.dimensions), min(self.dimensions)
-        self.lowestPoint = self.getLowestPoint()
-        
-    def getPointClockwise(self, point=None):
-        ## TODO: numpy index
-        if point is None:
-            point = self.pointClosestToOrigin
-        index = self.coordinates.tolist().index(point.tolist())
-        return self.coordinates[(index + 1) % 4]
-    
-    def getPointCounterClockwise(self, point=None):
-        ## TODO: numpy index
-        if point is None:
-            point = self.pointClosestToOrigin
-        index = self.coordinates.tolist().index(point.tolist())
-        return self.coordinates[(index % 4) - 1]
-    
-    def getLowestPoint(self):
-    
-        return np.amin(self.coordinates, 0)
-       
-    def slopeOfBase(self):
-        
-        lowestPoint = self.getLowestPoint()
-        rise = self.pointClosestToOrigin[1] - lowestPoint[1]
-        run = self.pointClosestToOrigin[0] - lowestPoint[0]
-        slope = rise / run
-        return slope
-    
-    def getBaseAngle(self):
-        vector = self.lowestPoint - self.pointClosestToOrigin
-        angle = angleBetween(vector, [1, 0])
-        return angle
-       
-def getHeightOfDoubleRow(radius):
-    return radius * (1 + (np.sqrt(3) * 1.5))
 
 def getRowWidth(radius):
     return 2 * radius * np.sqrt(3)
@@ -185,29 +70,13 @@ def getAbsolutePositions(relativePositions, rectangle):
     if relativePositions.size == 0:
         return relativePositions    
     
-    print(rectangle.lowestPoint)
-    print(rectangle.pointClosestToOrigin)
-    absolutePositions = np.add(relativePositions, rectangle.pointClosestToOrigin)
-#    angle = rectangle.getBaseAngle()
-#    absolutePositions = rotateAroundOrigin(angle, absolutePositions)
+    if rectangle.isFallenOver:
+     	relativePositions = np.flip(relativePositions, 1)
+    absolutePositions = rotateAroundOrigin(rectangle.baseAngle, relativePositions)
+    absolutePositions = np.add(absolutePositions, rectangle.lowestPoint)
 
     return absolutePositions
     
-    angle = rectangle.getBaseAngle()
-    if rectangle.pointClosestToOrigin[0] > rectangle.getPointClockwise()[0]:
-        print("HERE")
-        angle = -angle - np.pi / 2
-        relativePositions = relativePositions * [-1, -1]
-    elif rectangle.pointClosestToOrigin[1] < rectangle.getPointCounterClockwise()[1]:
-        print("HERE2")
-        angle = -angle - np.pi / 2
-        relativePositions = relativePositions * [1, -1]
-
-    absolutePositions = rotateAroundOrigin(angle, relativePositions)
-    absolutePositions = np.add(absolutePositions, rectangle.pointClosestToOrigin)
-
-    return absolutePositions
-
 def removePositionsOutsideBounds(positions, bounds):
     positionsOutsideBounds = []
     shape = Polygon(bounds)
@@ -216,40 +85,6 @@ def removePositionsOutsideBounds(positions, bounds):
             positionsOutsideBounds.append(position)
 
     return positionsOutsideBounds
-
-
-def getDistance(point1, point2):
-    return np.sqrt(((point1[0] - point2[0]) ** 2) + ((point1[1] - point2[1]) ** 2))
-
-
-def getRectangleDimensions(coordinates):
-    return (getDistance(coordinates[0], coordinates[1]),
-            getDistance(coordinates[1], coordinates[2]))
-
-
-def unitVector(vector):
-    return vector / np.linalg.norm(vector)
-
-
-def angleBetween(v1, v2):
-    v1_u = unitVector(v1)
-    v2_u = unitVector(v2)
-    return np.arccos(np.clip(np.dot(v1_u, v2_u), -1.0, 1.0))
-
-
-def rotateAroundOrigin(angle, coordinates):
-    newCoordinates = list()
-
-    for coordinate in coordinates:
-        x = np.cos(angle) * coordinate[0] + np.sin(angle) * coordinate[1]
-        y = np.sin(angle) * -coordinate[0] + np.cos(angle) * coordinate[1]
-
-        newCoordinates.append((x, y))
-
-    return newCoordinates
-
-def vectorBetween(point1, point2):
-    return
 
 def createPlot(plot, rectangle, absolutePositions, radius, relativeCropPositions):
     if len(absolutePositions) == 0:
@@ -270,7 +105,7 @@ def createPlot(plot, rectangle, absolutePositions, radius, relativeCropPositions
 
 def packArea(radius, plot):
     
-    smallestBoundingRectangle = plot.smallestBoundingRectangle()
+    smallestBoundingRectangle = Rectangle(plot.smallestBoundingRectangleCoordinates)
     relativeCropPositionss = packWithBestPackingScheme(radius, smallestBoundingRectangle)
     for relativeCropPositions in relativeCropPositionss:
         absoluteCropPositions = getAbsolutePositions(relativeCropPositions, smallestBoundingRectangle)
@@ -281,7 +116,7 @@ def packArea(radius, plot):
         createPlot(plot, smallestBoundingRectangle, absoluteCropPositions, radius, relativeCropPositions)
 
 
-for i in range(1):
+for i in range(2):
     points = np.random.rand(5, 2)
     plot = Polygon(points)
     packArea(0.05, plot)
