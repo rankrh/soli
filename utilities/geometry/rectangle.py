@@ -1,5 +1,8 @@
-from polygon import Polygon
-from geometry import getDistance, getVector
+#from polygon import Polygon
+#from geometry import getDistance, getVector
+from soli.utilities.geometry.polygon import Polygon
+from soli.utilities.geometry.geometry import getDistance, getVector
+
 import numpy as np
 
 class Rectangle(Polygon):
