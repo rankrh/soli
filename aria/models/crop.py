@@ -7,7 +7,7 @@ from .species import Species
 class Crop(models.Model):
     crop = models.AutoField(primary_key=True)
     variety = models.CharField(max_length=50)
-    taxonomy = models.ForeignKey(Species, on_delete=models.CASCADE)
+    species = models.ForeignKey(Species, on_delete=models.CASCADE)
     height = models.SmallIntegerField(
         null=True,
         validators=[MinValueValidator(1, "All crops must have a height greater than zero centimeters")]
@@ -21,8 +21,8 @@ class Crop(models.Model):
         db_column="yield"
     )
     gallonsPerWeek = models.FloatField()
-    sunPerDay = models.CharField(choices=cropchoices.SUN, null=True, max_length=1)
-    category = models.CharField(choices=cropchoices.CROP_TYPE, null=True, max_length=2)
+    sunPerDay = models.CharField(choices=cropchoices.SUN, null=True, max_length=1, default=None)
+    category = models.CharField(choices=cropchoices.CROP_TYPE, null=True, max_length=2, default=None)
     daysToHarvest = models.SmallIntegerField(validators=[MaxValueValidator(365)])
 
     class Meta:

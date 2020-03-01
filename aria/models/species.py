@@ -7,5 +7,5 @@ class Species(models.Model):
     genus = models.ForeignKey(Genus, on_delete=models.CASCADE)
 
     class Meta:
-        db_table = "species "
+        db_table = "species"
         app_label = "aria"
