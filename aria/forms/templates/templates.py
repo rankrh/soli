@@ -3,7 +3,7 @@ from django import forms
 
 def createNumberInput(placeholder, minimum=None, maximum=None):
     attributes = {
-        'class': 'form-control number',
+        'class': 'mb-3 form-control number',
         'placeholder': placeholder,
     }
 
@@ -18,7 +18,7 @@ def createNumberInput(placeholder, minimum=None, maximum=None):
 
 def createTextInput(placeholder):
     attributes = {
-        'class': 'form-control',
+        'class': 'mb-3 form-control',
         'placeholder': placeholder
     }
 
@@ -27,19 +27,16 @@ def createTextInput(placeholder):
 
 def createSelectInput(placeholder):
     attributes = {
-        'class': 'custom-select mb-2 mr-sm-2 mb-sm-0',
+        'class': 'mb-3 custom-select',
         'placeholder': placeholder
     }
 
     return forms.Select(attrs=attributes)
 
 
-def createRadioInput(placeholder, inline=False):
+def createRadioInput(placeholder):
 
-    style = "custom-control custom-radio"
-
-    if inline:
-        style += " custom-control-inline"
+    style = "custom-radio ml-4"
 
     attributes = {
         'class': style,

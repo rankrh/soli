@@ -1,50 +1,38 @@
 {% extends "aria/base.html" %}
 
 {% block content %}
-    <div class="card">
-        <div class="card-body">
-            <form method="POST">
-                <div class="input-group">
-                    <div class="form-control">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="input-group">
                         {{ form.variety }}
-                    </div>
-                    <div class="form-control">
                         {{ form.species }}
                     </div>
-                </div>
-                <div class="input-group">
-                    <div class="form-control">
+                    <div class="input-group">
                         {{ form.height }}
-                    </div>
-                    <div class="form-control">
                         {{ form.weight }}
-                    </div>
-                    <div class="form-control">
                         {{ form.daysToHarvest }}
                     </div>
-                </div>
-                <div class="input-group">
-                    <div class="form-control">
+                    <div class="input-group">
                         {{ form.yieldKg }}
-                    </div>
-                    <div class="form-control">
                         {{ form.gallonsPerWeek }}
                     </div>
-                </div>
-                <div class="input-group">
-                    <div class="form-control">
-                        {% for choice in form.sunPerDay %}
-                            {{ choice }}
-                        {% endfor %}
+                    <div class="input-group">
+                        <div class="custom-control custom-radio custom-control-inline mr-5">
+                            {% for choice in form.sunPerDay %}
+                                {{ choice }}
+                            {% endfor %}
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            {% for choice in form.category %}
+                                {{ choice }}
+                            {% endfor %}
+                        </div>
                     </div>
-                    <div class="form-control">
-                        {% for choice in form.category %}
-                            {{ choice }}
-                        {% endfor %}
-                    </div>
-                </div>
-                <button type="submit" class="btn-dark">Submit</button>
-            </form>
+                    <button type="submit" class="btn-dark">Submit</button>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -17,7 +17,7 @@ class CreateCropForm(forms.ModelForm):
             "weight": createNumberInput("Crop weight", minimum=0),
             "yieldKg": createNumberInput("Yield in kilograms", minimum=0),
             "gallonsPerWeek": createNumberInput("Gallons of water per week", minimum=0),
-            "sunPerDay": createRadioInput("Hours of sun per day", inline=True),
-            "category": createRadioInput("", inline=True),
+            "sunPerDay": createRadioInput("Hours of sun per day"),
+            "category": createRadioInput(""),
             "daysToHarvest": createNumberInput("Days from planting to harvest", 0, 365)
         }
