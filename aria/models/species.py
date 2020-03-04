@@ -9,3 +9,7 @@ class Species(models.Model):
     class Meta:
         db_table = "species"
         app_label = "aria"
+
+    def __str__(self):
+        genus = str(self.genus.genus)
+        return f"{genus.title()} {self.species}"
