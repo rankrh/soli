@@ -31,3 +31,8 @@ class CreateCropForm(forms.ModelForm):
                 "class": "font-italic"
             }),
         )
+
+    def saveCrop(self, request):
+        crop = self.save(commit=False)
+        crop.species_id = request.POST["species"]
+        crop.save()

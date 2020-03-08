@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="container">
-        <div class="card">
+        <div class="card m-5">
             <div class="card-body">
                 <form method="POST">
                     <div class="input-group">
@@ -20,11 +20,15 @@
                     </div>
                     <div class="input-group">
                         <div class="custom-control custom-radio custom-control-inline mr-5">
+                            {{ form.sunPerDay.errors }}
+                            <span class="font-weight-bold">{{ form.sunPerDay.label }}:</span>
                             {% for choice in form.sunPerDay %}
                                 {{ choice }}
                             {% endfor %}
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
+                            {{ form.category.errors }}
+                            <span class="font-weight-bold">{{ form.category.label }}:</span>
                             {% for choice in form.category %}
                                 {{ choice }}
                             {% endfor %}
