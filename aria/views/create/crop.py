@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from ..forms.createCrop import CreateCropForm
+from aria.forms.createCrop import CreateCropForm
 from django.shortcuts import render
 
 
@@ -13,4 +13,4 @@ def createCrop(request):
             return render(request, "aria/formValidationError.html", {'form': createCropForm})
     else:
         context = {'form':  CreateCropForm()}
-        return render(request, "aria/createCrop.html", context)
+        return render(request, "aria/create/crop.html", context)

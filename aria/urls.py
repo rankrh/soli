@@ -3,7 +3,8 @@ from . import views
 
 urlpatterns = [
 	path("", views.index, name="index"),
-	path("create-crop", views.createCrop, name="createCrop"),
+	path("create/crop", views.createCrop, name="createCrop"),
 	path("list-crops", views.listCrops, name="listCrops"),
-	path("create-species", views.createSpecies, name="createSpecies")
+	path("create/species", views.createSpecies, name="createSpecies"),
+	path("create/ajax/species", views.createSpeciesAjax, name="createGenus")
 ]

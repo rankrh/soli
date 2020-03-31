@@ -24,6 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 def getSecret():
     try:
+        return 'n02n3m!*#lujl6)dqly4dun+bn&s3x-x&mtpw(3up76z4ns-d_'
         return os.environ["SOLI_SECRET"]
     except KeyError:
         raise ImproperlyConfigured("Secret key missing or invalid")

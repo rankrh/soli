@@ -2,7 +2,7 @@ from django.db import models
 
 
 class Genus(models.Model):
-    genus = models.CharField(max_length=30)
+    genus = models.CharField(max_length=30, unique=True)
 
     class Meta:
         db_table = "genus"
