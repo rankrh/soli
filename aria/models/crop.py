@@ -28,3 +28,6 @@ class Crop(models.Model):
     class Meta:
         db_table = "crop"
         app_label = "aria"
+        unique_together = (
+            "crop", "species"
+        )

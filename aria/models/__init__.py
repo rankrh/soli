@@ -6,3 +6,4 @@ from .plotCoordinate import PlotCoordinate
 from .cropType import CropType
 from .cropPosition import CropPosition
 from .species import Species
+from .subspecies import Subspecies

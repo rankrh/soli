@@ -6,4 +6,4 @@ def listCrops(request):
     crops = Crop.objects.all()
     context = {"crops": crops}
 
-    return render(request, "aria/listCrops.html", context)
+    return render(request, "aria/list/crop.html", context)

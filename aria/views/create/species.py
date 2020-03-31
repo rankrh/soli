@@ -9,7 +9,7 @@ def createSpecies(request):
         createSpeciesForm = CreateSpeciesForm(request.POST)
         if createSpeciesForm.is_valid():
             createSpeciesForm.saveSpecies(request)
-            return HttpResponseRedirect("/aria/create-crop")
+            return HttpResponseRedirect("/aria/list/crop")
         else:
             return render(request, "aria/formValidationError.html", {'form': createSpeciesForm})
     else:
