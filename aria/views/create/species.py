@@ -1,6 +1,9 @@
-from aria.forms.createGenus import CreateGenusForm
+from aria.forms.genus import CreateGenusForm
+from aria.forms.templates.templates import createTextInput
+from aria.models import Species, Subspecies
+from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect, JsonResponse
-from aria.forms.createSpecies import CreateSpeciesForm
+from aria.forms.species import CreateSpeciesForm, subspeciesFormSet
 from django.shortcuts import render
 
 
@@ -15,6 +18,7 @@ def createSpecies(request):
     else:
         context = {
             'speciesForm': CreateSpeciesForm(),
+            'subspecies': subspeciesFormSet(),
             'genusForm': CreateGenusForm()
         }
         return render(request, "aria/create/species.html", context)

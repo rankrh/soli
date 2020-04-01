@@ -6,35 +6,40 @@
             <div class="card-body">
                 <form method="POST">
                     <div class="input-group">
-                        {{ form.variety }}
-                        {{ form.species }}
+                        {{ cropForm.variety }}
+                        {{ cropForm.species }}
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-secondary mr-3" data-toggle="modal" data-target="#addSpecies">
+                                Add New<New></New>
+                            </button>
+                        </div>
                     </div>
                     <div class="input-group">
-                        {{ form.height }}
-                        {{ form.weight }}
-                        {{ form.daysToHarvest }}
+                        {{ cropForm.height }}
+                        {{ cropForm.weight }}
+                        {{ cropForm.daysToHarvest }}
                     </div>
                     <div class="input-group">
-                        {{ form.yieldKg }}
-                        {{ form.gallonsPerWeek }}
+                        {{ cropForm.yieldKg }}
+                        {{ cropForm.gallonsPerWeek }}
                     </div>
                     <div class="input-group">
                         <div class="custom-control custom-radio custom-control-inline mr-5">
-                            {{ form.sunPerDay.errors }}
+                            {{ cropForm.sunPerDay.errors }}
                             <span class="font-weight-bold">{{ form.sunPerDay.label }}:</span>
-                            {% for choice in form.sunPerDay %}
+                            {% for choice in cropForm.sunPerDay %}
                                 {{ choice }}
                             {% endfor %}
                         </div>
                         <div class="custom-control custom-radio custom-control-inline">
-                            {{ form.category.errors }}
+                            {{ cropForm.category.errors }}
                             <span class="font-weight-bold">{{ form.category.label }}:</span>
-                            {% for choice in form.category %}
+                            {% for choice in cropForm.category %}
                                 {{ choice }}
                             {% endfor %}
                         </div>
                     </div>
-                    <button type="submit" class="btn-dark">Submit</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     {% csrf_token %}
                 </form>
             </div>

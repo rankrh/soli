@@ -16,4 +16,10 @@ class Species(models.Model):
 
     def __str__(self):
         genus = str(self.genus.genus)
-        return f"{genus.title()} {self.species}"
+        latinName = f"{genus.title()} {self.species}"
+
+        if self.common_name:
+            fullName = f"{self.common_name} ({latinName})"
+        else:
+            fullName = latinName
+        return fullName

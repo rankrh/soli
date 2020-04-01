@@ -11,15 +11,19 @@
             <div class="card-body">
                 <form method="POST">
                     <div class="input-group">
-                        <div class="input-group">
-                        {{ speciesForm.genus }}
-                        <div class="input-group-append">
-                            <button type="button" class="btn btn-secondary mr-3" data-toggle="modal" data-target="#createGenus">
-                                Add New<New></New>
-                            </button>
+                        <div class="input-group mb-3">
+                            {{ speciesForm.genus }}
+                            <div class="input-group-append">
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#createGenus">
+                                    Add New<New></New>
+                                </button>
+                            </div>
                         </div>
-                        {{ speciesForm.species }}
-                        {{ speciesForm.common_name }}
+                        <div class="input-group mb-3">
+                            {{ speciesForm.species }}
+                            {{ speciesForm.common_name }}
+                            {{ subspecies.subspecies }}
+                        </div>
                         <button type="submit" class="ml-3 btn btn-primary">Submit</button>
                     </div>
                     {% csrf_token %}

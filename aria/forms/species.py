@@ -1,5 +1,7 @@
-from aria.models import Genus, Species
+from aria.models import Genus, Species, Subspecies
 from django import forms
+from django.forms import inlineformset_factory
+
 from .templates.templates import createTextInput, createSelectInput
 
 
@@ -9,7 +11,7 @@ class CreateSpeciesForm(forms.ModelForm):
         fields = ["species", "common_name"]
         widgets = {
             "species": createTextInput("Species"),
-            "common_name": createTextInput("Subspecies")
+            "common_name": createTextInput("Common Name")
         }
 
     def __init__(self, *args, **kwargs):
@@ -28,3 +30,20 @@ class CreateSpeciesForm(forms.ModelForm):
         species.genus_id = request.POST["genus"]
         species.save()
 
+
+def subspeciesFormSet(species=Species()):
+
+    formset = inlineformset_factory(
+        Species,
+        Subspecies,
+        fields=["subspecies"],
+        extra=1,
+        can_delete=False,
+        widgets={
+            "subspecies": createTextInput("Subspecies")
+        })
+
+    subspecies =  formset(instance=species)
+    if len(subspecies) == 1:
+        subspecies = subspecies[0]
+    return subspecies
