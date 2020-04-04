@@ -132,4 +132,4 @@ manage.py
 *.sqlite
 *.suo
 
-
+.DS_Store

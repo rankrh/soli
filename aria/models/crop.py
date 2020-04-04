@@ -31,3 +31,6 @@ class Crop(models.Model):
         unique_together = (
             "crop", "species"
         )
+
+    def __str__(self):
+        return self.variety
