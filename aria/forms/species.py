@@ -18,10 +18,7 @@ class CreateSpeciesForm(forms.ModelForm):
         super(CreateSpeciesForm, self).__init__(*args, **kwargs)
         self.fields["genus"] = forms.ModelChoiceField(
             queryset=Genus.objects.all().order_by("genus"),
-            widget=createSelectInput(attrs={
-                "placeholder": "Genus",
-                "class": "font-italic",
-            }))
+            widget=createSelectInput("Genus", ["font-italic"]))
 
         self.fields["genus"].empty_label = "Genus"
 

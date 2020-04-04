@@ -25,21 +25,34 @@ def createTextInput(placeholder):
     return forms.TextInput(attrs=attributes)
 
 
-def createSelectInput(attrs):
+def createTextArea(placeholder, rows=5):
     attributes = {
-        'class': 'custom-select',
+        "class": "form-control",
+        "rows": rows,
+        "placeholder": placeholder
     }
 
-    attributes = updateAttributes(attributes, attrs)
+    return forms.Textarea(attributes)
+
+
+def createSelectInput(placeholder="", extraClasses=[]):
+
+    classes = "custom-select"
+    for extraClass in extraClasses:
+        classes += " " + str(extraClass)
+
+    attributes = {
+        'class': classes,
+        'placeholder': placeholder
+    }
 
     return forms.Select(attrs=attributes)
 
 
 def createRadioInput(placeholder):
-    style = "custom-radio"
 
     attributes = {
-        'class': style,
+        'class': "custom-radio",
         'placeholder': placeholder
     }
 
