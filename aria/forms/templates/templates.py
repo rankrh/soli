@@ -49,14 +49,14 @@ def createSelectInput(placeholder="", extraClasses=[]):
     return forms.Select(attrs=attributes)
 
 
-def createRadioInput(placeholder):
+def createRadioInput(placeholder, choices=None):
 
     attributes = {
         'class': "custom-radio",
         'placeholder': placeholder
     }
 
-    return forms.RadioSelect(attrs=attributes)
+    return forms.RadioSelect(attrs=attributes, choices=choices)
 
 
 def updateAttributes(attributes, attrs):

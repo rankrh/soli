@@ -29,7 +29,6 @@ class CreateSpeciesForm(forms.ModelForm):
 
 
 def subspeciesFormSet(species=Species()):
-
     formset = inlineformset_factory(
         Species,
         Subspecies,
@@ -40,7 +39,7 @@ def subspeciesFormSet(species=Species()):
             "subspecies": createTextInput("Subspecies")
         })
 
-    subspecies =  formset(instance=species)
+    subspecies = formset(instance=species)
     if len(subspecies) == 1:
         subspecies = subspecies[0]
     return subspecies

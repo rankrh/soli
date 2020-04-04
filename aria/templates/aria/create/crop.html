@@ -5,6 +5,8 @@
         <div class="card m-5">
             <div class="card-body">
                 <form method="POST">
+                    {{ cropForm }}
+                    <!--
                     <div class="input-group">
                         {{ cropForm.variety }}
                         {{ cropForm.species }}
@@ -36,7 +38,7 @@
                                 {{ choice }}
                             {% endfor %}
                         </div>
-                    </div>
+                    </div>-->
                     <button type="submit" class="btn btn-primary">Submit</button>
                     {% csrf_token %}
                 </form>

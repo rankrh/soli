@@ -1,5 +1,5 @@
 ROOT = "R"
-LEAFY_GREEN = "LG"
+LEAFY_GREEN = "G"
 FRUIT = "F"
 NUT = "N"
 SEED = "S"

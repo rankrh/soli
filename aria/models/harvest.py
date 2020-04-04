@@ -1,3 +1,4 @@
+from aria.models.validation.harvest import CROP_TYPE
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -17,5 +18,11 @@ class Harvest(models.Model):
         validators=[
             MinValueValidator(0),
         ]
+    )
+
+    variety = models.CharField(
+        null=True,
+        choices=CROP_TYPE,
+        max_length=1
     )
 

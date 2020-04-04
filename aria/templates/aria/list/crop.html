@@ -19,10 +19,10 @@
                                 <div class="card-body">
                                     <table class="table">
                                         <tbody>
-                                            {% if crop.category %}
+                                            {% if crop.harvest.variety %}
                                                 <tr>
                                                     <th><img data-src="{% static 'icons/svg/basket.svg' %}" class="icon icon-crop"></th>
-                                                    <th>{{ crop.get_category_display }}</th>
+                                                    <th>{{ crop.harvest.get_variety_display }}</th>
                                                 </tr>
                                             {% endif %}
                                             {% if crop.sunPerDay %}
