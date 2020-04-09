@@ -1,27 +1,120 @@
-from aria.models.validation.plant import GROW_STYLE
+from aria.models import Genus, Species, Subspecies, Crop, Plant, Grow, Harvest
+from aria.models.validation.crop import ORGANIC_CHOICES, HYBRID_CHOICES, TREATED_CHOICES
+from aria.models.validation.grow import SUN
+from aria.models.validation.harvest import CROP_TYPE
 from django import forms
-from ..models import Crop, Species, Plant, Grow, Harvest
-from .templates.templates import createTextInput, createSelectInput, createTextArea, createNumberInput
 from django.forms import inlineformset_factory
 
+from .templates.templates import createTextInput, createSelectInput, createTextArea, createRadioInput, createNumberInput
 
-class CropForm(forms.Form):
-    variety = forms.CharField(widget=createTextInput('Crop variety'))
-    species = forms.ModelChoiceField(
+
+class CreateCropForm(forms.ModelForm):
+    class Meta:
+        model = Crop
+        fields = [
+            "variety",
+            "description",
+            "company",
+            "organic",
+            "treated",
+            "hybrid",
+            "temperature",
+            "depth",
+            "germination"
+        ]
+
+        widgets = {
+            "variety": createTextInput("Variety"),
+            "description": createTextArea("Description"),
+            "company": createTextInput("Company"),
+            "organic": createRadioInput(choices=ORGANIC_CHOICES),
+            "treated": createRadioInput(choices=TREATED_CHOICES),
+            "hybrid": createRadioInput(choices=HYBRID_CHOICES),
+            "temperature": createNumberInput(placeholder="Ideal Soil Temperature"),
+            "depth": createNumberInput(placeholder="Depth"),
+            "germination": createNumberInput(placeholder="Days to Germination")
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(CreateCropForm, self).__init__(*args, **kwargs)
+        self.fields["species"] = forms.ModelChoiceField(
             queryset=Species.objects.all(),
             widget=createSelectInput("Crop species", ["font-italic"]),
         )
-    description = forms.CharField(widget=createTextArea("Description"))
-    germination = forms.IntegerField(widget=createNumberInput("Days to Germination"))
-    depth = forms.IntegerField(widget=createNumberInput("Seed depth"))
-    temperature = forms.IntegerField(widget=createNumberInput("Ideal temperature"))
-    pattern = forms.ChoiceField(widget=createSelectInput("Sowing Pattern", GROW_STYLE))
-    spacing = forms.IntegerField(widget=createNumberInput("Spacing"))
-    maturity = forms.IntegerField(widget=createNumberInput("Days to Maturity"))
+        self.fields["species"].empty_label = "Species"
 
     def saveCrop(self, request):
         crop = self.save(commit=False)
-        crop.species_id = request.POST["species"]
         crop.save()
 
 
+def plantFormSet(plant=Plant()):
+    formset = inlineformset_factory(
+        Crop,
+        Plant,
+        fields=[
+            "pattern",
+            "spacing",
+            "frost",
+            "date",
+            "location"
+        ],
+        extra=1,
+        can_delete=False,
+        widgets={
+            "pattern": createSelectInput(),
+            "spacing": createNumberInput(),
+            "frost": createSelectInput(),
+            "date": createNumberInput(None, 0),
+            "location": createSelectInput()
+        })
+
+    plant = formset(instance=plant)
+    if len(plant) == 1:
+        plant = plant[0]
+    return plant
+
+
+def growFormSet(grow=Grow()):
+    formset = inlineformset_factory(
+        Crop,
+        Grow,
+        fields=[
+            "sun",
+            "soil"
+        ],
+        extra=1,
+        can_delete=False,
+        widgets={
+            "sun": createRadioInput(choices=SUN),
+            "soil": createTextInput(placeholder="Soil type")
+        })
+
+    grow = formset(instance=grow)
+    if len(grow) == 1:
+        grow = grow[0]
+    return grow
+
+
+def harvestFormSet(harvest=Harvest()):
+    formset = inlineformset_factory(
+        Crop,
+        Harvest,
+        fields=[
+            "begin",
+            "end",
+            "variety"
+        ],
+        extra=1,
+        can_delete=False,
+        widgets={
+            "begin": createNumberInput(),
+            "end": createNumberInput(),
+            "variety": createRadioInput(choices=CROP_TYPE)
+        }
+    )
+
+    harvest = formset(instance=harvest)
+    if len(harvest) == 1:
+        harvest = harvest[0]
+    return harvest

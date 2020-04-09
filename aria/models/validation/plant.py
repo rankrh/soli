@@ -12,6 +12,14 @@ GROW_STYLE = [
     (SCATTER, "scatter"),
 ]
 
+GROW_STYLE_FORMATTED = [
+    (ROW, "plant in rows"),
+    (MOUND, "plant in mounds"),
+    (POT, "plant in pots"),
+    (TRELLIS, "plant along trellises"),
+    (SCATTER, "scatter plant"),
+]
+
 FIRST_FROST = "F"
 LAST_FROST = "L"
 

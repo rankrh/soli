@@ -1,11 +1,17 @@
 from aria.models.validation.harvest import CROP_TYPE
 from django.core.validators import MinValueValidator
 from django.db import models
+from aria.models import Crop, Plant, Grow
 
 
 class Harvest(models.Model):
-    harvest = models.AutoField(primary_key=True)
+    class Meta:
+        db_table = "harvest"
+        app_label = "aria"
 
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    grow = models.ForeignKey(Grow, on_delete=models.CASCADE)
     begin = models.IntegerField(
         null=True,
         validators=[
@@ -25,4 +31,3 @@ class Harvest(models.Model):
         choices=CROP_TYPE,
         max_length=1
     )
-

@@ -4,45 +4,103 @@
     <div class="container">
         <div class="card m-5">
             <div class="card-body">
-                <form method="POST">
-                    {{ cropForm }}
-                    <!--
-                    <div class="input-group">
-                        {{ cropForm.variety }}
-                        {{ cropForm.species }}
-                        <div class="input-group-append">
-                            <a role="button" class="btn btn-secondary mr-3" href="{% url 'createSpecies' %}">Add New<New></New></a>
+                <div class="container">
+                    <form method="POST">
+                        <div class="row mb-3">
+                            <div class="input-group">
+                                {{ cropForm.variety }}
+                                {{ cropForm.species }}
+                                <div class="input-group-append">
+                                    <a role="button" class="btn btn-secondary" href="{% url 'createSpecies' %}">Add New<New></New></a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="input-group">
-                        {{ cropForm.height }}
-                        {{ cropForm.weight }}
-                        {{ cropForm.daysToHarvest }}
-                    </div>
-                    <div class="input-group">
-                        {{ cropForm.yieldKg }}
-                        {{ cropForm.gallonsPerWeek }}
-                    </div>
-                    <div class="input-group">
-                        <div class="custom-control custom-radio custom-control-inline mr-5">
-                            {{ cropForm.sunPerDay.errors }}
-                            <span class="font-weight-bold">{{ form.sunPerDay.label }}:</span>
-                            {% for choice in cropForm.sunPerDay %}
-                                {{ choice }}
-                            {% endfor %}
+                        <div class="row  mb-3">
+                            <div class="input-group">
+                                {{ cropForm.description }}
+                            </div>
                         </div>
-                        <div class="custom-control custom-radio custom-control-inline">
-                            {{ cropForm.category.errors }}
-                            <span class="font-weight-bold">{{ form.category.label }}:</span>
-                            {% for choice in cropForm.category %}
-                                {{ choice }}
-                            {% endfor %}
+                        <div class="row justify-content-around input-group mb-3">
+                            <div>
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                {% for option in cropForm.organic %}
+                                    <label class="btn btn-secondary active">
+                                        {{ option }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            </div>
+                            <div>
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                {% for option in cropForm.treated %}
+                                    <label class="btn btn-secondary active">
+                                        {{ option }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            </div>
+                            <div>
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                {% for option in cropForm.hybrid %}
+                                    <label class="btn btn-secondary active">
+                                        {{ option }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            </div>
                         </div>
-                    </div>-->
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    {% csrf_token %}
-                </form>
+                        <div class="row mb-3">
+                            <div class="input-group">
+                                {{ cropForm.depth }}
+                                {{ cropForm.temperature }}
+                                {{ cropForm.germination }}
+                            </div>
+                        </div>
+                        <div class="row justify-content-end mb-3">
+                            <button type="button" class="btn btn-secondary mr-3" data-toggle="modal" data-target="#addPlantingScheme">
+                                Add Planting Scheme<New></New>
+                            </button>
+                        </div>
+                        <div class="modal" id="addPlantingScheme" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-xl" id="addPlantingSchemeModal">
+                                <!-- Modal content-->
+                                <div class="modal-content" id="addPlantingSchemeModal-content">
+                                    <div class="modal-header">
+                                         <h4 class="modal-title">Add New Planting</h4>
+                                    </div>
+                                    <div class="modal-body" id="addPlantingSchemeModal-body">
+                                        <div class="alert alert-danger" id="addPlantingSchemeModal-errors" role="alert" style="display: none;">
+                                        </div>
+                                        <div>
+                                            <div class="input-group">
+                                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                    {{ plantFormSet.pattern }}
+                                                    {{ plantFormSet.date }}
+                                                    <span>weeks</span>
+                                                    <select name="plant_set-0-frost" class="custom-select" placeholder="" id="id_plant_set-0-frost">
+                                                      <option value="-1">before</option>
+                                                      <option value="1">after</option>
+                                                    </select>
+                                                    {{ plantFormSet.frost }}
+                                                </div>
+                                            </div>
+                                        {{ plantFormSet }}
+                                        {{ growFormSet }}
+                                        {{ harvestFormSet }}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" onclick="createPlantingScheme()">Add</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                        {% csrf_token %}
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}

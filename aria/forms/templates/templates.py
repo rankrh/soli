@@ -1,7 +1,7 @@
 from django import forms
 
 
-def createNumberInput(placeholder, minimum=None, maximum=None):
+def createNumberInput(placeholder=None, minimum=None, maximum=None):
     attributes = {
         'class': 'form-control number',
         'placeholder': placeholder,
@@ -43,16 +43,16 @@ def createSelectInput(placeholder="", extraClasses=[]):
 
     attributes = {
         'class': classes,
-        'placeholder': placeholder
+        'placeholder': placeholder,
     }
 
     return forms.Select(attrs=attributes)
 
 
-def createRadioInput(placeholder, choices=None):
+def createRadioInput(placeholder=None, choices=[]):
 
+    choices = [(choice[0], choice[1].capitalize()) for choice in choices]
     attributes = {
-        'class': "custom-radio",
         'placeholder': placeholder
     }
 

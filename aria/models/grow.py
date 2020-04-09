@@ -1,10 +1,15 @@
 from aria.models.validation.grow import SUN
 from django.db import models
+from aria.models import Crop, Plant
 
 
 class Grow(models.Model):
-    grow = models.AutoField(primary_key=True)
+    class Meta:
+        db_table = "grow"
+        app_label = "aria"
 
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
     sun = models.CharField(
         null=True,
         choices=SUN,

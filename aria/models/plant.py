@@ -1,56 +1,37 @@
+from aria.models import Crop
 from aria.models.validation.plant import *
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Plant(models.Model):
+    class Meta:
+        db_table = "plant"
+        app_label = "aria"
 
-    germination = models.SmallIntegerField(
-        null=True,
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(365)
-        ]
-    )
-
-    depth = models.SmallIntegerField(
-        null=True,
-        validators=[
-            MinValueValidator(0),
-            MaxValueValidator(1000)
-        ]
-    )
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
 
     pattern = models.CharField(
-        null=True,
         choices=GROW_STYLE,
-        max_length=1
-
+        max_length=1,
+        blank=False,
+        default=None
     )
 
     spacing = models.SmallIntegerField(
-        null=True,
         validators=[
             MinValueValidator(0)
         ]
     )
 
-    temperature = models.SmallIntegerField(
-        null=True,
-        validators=[
-            MinValueValidator(-50),
-            MaxValueValidator(50)
-        ]
-    )
-
     frost = models.CharField(
-        null=True,
         choices=FROST,
-        max_length = 1
+        max_length=1,
+        blank=False,
+        default=None
     )
 
     date = models.SmallIntegerField(
-        null=True,
         validators=[
             MinValueValidator(-180),
             MaxValueValidator(180)
@@ -58,11 +39,13 @@ class Plant(models.Model):
     )
 
     location = models.CharField(
-        null=True,
         choices=LOCATION,
-        max_length=1
+        max_length=1,
+        blank=False,
+        default=None
     )
 
     transplant = models.ForeignKey(
         "self",
+        null=True,
         on_delete=models.CASCADE)

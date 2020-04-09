@@ -1,11 +1,11 @@
 from django.http import HttpResponseRedirect
-from aria.forms.crop import CropForm
+from aria.forms.crop import CreateCropForm, plantFormSet, growFormSet, harvestFormSet
 from django.shortcuts import render
 
 
 def createCrop(request):
     if request.method == "POST":
-        createCropForm = CropForm(request.POST)
+        createCropForm = CreateCropForm(request.POST)
         if createCropForm.is_valid():
             createCropForm.saveCrop(request)
             return HttpResponseRedirect("/aria/display/crops")
@@ -13,6 +13,9 @@ def createCrop(request):
             return render(request, "aria/formValidationError.html", {'cropForm': createCropForm})
     else:
         context = {
-            'cropForm':  CropForm(),
+            'cropForm':  CreateCropForm(),
+            'plantFormSet': plantFormSet(),
+            'growFormSet': growFormSet(),
+            'harvestFormSet': harvestFormSet()
         }
         return render(request, "aria/create/crop.html", context)
