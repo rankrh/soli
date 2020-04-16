@@ -49,12 +49,14 @@ def createSelectInput(placeholder="", extraClasses=[]):
     return forms.Select(attrs=attributes)
 
 
-def createRadioInput(placeholder=None, choices=[]):
+def createRadioInput(placeholder=None, choices=[], onchange=None):
 
     choices = [(choice[0], choice[1].capitalize()) for choice in choices]
     attributes = {
         'placeholder': placeholder
     }
+    if onchange:
+        attributes["onchange"] = onchange
 
     return forms.RadioSelect(attrs=attributes, choices=choices)
 

@@ -5,11 +5,11 @@ TRELLIS = "T"
 SCATTER = "S"
 
 GROW_STYLE = [
-    (ROW, "row"),
-    (MOUND, "mound"),
-    (POT, "pot"),
-    (TRELLIS, "trellis"),
-    (SCATTER, "scatter"),
+    (ROW, "Row"),
+    (MOUND, "Mound"),
+    (POT, "Pot"),
+    (TRELLIS, "Trellis"),
+    (SCATTER, "Scatter"),
 ]
 
 GROW_STYLE_FORMATTED = [
@@ -33,7 +33,7 @@ OUTSIDE = "O"
 TRANSPLANT = "T"
 
 LOCATION = [
-    (INSIDE, "start inside"),
-    (OUTSIDE, "direct sow"),
-    (TRANSPLANT, "transplant")
+    (INSIDE, "Start inside"),
+    (OUTSIDE, "Direct sow"),
+    (TRANSPLANT, "Transplant")
 ]

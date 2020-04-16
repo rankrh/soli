@@ -16,18 +16,24 @@ class Harvest(models.Model):
         null=True,
         validators=[
             MinValueValidator(0),
-        ]
+        ],
+        blank=False,
+        default=None
     )
 
     end = models.IntegerField(
         null=True,
         validators=[
             MinValueValidator(0),
-        ]
+        ],
+        blank=False,
+        default=None
     )
 
     variety = models.CharField(
         null=True,
         choices=CROP_TYPE,
-        max_length=1
+        max_length=1,
+        blank=False,
+        default=None
     )

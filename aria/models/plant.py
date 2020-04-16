@@ -32,6 +32,7 @@ class Plant(models.Model):
     )
 
     date = models.SmallIntegerField(
+        default=1,
         validators=[
             MinValueValidator(-180),
             MaxValueValidator(180)

@@ -62,11 +62,18 @@ def plantFormSet(plant=Plant()):
         extra=1,
         can_delete=False,
         widgets={
-            "pattern": createSelectInput(),
+            "pattern": forms.RadioSelect(attrs={
+                "name": "pattern",
+                "id": "pattern"
+            }),
             "spacing": createNumberInput(),
             "frost": createSelectInput(),
             "date": createNumberInput(None, 0),
-            "location": createSelectInput()
+            "location": forms.RadioSelect(attrs={
+                "onchange": "togglePattern();",
+                "name": "location",
+                "id": "location"
+            })
         })
 
     plant = formset(instance=plant)
@@ -108,8 +115,8 @@ def harvestFormSet(harvest=Harvest()):
         extra=1,
         can_delete=False,
         widgets={
-            "begin": createNumberInput(),
-            "end": createNumberInput(),
+            "begin": createNumberInput("Start Date", 1),
+            "end": createNumberInput("End Date", 1),
             "variety": createRadioInput(choices=CROP_TYPE)
         }
     )

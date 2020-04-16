@@ -13,10 +13,12 @@ class Grow(models.Model):
     sun = models.CharField(
         null=True,
         choices=SUN,
-        max_length = 1
+        max_length=1,
+        blank=False,
+        default=None
     )
 
     soil = models.CharField(
         null=True,
-        max_length = 30
+        max_length=30
     )
