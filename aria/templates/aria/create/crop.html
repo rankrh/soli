@@ -13,46 +13,47 @@
                 <div class="container">
                     <form method="POST">
                         <div class="row mb-3">
-                            <div class="input-group">
+                            <div class="col">
                                 {{ cropForm.variety }}
+                            </div>
+                            <div class="col input-group">
                                 {{ cropForm.species }}
                                 <div class="input-group-append">
                                     <a role="button" class="btn btn-secondary" href="{% url 'createSpecies' %}">Add New<New></New></a>
                                 </div>
                             </div>
                         </div>
-                        <div class="row  mb-3">
-                            <div class="input-group">
+                        <div class="row mb-3">
+                            <div class="col-4 pull-right">
+                                {{ cropForm.company }}
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
                                 {{ cropForm.description }}
                             </div>
                         </div>
                         <div class="row justify-content-around input-group mb-3">
-                            <div>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 {% for option in cropForm.organic %}
                                     <label class="btn btn-secondary active">
                                         {{ option }}
                                     </label>
                                 {% endfor %}
                             </div>
-                            </div>
-                            <div>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 {% for option in cropForm.treated %}
                                     <label class="btn btn-secondary active">
                                         {{ option }}
                                     </label>
                                 {% endfor %}
                             </div>
-                            </div>
-                            <div>
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 {% for option in cropForm.hybrid %}
                                     <label class="btn btn-secondary active">
                                         {{ option }}
                                     </label>
                                 {% endfor %}
-                            </div>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -80,14 +81,14 @@
                                         <div class="container">
                                             <div class="row">
                                                 <div class="btn-group btn-group-toggle my-3 col" data-toggle="buttons">
-                                                    {% for option in harvestFormSet.variety %}
+                                                    {% for option in cropForm.harvest.form.variety %}
                                                         <label class="btn btn-outline-info">
                                                             {{ option }}
                                                         </label>
                                                     {% endfor %}
                                                 </div>
                                                 <div class="btn-group btn-group-toggle my-3 col" data-toggle="buttons">
-                                                    {% for option in plantFormSet.location %}
+                                                    {% for option in cropForm.plant.form.location %}
                                                         <label class="btn btn-outline-info">
                                                             {{ option }}
                                                         </label>
@@ -96,14 +97,14 @@
                                             </div>
                                             <div class="row">
                                                 <div class="btn-group btn-group-toggle my-3 col" data-toggle="buttons">
-                                                    {% for option in growFormSet.sun %}
+                                                    {% for option in cropForm.grow.form.sun %}
                                                         <label class="btn btn-outline-info">
                                                             {{ option }}
                                                         </label>
                                                     {% endfor %}
                                                 </div>
                                                 <div class="btn-group btn-group-toggle my-3 col" data-toggle="buttons" id="pattern">
-                                                    {% for option in plantFormSet.pattern %}
+                                                    {% for option in cropForm.plant.form.pattern %}
                                                         <label class="btn btn-outline-info" for="{{ option.id_for_label }}" name="pattern">
                                                             {{ option }}
                                                         </label>
@@ -113,17 +114,17 @@
                                             <div class="row my-3">
                                                 <splan class="mx-3 text-center input-group-addon">Plant</splan>
                                                 <div class="col-xs-12">
-                                                    {{ plantFormSet.date }}
+                                                    {{ cropForm.plant.form.date }}
                                                 </div>
                                                 <span class="mx-3 text-center input-group-addon">weeks</span>
                                                 <div class="col-xs-12">
-                                                    <select name="plant_set-0-frost" class="custom-select" placeholder="" id="id_plant_set-0-frost">
+                                                    <select name="beforeOrAfter" class="custom-select" id="beforeOrAfter">
                                                       <option value="-1">before</option>
                                                       <option value="1">after</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-xs-12">
-                                                    {{ plantFormSet.frost }}
+                                                    {{ cropForm.plant.form.frost }}
                                                 </div>
                                                 <div class="form-check mx-3">
                                                     <input class="form-check-input" type="checkbox" id="succession" onchange="toggleSuccession();">
@@ -154,18 +155,18 @@
                                         <div class="row">
                                             <splan class="mx-3 text-center input-group-addon">Harvest</splan>
                                             <div class="col-xs-12">
-                                                {{ harvestFormSet.begin }}
+                                                {{ cropForm.harvest.form.begin }}
                                             </div>
                                             <splan class="mx-3 text-center input-group-addon">to</splan>
                                             <div class="col-xs-12">
-                                                {{ harvestFormSet.end }}
+                                                {{ cropForm.harvest.form.end }}
                                             </div>
                                             <splan class="mx-3 text-center input-group-addon">days after planting</splan>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-primary" onclick="createPlantingScheme()">Add</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+                                        <button type="button" class="btn btn-default" onclick="clearPlantingScheme()">Close</button>
                                     </div>
                                 </div>
                             </div>

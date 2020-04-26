@@ -1,7 +1,7 @@
 function togglePattern() {
 
     var transplantDate = $("#transplant-date");
-    if ($("input[name='plant_set-0-location']:checked").val() == "I") {
+    if ($("input[name^='location']:checked:visible").val() == "I") {
         transplantDate.show();
     } else {
         transplantDate.hide();
