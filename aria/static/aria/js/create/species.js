@@ -30,3 +30,4 @@ function createGenusSuccess(data) {
         $("#createGenus").modal('hide');
     }
 }
+
