@@ -1,17 +1,13 @@
 from django import forms
 
-
 def createNumberInput(placeholder=None, minimum=None, maximum=None):
+
     attributes = {
         'class': 'form-control number',
         'placeholder': placeholder,
+        'min': minimum,
+        'max': maximum
     }
-
-    if minimum is not None:
-        attributes["min"] = minimum
-
-    if maximum is not None:
-        attributes["max"] = maximum
 
     return forms.NumberInput(attrs=attributes)
 

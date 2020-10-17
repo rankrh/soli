@@ -16,28 +16,6 @@ class Crop(models.Model):
     organic = models.BooleanField(null=True)
     treated = models.BooleanField(null=True)
     hybrid = models.BooleanField(null=True)
-    temperature = models.SmallIntegerField(
-        null=True,
-        validators=[
-            MinValueValidator(-50),
-            MaxValueValidator(50)
-        ]
-    )
-    germination = models.SmallIntegerField(
-        null=True,
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(365)
-        ]
-    )
-
-    depth = models.SmallIntegerField(
-        null=True,
-        validators=[
-            MinValueValidator(0),
-            MaxValueValidator(1000)
-        ]
-    )
 
     def __str__(self):
         return self.variety

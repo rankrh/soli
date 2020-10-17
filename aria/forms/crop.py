@@ -21,10 +21,7 @@ class CreateCropForm(forms.ModelForm):
             "company",
             "organic",
             "treated",
-            "hybrid",
-            "temperature",
-            "depth",
-            "germination"
+            "hybrid"
         ]
 
         widgets = {
@@ -34,9 +31,6 @@ class CreateCropForm(forms.ModelForm):
             "organic": createRadioInput(choices=ORGANIC_CHOICES),
             "treated": createRadioInput(choices=TREATED_CHOICES),
             "hybrid": createRadioInput(choices=HYBRID_CHOICES),
-            "temperature": createNumberInput(placeholder="Ideal Soil Temperature"),
-            "depth": createNumberInput(placeholder="Depth"),
-            "germination": createNumberInput(placeholder="Days to Germination")
         }
 
     def __init__(self, *args, **kwargs):

@@ -50,3 +50,27 @@ class Plant(models.Model):
         "self",
         null=True,
         on_delete=models.CASCADE)
+
+    temperature = models.SmallIntegerField(
+        null=True,
+        validators=[
+            MinValueValidator(-50),
+            MaxValueValidator(50)
+        ]
+    )
+
+    germination = models.SmallIntegerField(
+        null=True,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(365)
+        ]
+    )
+
+    depth = models.SmallIntegerField(
+        null=True,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(1000)
+        ]
+    )

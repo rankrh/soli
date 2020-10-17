@@ -34,6 +34,5 @@ TRANSPLANT = "T"
 
 LOCATION = [
     (INSIDE, "Start inside"),
-    (OUTSIDE, "Direct sow"),
-    (TRANSPLANT, "Transplant")
+    (OUTSIDE, "Direct sow")
 ]
