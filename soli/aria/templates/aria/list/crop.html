@@ -1,0 +1,52 @@
+{% extends "aria/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="card m-5">
+            <div class="card-body">
+                <div class="accordion" id="cropTable">
+                    {% for crop in crops %}
+                        <div class="card z-depth-0 bordered">
+                            <div class="card-header" id="crop_{{ crop.pk }}_heading" data-toggle="collapse" data-target="#crop_{{ crop.pk }}_body" aria-expanded="true" aria-controls="crop_{{ crop.pk }}_body">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button">
+                                        {{ crop.variety }} - {{ crop.species }}
+                                    </button>
+                                </h5>
+                            </div>
+                            <div id="crop_{{ crop.pk }}_body" class="collapse" aria-labelledby="crop_{{ crop.pk }}_heading">
+                                <div class="card-body">
+                                    <table class="table">
+                                        <tbody>
+                                            {% if crop.harvest.variety %}
+                                                <tr>
+                                                    <th><img data-src="{% static 'icons/svg/basket.svg' %}" class="icon icon-crop"></th>
+                                                    <th>{{ crop.harvest.get_variety_display }}</th>
+                                                </tr>
+                                            {% endif %}
+                                            {% if crop.sunPerDay %}
+                                                <tr>
+                                                    <th><img data-src="{% static 'icons/svg/sun.svg' %}" class="icon icon-sun"></th>
+                                                    <th>{{ crop.get_sunPerDay_display }}</th>
+                                                </tr>
+                                            {% endif %}
+                                            {% if crop.gallonsPerWeek %}
+                                                <tr>
+                                                    <th>
+                                                        <img data-src="{% static 'icons/svg/rain.svg' %}" class="icon icon-rain"></img>
+                                                    </th>
+                                                    <th>{{ crop.gallonsPerWeek }}</th>
+                                                </tr>
+                                            {% endif %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

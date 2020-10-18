@@ -1,0 +1,12 @@
+{% extends "aria/base.html" %}
+
+{% block content %}
+    <p>Test</p>
+    <ul>
+        {% for crop in crops %}
+            <li>
+                {{ crop.variety }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,16 @@
+.icon {
+    width: 33px;
+    height: 33px;
+}
+
+.icon-rain {
+    fill: #518fc9;
+}
+
+.icon-crop {
+    fill: #51a14c;
+}
+
+.icon-sun {
+    fill: #fcf25d;
+}
