@@ -16,30 +16,30 @@ class CreateCropForm(forms.ModelForm):
     class Meta:
         model = Crop
         fields = [
-            "variety",
-            "description",
-            "company",
-            "organic",
-            "treated",
-            "hybrid"
+            "cr_variety",
+            "cr_description",
+            "cr_company",
+            "cr_organic",
+            "cr_treated",
+            "cr_hybrid"
         ]
 
         widgets = {
-            "variety": createTextInput("Variety"),
-            "description": createTextArea("Description"),
-            "company": createTextInput("Company"),
-            "organic": createRadioInput(choices=ORGANIC_CHOICES),
-            "treated": createRadioInput(choices=TREATED_CHOICES),
-            "hybrid": createRadioInput(choices=HYBRID_CHOICES),
+            "cr_variety": createTextInput("Variety"),
+            "cr_description": createTextArea("Description"),
+            "cr_company": createTextInput("Company"),
+            "cr_organic": createRadioInput(choices=ORGANIC_CHOICES),
+            "cr_treated": createRadioInput(choices=TREATED_CHOICES),
+            "cr_hybrid": createRadioInput(choices=HYBRID_CHOICES),
         }
 
     def __init__(self, *args, **kwargs):
         super(CreateCropForm, self).__init__(*args, **kwargs)
-        self.fields["species"] = forms.ModelChoiceField(
+        self.fields["cr_sp_num"] = forms.ModelChoiceField(
             queryset=Species.objects.all(),
             widget=createSelectInput("Crop species", ["font-italic"]),
         )
-        self.fields["species"].empty_label = "Species"
+        self.fields["cr_sp_num"].empty_label = "Species"
 
     def saveCrop(self, request):
         crop = self.save(commit=False)

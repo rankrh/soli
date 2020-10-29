@@ -1,10 +1,10 @@
-from aria.models import Plant
 from django.http import HttpResponseRedirect
 from aria.forms.crop import CreateCropForm
 from django.shortcuts import render
 
 
 def createCrop(request):
+
     if request.method == "POST":
         createCropForm = CreateCropForm(request.POST)
         if createCropForm.is_valid():

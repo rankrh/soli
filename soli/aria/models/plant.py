@@ -9,29 +9,30 @@ class Plant(models.Model):
         db_table = "plant"
         app_label = "aria"
 
-    crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
+    pl_num = models.AutoField(primary_key=True)
+    pl_cr_num = models.ForeignKey(Crop, db_column="pl_cr_num", on_delete=models.CASCADE)
 
-    pattern = models.CharField(
+    pl_pattern = models.CharField(
         choices=GROW_STYLE,
         max_length=1,
         blank=False,
         default=None
     )
 
-    spacing = models.SmallIntegerField(
+    pl_spacing = models.SmallIntegerField(
         validators=[
             MinValueValidator(0)
         ]
     )
 
-    frost = models.CharField(
+    pl_frost = models.CharField(
         choices=FROST,
         max_length=1,
         blank=False,
         default=None
     )
 
-    date = models.SmallIntegerField(
+    pl_date = models.SmallIntegerField(
         default=1,
         validators=[
             MinValueValidator(-180),
@@ -39,19 +40,20 @@ class Plant(models.Model):
         ]
     )
 
-    location = models.CharField(
+    pl_location = models.CharField(
         choices=LOCATION,
         max_length=1,
         blank=False,
         default=None
     )
 
-    transplant = models.ForeignKey(
+    pl_transplant = models.ForeignKey(
         "self",
         null=True,
+        db_column="pl_transplant",
         on_delete=models.CASCADE)
 
-    temperature = models.SmallIntegerField(
+    pl_temperature = models.SmallIntegerField(
         null=True,
         validators=[
             MinValueValidator(-50),
@@ -59,7 +61,7 @@ class Plant(models.Model):
         ]
     )
 
-    germination = models.SmallIntegerField(
+    pl_germination = models.SmallIntegerField(
         null=True,
         validators=[
             MinValueValidator(1),
@@ -67,7 +69,7 @@ class Plant(models.Model):
         ]
     )
 
-    depth = models.SmallIntegerField(
+    pl_depth = models.SmallIntegerField(
         null=True,
         validators=[
             MinValueValidator(0),

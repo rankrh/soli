@@ -8,23 +8,23 @@ from .templates.templates import createTextInput, createSelectInput
 class CreateSpeciesForm(forms.ModelForm):
     class Meta:
         model = Species
-        fields = ["species", "common_name"]
+        fields = ["sp_name", "sp_common_name"]
         widgets = {
-            "species": createTextInput("Species"),
-            "common_name": createTextInput("Common Name")
+            "sp_name": createTextInput("Species"),
+            "sp_common_name": createTextInput("Common Name")
         }
 
     def __init__(self, *args, **kwargs):
         super(CreateSpeciesForm, self).__init__(*args, **kwargs)
-        self.fields["genus"] = forms.ModelChoiceField(
-            queryset=Genus.objects.all().order_by("genus"),
+        self.fields["ge_num"] = forms.ModelChoiceField(
+            queryset=Genus.objects.all().order_by("ge_name"),
             widget=createSelectInput("Genus", ["font-italic"]))
 
-        self.fields["genus"].empty_label = "Genus"
+        self.fields["ge_num"].empty_label = "Genus"
 
     def saveSpecies(self, request):
         species = self.save(commit=False)
-        species.genus_id = request.POST["genus"]
+        species.sp_ge_num = Genus(ge_num=request.POST["ge_num"])
         species.save()
 
 
@@ -32,11 +32,11 @@ def subspeciesFormSet(species=Species()):
     formset = inlineformset_factory(
         Species,
         Subspecies,
-        fields=["subspecies"],
+        fields=["sub_name"],
         extra=1,
         can_delete=False,
         widgets={
-            "subspecies": createTextInput("Subspecies")
+            "sub_name": createTextInput("Subspecies")
         })
 
     subspecies = formset(instance=species)

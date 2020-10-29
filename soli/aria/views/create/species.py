@@ -24,15 +24,15 @@ def createSpecies(request):
         return render(request, "aria/create/species.html", context)
 
 
-def createSpeciesAjax(request):
+def createGenus(request):
 
     response = {"errors": []}
     if request.is_ajax() and request.method == "POST":
         createGenusForm = CreateGenusForm(request.POST)
         if createGenusForm.is_valid():
             genus = createGenusForm.saveGenus(request)
-            response["id"] =  genus.id
-            response["genus"] = genus.genus
+            response["ge_num"] = genus.ge_num
+            response["ge_name"] = genus.ge_name
         else:
-            response["errors"].append("This genus already exists")
+            response["errors"].append(createGenusForm.errors)
     return JsonResponse(response)

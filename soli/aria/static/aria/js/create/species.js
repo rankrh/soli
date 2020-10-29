@@ -1,12 +1,12 @@
 function createGenus() {
 
 	$.ajax({
-		url: 'ajax/species',
+		url: 'ajax/genus',
 		type: "POST",
 		dataType: 'json',
 		data: {
 			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-			genus: $("input[name='genus']").val()
+			ge_name: $("input[name='ge_name']").val()
 		},
 		dataType: 'json',
 		success: function (data) {
@@ -15,20 +15,21 @@ function createGenus() {
 	})
 }
 
-function createGenusSuccess(data) {
+function createGenusSuccess(genus) {
 
-	if (data.errors.length) {
+	if (genus.errors.length) {
 		var errorBar = $("#addGenusModal-errors");
-		for (error in data.errors) {
+		for (error in genus.errors) {
 		console.log(error);
-			errorBar.html("<span>" + data.errors + "</span");
+			errorBar.html("<span>" + genus.errors + "</span");
 		}
 		errorBar.show();
 	} else {
-		$("input[name='genus']").val("");
-		$('#id_genus').append(new Option(data.genus, data.id));
+		$("input[name='ge_name']").val("");
+		console.log(genus);
+		$('#id_ge_num').append(new Option(genus.ge_name, genus.ge_num));
 		$("#createGenus").modal('hide');
-		$("#id_genus").val(data.id);
+		$("#id_ge_num").val(genus.ge_num);
 	}
 }
 

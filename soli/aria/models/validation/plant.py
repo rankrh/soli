@@ -24,8 +24,8 @@ FIRST_FROST = "F"
 LAST_FROST = "L"
 
 FROST = [
-    (FIRST_FROST, "first frost"),
-    (LAST_FROST, "last frost")
+    (FIRST_FROST, "First frost"),
+    (LAST_FROST, "Last frost")
 ]
 
 INSIDE = "I"
