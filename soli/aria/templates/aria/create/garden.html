@@ -1,0 +1,12 @@
+{% extends "aria/base.html" %}
+{% load static %}
+
+{% block javascript %}
+    <script src="{% static './aria/js/create/garden.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+    <div id="garden">
+        <div id="like_button_container"></div>
+    </div>
+{% endblock %}
