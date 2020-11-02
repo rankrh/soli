@@ -2,22 +2,22 @@ var LAST_PAGE = 5;
 
 function togglePattern() {
 
-    var transplantDate = $("#transplant-date");
-    if ($("input[name^='pl_location']:checked:visible").val() == "I") {
-        transplantDate.show();
-    } else {
-        transplantDate.hide();
-    }
+	var transplantDate = $("#transplant-date");
+	if ($("input[name^='pl_location']:checked:visible").val() == "I") {
+		transplantDate.show();
+	} else {
+		transplantDate.hide();
+	}
 }
 
 function toggleSuccession() {
 
-    var successionData = $("#succession-data");
-    if ($("#succession").is(":checked")) {
-        successionData.show();
-    } else {
-        successionData.hide();
-    }
+	var successionData = $("#succession-data");
+	if ($("#succession").is(":checked")) {
+		successionData.show();
+	} else {
+		successionData.hide();
+	}
 }
 
 function previousPlantingScheme() {
@@ -74,7 +74,7 @@ function getPlantingSchemeJson() {
 	var plantingScheme = {
 		"schemeId": $("#planting-schemes-body").find("tr").length + 1,
 		"variety": $("input[name='har_variety']:checked"),
-		"location":$("input[name='pl_location']:checked"),
+		"location": $("input[name='pl_location']:checked"),
 		"transplantWeeks": $("#transplant"),
 		"sun": $("input[name='gr_sun']:checked"),
 		"plantDate": $("input[name='pl_date']"),
@@ -99,10 +99,7 @@ function createPlantingScheme() {
 	storePlantingSchemeData(plantingScheme);
 }
 
-function storePlantingSchemeData(plantingScheme) {
-
-
-}
+function storePlantingSchemeData(plantingScheme) {}
 
 function createPlantingSchemeRow(plantingScheme) {
 
@@ -118,7 +115,7 @@ function createPlantingSchemeRow(plantingScheme) {
 	row += "<td><div class=\"btn-group\">";
 	row += "<button type=\"button\" class=\"btn btn-secondary\" onchange=\"editPlantingScheme(" + plantingScheme.schemeId + ")\">Edit<\/button>";
 	row += "<button type=\"button\" class=\"btn btn-secondary\" onchante=\"deletePlantingScheme(" + plantingScheme.schemeId + "\">Delete<\/button>";
-	row += "<\/div><\/td>"
+	row += "<\/div><\/td>";
 	row += "<\/tr>";
 
 	plantingSchemesBody.append(row);
@@ -127,6 +124,6 @@ function createPlantingSchemeRow(plantingScheme) {
 function goToPage(page) {
 
 	$("div[id^=page-]").hide();
-	$("#page-" + page).show()
+	$("#page-" + page).show();
 	hideButtons(page);
 }
