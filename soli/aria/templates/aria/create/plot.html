@@ -5,7 +5,7 @@
     {% include "util/maps.html" %}
 {% endblock %}
 {% block javascript %}
-    <script src="{% static './aria/js/create/garden.js' %}" type="text/javascript"></script>
+    <script src="{% static './aria/js/create/plot.js' %}" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
@@ -38,6 +38,23 @@
                 </div>
                 <button id="save-area" type="button" class="btn btn-secondary" onclick="">Save</button>
             </div>
+            {% for plot in plots %}
+                <div>
+                    {{ plot.plot.plt_name }}
+                    {% for point in  plot.points %}
+                        {{ point.pt_lat }}, {{ point.pt_long }}
+                    {% endfor %}
+                </div>
+            {% endfor %}
         </div>
     </div>
+    <script>
+        {% for plot in plots %}
+            addPlot("{{ plot.plot.plt_name }}", [
+                {% for point in  plot.points %}
+                    [{{ point.pt_lat }}, {{ point.pt_long }}]
+                {% endfor %}
+            ])
+        {% endfor %}
+    </script>
 {% endblock %}

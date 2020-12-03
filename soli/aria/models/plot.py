@@ -8,5 +8,6 @@ class Plot(models.Model):
         app_label = "aria"
 
     plt_num = models.AutoField(primary_key=True)
-    plt_parent_num = models.ForeignKey('self', on_delete=models.CASCADE, db_column="plt_parent_num")
-    plt_cr_num = models.ForeignKey(Crop, null=True, on_delete=models.SET_NULL, db_column="plt_cr_num")
+    plt_name = models.CharField(max_length=128)
+    plt_parent_num = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE, db_column="plt_parent_num")
+    plt_cr_num = models.ForeignKey(Crop, blank=True, null=True, on_delete=models.SET_NULL, db_column="plt_cr_num")
