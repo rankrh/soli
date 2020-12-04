@@ -48,13 +48,5 @@
             {% endfor %}
         </div>
     </div>
-    <script>
-        {% for plot in plots %}
-            addPlot("{{ plot.plot.plt_name }}", [
-                {% for point in  plot.points %}
-                    [{{ point.pt_lat }}, {{ point.pt_long }}]
-                {% endfor %}
-            ])
-        {% endfor %}
-    </script>
+    {{ plots | json_script:"plots-data" }}
 {% endblock %}

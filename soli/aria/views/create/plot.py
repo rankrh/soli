@@ -1,8 +1,11 @@
+import json
+
 from django.shortcuts import render
 
-from aria.views.create.plotDetails import PlotDetails
+from aria.models.plotDetails import PlotDetails
+
 
 def createPlot(request):
 
-    context = {"plots": [PlotDetails(1)]}
+    context = {"plots": [PlotDetails(1).jsonify()]}
     return render(request, "aria/create/plot.html", context)

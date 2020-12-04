@@ -1,5 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoicmFua3JoIiwiYSI6ImNraDFnbjlrcTAxZjMydG4xN2dyNmtoYWUifQ.tlJBm2GyxVZapHdK0_oDyQ';
 
+const plots = JSON.parse($("#plots-data").text());
+
 var map = new mapboxgl.Map({
 	container: 'map', // container id
 	style: 'mapbox://styles/rankrh/ckhcwof2w17fa19o2uo8pmzdr', //hosted style id
@@ -63,32 +65,34 @@ function calculateArea(data) {
 	return roundTo2Decimals(turf.area(data));
 }
 
-map.on('load', function () {addPlot()});
+map.on('load', function () {addSavedPlots()});
+
+function addSavedPlots() {
+
+	for (i=0; i < plots.length; i++) {
+		addPlot(plots[i]);
+	}
+}
 
 function addPlot(plot) {
 
 	map.addSource(
-		'maine', {
+		plot.name, {
 			'type': 'geojson',
 			'data': {
 				'type': 'Feature',
 				'geometry': {
 					'type': 'Polygon',
-					'coordinates': [[
-						[-67.13734351262877, 45.137451890638886],
-						[-80.96466, 44.8097],
-						[-60.03252, 38.3252],
-					]]
+					'coordinates': [plot.points]
 				}
 			}
 		}
 	);
-	console.log("{{ plots }}")
 
 	map.addLayer({
-		'id': 'maine',
+		'id': plot.name,
 		'type': 'fill',
-		'source': 'maine',
+		'source': plot.name,
 		'layout': {},
 		'paint': {
 			'fill-color': '#088',
