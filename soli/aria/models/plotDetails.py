@@ -14,5 +14,6 @@ class PlotDetails():
             "name": self.plot.plt_name,
             "num": self.plot.plt_num,
             "parent": self.plot.plt_parent_num,
+            "area": self.plot.plt_area,
             "points": [[point.pt_lat, point.pt_long] for point in self.points]
         }

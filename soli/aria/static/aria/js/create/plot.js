@@ -12,8 +12,11 @@ var map = new mapboxgl.Map({
 var draw = new MapboxDraw({
 	displayControlsDefault: false,
 	controls: {
-	polygon: true,
-	trash: true
+    polygon: true,
+    polyline: false,
+    rectangle: false,
+    circle: false,
+    marker: false
 	}
 });
 
@@ -29,30 +32,37 @@ map.addControl(draw);
 map.on('draw.create', updateArea);
 map.on('draw.delete', updateArea);
 map.on('draw.update', updateArea);
+map.on('load', function () { initializePlots() });
 
 $("input[type=radio][name=units]").change(
 	function() {
-		var area = 	$("#calculated-area").val();
-		updateAreaUI(area);
+		for (i=0; i < plots.length; i++) {
+			updateAreaUI(plots[i]);
+		}
 	}
 );
 
+function initializePlots() {
+
+	addSavedPlots();
+}
+
 function updateArea(e) {
+
 	var data = draw.getAll();
-	console.log(data);
 	if (data.features.length > 0) {
 		var area = calculateArea(data);
 		updateStoredArea(area);
-		updateAreaUI(area);
+		updateAreaUI();
 	}
 }
 
-function updateAreaUI(area) {
+function updateAreaUI(plot) {
 
 	var units = $("input[name='units']:checked");
-	var convertedArea = convertArea(area, units.val());
+	var convertedArea = convertArea(plot.area, units.val());
 
-	$("#formatted-area").text(convertedArea + " " + units.closest('label').text());
+	$("#formatted-area-" + plot.num).text(convertedArea + " " + units.closest('label').text());
 }
 
 function updateStoredArea(area) {
@@ -65,38 +75,11 @@ function calculateArea(data) {
 	return roundTo2Decimals(turf.area(data));
 }
 
-map.on('load', function () {addSavedPlots()});
-
 function addSavedPlots() {
 
 	for (i=0; i < plots.length; i++) {
-		addPlot(plots[i]);
+		var plot = plots[i];
+		addPolygon(map, plot.name, plot.points);
+		updateAreaUI(plot);
 	}
-}
-
-function addPlot(plot) {
-
-	map.addSource(
-		plot.name, {
-			'type': 'geojson',
-			'data': {
-				'type': 'Feature',
-				'geometry': {
-					'type': 'Polygon',
-					'coordinates': [plot.points]
-				}
-			}
-		}
-	);
-
-	map.addLayer({
-		'id': plot.name,
-		'type': 'fill',
-		'source': plot.name,
-		'layout': {},
-		'paint': {
-			'fill-color': '#088',
-			'fill-opacity': 0.8
-		}
-	});
 }
