@@ -1,27 +1,9 @@
 {% load static %}
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-      crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
-
-<!-- Maps javascript -->
-<script src="{% static 'js/maps/mapbox-gl.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/maps/mapbox-gl-draw.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/maps/mapbox-gl-geocoder.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/maps/turf.min.js' %}" type="text/javascript"></script>
-<script src="{% static 'js/maps/map-utils.js' %}" type="text/javascript"></script>
-<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js'></script>
-<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.4.10/leaflet.draw.js'></script>
-
-<!-- Maps CSS -->
-<link rel="stylesheet" href="{% static '/css/maps/mapbox-gl.css' %}"/>
-<link rel="stylesheet" href="{% static '/css/maps/mapbox-gl-draw.css' %}"/>
-<link rel="stylesheet" href="{% static '/css/maps/mapbox-gl-geocoder.css' %}"/>
-<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.4.10/leaflet.draw.css' rel='stylesheet' />
+<script src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet' />
 <link rel="stylesheet" href="{% static '/css/maps/maps.css' %}"/>
 
-<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.4.10/leaflet.draw.css' rel='stylesheet' />
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.4.10/leaflet.draw.js'></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js'></script>
