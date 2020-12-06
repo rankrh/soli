@@ -10,6 +10,7 @@ urlpatterns = [
 	path("create/species", views.createSpecies, name="createSpecies"),
 	path("create/ajax/genus", views.createGenus, name="createGenus"),
 	path("create/plot", views.createPlot, name="createPlot"),
+	path("create/ajax/plot", views.createPlotAjax, name="createPlotAjax"),
 	
 	# Display
 	path("display/crops", views.displayCrops, name="displayCrops"),

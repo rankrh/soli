@@ -22,17 +22,16 @@
                         <div class="card">
                             <div class="card-header" id="heading-{{ plot.num }}">
                                 <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-plot-{{ plot.num }}" aria-expanded="true" aria-controls="collapse-plot-{{ plot.num }}">
+                                    <button id="plot-{{ plot.num }}-name" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-plot-{{ plot.num }}" aria-expanded="true" aria-controls="collapse-plot-{{ plot.num }}">
                                         {{ plot.name }}
                                     </button>
                                 </h2>
                             </div>
                             <div id="collapse-plot-{{ plot.num }}" class="collapse" aria-labelledby="heading-plot-{{ plot.num }}" data-parent="#plots-accordion">
                                 <div class="card-body">
-                                    <input type="hidden" id="calculated-area-{{ plot.num }}" value="{{ plot.area }}">
                                     <div class="card-body">
-                                        <div id="area">
-                                            <p>Area: <span id="formatted-area-{{ plot.num }}"></span></p>
+                                        <div id="plot-{{ plot.num }} description">
+                                            <p>{{ plot.description }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -55,7 +54,7 @@
                             <input type="radio" name="units" value="miles">Square Miles
                         </label>
                     </div>
-                    <button id="save-area" type="button" class="btn btn-secondary" onclick="">Save</button>
+                    <button id="save-area" type="button" class="btn btn-secondary" onclick="savePlotDetails();">Save</button>
                 </div>
             </div>
         </div>

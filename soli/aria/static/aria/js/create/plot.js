@@ -1,6 +1,5 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoicmFua3JoIiwiYSI6ImNraDFnbjlrcTAxZjMydG4xN2dyNmtoYWUifQ.tlJBm2GyxVZapHdK0_oDyQ';
 
-var next_plot_id = 0;
 const plots = JSON.parse($("#plots-data").text());
 
 var map = L.mapbox.map('map')
@@ -22,10 +21,10 @@ var drawControl = new L.Control.Draw({
 
 map.on('draw:created', function (e) {
 	var plot = e.layer;
+
+	createPlotAccordion(plot);
 	featureGroup.addLayer(plot);
-	plot.new_plot_id = getNextPlotId();
 	editPlotDetails(plot);
-	updatePolygonArea(plot, $("input[type=radio][name=units]:checked"));
 });
 
 map.on('draw:edited', updateAllPolygonAreas);
@@ -36,10 +35,6 @@ $("input[type=radio][name=units]").change(
 	}
 );
 
-function getNextPlotId() {
-
-	return ++next_plot_id;
-}
 function initializePlots() {
 
 	addSavedPlots();
@@ -53,12 +48,7 @@ function zoomToBounds(boundedLayer) {
 
 function editPlotDetails(plot) {
 
-	var editPlotId = $("#edit-plot-id");
-	if (plot.id) {
-		editPlotId.val(plot.id);
-	} else {
-		editPlotId.val(plot.new_plot_id);
-	}
+	$("#edit-plot-id").val(plot.id);
 
 	if (plot.name) {
 		$("#edit-plot-name").val(plot.name)
@@ -67,11 +57,51 @@ function editPlotDetails(plot) {
 	if (plot.description) {
 		$("#edit-plot-description").val(plot.description)
 	}
+
 	$("#edit-plot-modal").modal("toggle");
 }
 
 function savePlotDetails() {
 
+	var plotNum = $("#edit-plot-id").val();
+	var plot = featureGroup.getLayer(plotNum);
+
+	plot.name = $("#edit-plot-name").val();
+	plot.description = $("#edit-plot-description").val();
+	updatePlotAccordion(plot);
+	updatePolygonArea(plot);
+	clearEditPlotModal();
+}
+
+function persistPlot(plot) {
+
+	$.ajax({
+		type: "POST",
+		url: "ajax/plot",
+		dataType: "json",
+		data: {
+			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+			plt_num: plot.id,
+			plt_name: "hi",
+			plt_description: plot.description,
+		}
+	});
+}
+
+function createPlotAccordion(plot) {
+}
+
+function updatePlotAccordion(plot) {
+
+	$("#plot-" + plotNum + "-name").val(plot.name);
+	$("#plot-" + plotNum + "-description").val(plot.description);
+}
+
+function clearEditPlotModal() {
+
+	$("#edit-plot-modal").modal("toggle");
+	$("#edit-plot-name").val("");
+	$("#edit-plot-description").val("");
 }
 
 function addSavedPlots() {
@@ -100,6 +130,10 @@ function updateAllPolygonAreas(map) {
 }
 
 function updatePolygonArea(plot, units) {
+
+	if (!units) {
+		units = $("input[type=radio][name=units]:checked");
+	}
 
 	updatePolygonAreaPopup(plot, units);
   	plot.openPopup();

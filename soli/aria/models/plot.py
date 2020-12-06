@@ -8,7 +8,8 @@ class Plot(models.Model):
         app_label = "aria"
 
     plt_num = models.AutoField(primary_key=True)
-    plt_name = models.CharField(max_length=128)
+    plt_name = models.CharField(max_length=128, blank=True, default="Unnamed Plot")
+    plt_description = models.CharField(max_length=1024, blank=True, default="")
     plt_area = models.FloatField(blank=True, null=True)
     plt_parent_num = models.ForeignKey(
         'self', blank=True, null=True, on_delete=models.CASCADE, db_column="plt_parent_num"
