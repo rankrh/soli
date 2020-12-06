@@ -1,6 +1,6 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoicmFua3JoIiwiYSI6ImNraDFnbjlrcTAxZjMydG4xN2dyNmtoYWUifQ.tlJBm2GyxVZapHdK0_oDyQ';
 
-var temp = null;
+var next_plot_id = 0;
 const plots = JSON.parse($("#plots-data").text());
 
 var map = L.mapbox.map('map')
@@ -20,37 +20,96 @@ var drawControl = new L.Control.Draw({
   	}
 }).addTo(map);
 
-map.on('draw:created', showPolygonArea);
-map.on('draw:edited', showAllPolygonAreas);
-map.on('click', function () { initializePlots() });
+map.on('draw:created', function (e) {
+	var plot = e.layer;
+	featureGroup.addLayer(plot);
+	plot.new_plot_id = getNextPlotId();
+	editPlotDetails(plot);
+	updatePolygonArea(plot, $("input[type=radio][name=units]:checked"));
+});
 
+map.on('draw:edited', updateAllPolygonAreas);
+$(initializePlots());
+$("input[type=radio][name=units]").change(
+	function() {
+		updateAllPolygonAreas();
+	}
+);
+
+function getNextPlotId() {
+
+	return ++next_plot_id;
+}
 function initializePlots() {
 
 	addSavedPlots();
+	zoomToBounds(featureGroup);
+}
+
+function zoomToBounds(boundedLayer) {
+
+	map.fitBounds(boundedLayer.getBounds());
+}
+
+function editPlotDetails(plot) {
+
+	var editPlotId = $("#edit-plot-id");
+	if (plot.id) {
+		editPlotId.val(plot.id);
+	} else {
+		editPlotId.val(plot.new_plot_id);
+	}
+
+	if (plot.name) {
+		$("#edit-plot-name").val(plot.name)
+	}
+
+	if (plot.description) {
+		$("#edit-plot-description").val(plot.description)
+	}
+	$("#edit-plot-modal").modal("toggle");
+}
+
+function savePlotDetails() {
+
 }
 
 function addSavedPlots() {
 
+	var units = $("input[type=radio][name=units]:checked");
 	for (i=0; i < plots.length; i++) {
 		var plot = plots[i];
-		console.log(plot.points)
-		L.polygon([plot.points]).addTo(map);
+		var plotLayer = L.polygon([plot.points]);
+
+		plotLayer._leaflet_id = plot.num;
+		plotLayer.name = plot.name;
+		plotLayer.addTo(map);
+
+	  	featureGroup.addLayer(plotLayer);
+		updatePolygonAreaPopup(plotLayer, units);
 	}
 }
 
-function showAllPolygonAreas(map) {
- 	map.layers.eachLayer(function(layer) {
- 		showPolygonArea({ layer: layer });
+function updateAllPolygonAreas(map) {
+
+	var units = $("input[type=radio][name=units]:checked");
+
+ 	featureGroup.eachLayer(function(layer) {
+ 		updatePolygonArea(layer, units);
  	});
- 	temp = map;
 }
 
-function showPolygonArea(plot) {
+function updatePolygonArea(plot, units) {
 
-	var area = (LGeo.area(plot.layer)).toFixed(2);
+	updatePolygonAreaPopup(plot, units);
+  	plot.openPopup();
+}
 
-	$("#calculated-area").val(area);
-  	featureGroup.addLayer(plot.layer);
-  	plot.layer.bindPopup(area + ' m<sup>2</sup>');
-  	plot.layer.openPopup();
+function updatePolygonAreaPopup(plot, units) {
+
+	var area = convertArea(LGeo.area(plot), units.val());
+	var name = plot.name ? plot.name : "Unnamed Plot"
+  	var popUpMessage = "<b>" + name + "</b><br>" + area + ' ' + units.closest('label').text();
+
+  	plot.bindPopup(popUpMessage);
 }
