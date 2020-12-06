@@ -34,19 +34,8 @@
 		{% block includes %}{% endblock %}
 	</head>
     <body>
-
-		<link rel="stylesheet" href="{% static '/css/maps/maps.css' %}"/>
-
-		<img src="{% static 'icons/sprite/open-iconic.svg' %}" class="iconic-sprite" style="display:none;" />
         {% block content %}
         {% endblock %}
-	    <script>
-			// Elements to inject
-			var elementsToInject = document.querySelectorAll('.icon');
-
-			// Do the injection
-			SVGInjector(elementsToInject);
-		</script>
 		{% block javascript %}{% endblock %}
 	</body>
 </html>
