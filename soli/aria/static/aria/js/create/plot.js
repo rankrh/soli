@@ -22,6 +22,7 @@ var drawControl = new L.Control.Draw({
 map.on('draw:created', function (e) {
 	var plot = e.layer;
 
+	persistPlot(plot);
 	createPlotAccordion(plot);
 	featureGroup.addLayer(plot);
 	editPlotDetails(plot);
@@ -68,6 +69,7 @@ function savePlotDetails() {
 
 	plot.name = $("#edit-plot-name").val();
 	plot.description = $("#edit-plot-description").val();
+	persistPlot(plot);
 	updatePlotAccordion(plot);
 	updatePolygonArea(plot);
 	clearEditPlotModal();
@@ -82,8 +84,9 @@ function persistPlot(plot) {
 		data: {
 			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
 			plt_num: plot.id,
-			plt_name: "hi",
+			plt_name: plot.name,
 			plt_description: plot.description,
+			points: JSON.stringify(plot.getLatLngs())
 		}
 	});
 }

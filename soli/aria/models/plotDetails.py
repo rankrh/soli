@@ -1,7 +1,7 @@
 from aria.models import Plot, Point
 
 
-class PlotDetails():
+class PlotDetails:
     plot = None
     points = []
 
@@ -12,8 +12,19 @@ class PlotDetails():
     def jsonify(self):
         return {
             "name": self.plot.plt_name,
+            "description": self.plot.plt_description,
             "num": self.plot.plt_num,
             "parent": self.plot.plt_parent_num,
             "area": self.plot.plt_area,
-            "points": [[point.pt_long, point.pt_lat] for point in self.points]
+            "points": [[point.pt_lat, point.pt_long] for point in self.points]
         }
+
+
+class PlotDetailsList:
+    plotDetails = []
+
+    def getAllDetails(self):
+        plots = Plot.objects.all()
+        self.plotDetails = [PlotDetails(plot.plt_num).jsonify() for plot in plots]
+
+        return self.plotDetails
