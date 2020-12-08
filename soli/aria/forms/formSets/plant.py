@@ -7,23 +7,23 @@ plantFormSet = inlineformset_factory(
     Crop,
     Plant,
     fields=[
-        "pl_pattern",
-        "pl_spacing",
-        "pl_frost",
-        "pl_date",
-        "pl_location"
+        "pattern",
+        "spacing",
+        "frost",
+        "date",
+        "location"
     ],
     extra=1,
     can_delete=False,
     widgets={
-        "pl_pattern": forms.RadioSelect(attrs={
+        "pattern": forms.RadioSelect(attrs={
             "name": "pattern",
             "id": "pattern"
         }),
-        "pl_spacing": createNumberInput(),
-        "pl_frost": createSelectInput(),
-        "pl_date": createNumberInput(None, 0),
-        "pl_location": forms.RadioSelect(attrs={
+        "spacing": createNumberInput(),
+        "frost": createSelectInput(),
+        "date": createNumberInput(None, 0),
+        "location": forms.RadioSelect(attrs={
             "onchange": "togglePattern();",
             "name": "location",
             "id": "location"
