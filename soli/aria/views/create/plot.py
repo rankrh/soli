@@ -3,11 +3,11 @@ from django.shortcuts import render
 
 from aria.forms.plot import PlotForm
 from aria.models.Points import Points
-from aria.models.plotDetails import PlotDetails, PlotDetailsList
+from aria.models.plotDetails import PlotDetails
 
 
 def createPlot(request):
-    context = {"plots": PlotDetailsList().getAllDetails()}
+    context = {"plots": 1}
     return render(request, "aria/create/plot.html", context)
 
 

@@ -4,7 +4,8 @@ const plots = JSON.parse($("#plots-data").text());
 
 var map = L.mapbox.map('map')
     .setView([40, -100], 4)
-    .addLayer(L.mapbox.styleLayer('mapbox://styles/rankrh/ckhcwof2w17fa19o2uo8pmzdr'));
+    .addLayer(L.mapbox.styleLayer('mapbox://styles/rankrh/ckhcwof2w17fa19o2uo8pmzdr'))
+    .addControl(L.mapbox.geocoderControl('mapbox.places'));
 
 var featureGroup = L.featureGroup().addTo(map);
 
@@ -44,7 +45,9 @@ function initializePlots() {
 
 function zoomToBounds(boundedLayer) {
 
-	map.fitBounds(boundedLayer.getBounds());
+	if (boundedLayer.length) {
+		map.fitBounds(boundedLayer.getBounds());
+	}
 }
 
 function editPlotDetails(plot) {
@@ -64,7 +67,7 @@ function editPlotDetails(plot) {
 
 function savePlotDetails() {
 
-	var plotNum = $("#edit-plot-id").val();
+	var plotNum = Number($("#edit-plot-id").val());
 	var plot = featureGroup.getLayer(plotNum);
 
 	plot.name = $("#edit-plot-name").val();
@@ -87,6 +90,10 @@ function persistPlot(plot) {
 			plt_name: plot.name,
 			plt_description: plot.description,
 			points: JSON.stringify(plot.getLatLngs())
+		},
+		success: function(data) {
+			$("#edit-plot-id").val(data.plt_num);
+			plot._leaflet_id = data.plt_num;
 		}
 	});
 }
