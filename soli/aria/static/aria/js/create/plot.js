@@ -23,14 +23,32 @@ var drawControl = new L.Control.Draw({
 map.on('draw:created', function (e) {
 	var plot = e.layer;
 
+	updatePolygonArea(plot);
 	persistPlot(plot);
-	createPlotAccordion(plot);
-	featureGroup.addLayer(plot);
 	editPlotDetails(plot);
 });
 
-map.on('draw:edited', updateAllPolygonAreas);
+map.on('draw:edited', function (e) {
+	e.layers.eachLayer(function(layer) {
+		updatePolygonArea(layer);
+		persistPlot(layer);
+	});
+	updateAllPolygonAreas();
+});
+
+map.on('draw:deleted', function (e) {
+
+	var plotsToDelete = []
+
+	e.layers.eachLayer(function(layer) {
+		plotsToDelete.push(layer._leaflet_id)
+	});
+
+	deletePlots(plotsToDelete);
+});
+
 $(initializePlots());
+
 $("input[type=radio][name=units]").change(
 	function() {
 		updateAllPolygonAreas();
@@ -41,11 +59,23 @@ function initializePlots() {
 
 	addSavedPlots();
 	zoomToBounds(featureGroup);
+	updateAllPolygonAreas();
+}
+
+function togglePlotFocus(plotId) {
+
+	var boundedLayer = featureGroup;
+	if (!$("#collapse-plot-" + plotId).hasClass("show")) {
+		boundedLayer = featureGroup.getLayer(plotId);
+		boundedLayer.openPopup();
+	}
+
+	zoomToBounds(boundedLayer);
 }
 
 function zoomToBounds(boundedLayer) {
 
-	if (boundedLayer.length) {
+	if (boundedLayer) {
 		map.fitBounds(boundedLayer.getBounds());
 	}
 }
@@ -67,14 +97,15 @@ function editPlotDetails(plot) {
 
 function savePlotDetails() {
 
-	var plotNum = Number($("#edit-plot-id").val());
-	var plot = featureGroup.getLayer(plotNum);
+	var plot = featureGroup.getLayer(Number($("#edit-plot-id").val()));
 
 	plot.name = $("#edit-plot-name").val();
 	plot.description = $("#edit-plot-description").val();
+
 	persistPlot(plot);
 	updatePlotAccordion(plot);
 	updatePolygonArea(plot);
+	updatePolygonPopup(plot, $("input[type=radio][name=units]:checked"))
 	clearEditPlotModal();
 }
 
@@ -86,25 +117,72 @@ function persistPlot(plot) {
 		dataType: "json",
 		data: {
 			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-			plt_num: plot.id,
-			plt_name: plot.name,
-			plt_description: plot.description,
+			id: plot._leaflet_id,
+			name: plot.name,
+			description: plot.description,
+			area: plot.area,
 			points: JSON.stringify(plot.getLatLngs())
 		},
 		success: function(data) {
-			$("#edit-plot-id").val(data.plt_num);
-			plot._leaflet_id = data.plt_num;
+			$("#edit-plot-id").val(data.plot);
+			plot._leaflet_id = data.plot;
+			featureGroup.addLayer(plot);
+
+			if ($("#plot-details-" + plot._leaflet_id).length == 0) {
+				createPlotAccordion(plot);
+			}
 		}
 	});
 }
 
+
+function deletePlots(plots) {
+
+	$.ajax({
+		type: "POST",
+		url: "ajax/delete-plots",
+		dataType: "json",
+		data: {
+			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+			plots: JSON.stringify(plots)
+		},
+		success: function(data) {
+			console.log("success");
+		}
+	});
+}
+
+
 function createPlotAccordion(plot) {
+
+	var num = plot._leaflet_id
+	var name = plot.name ? plot.name : "Unnamed Plot"
+	var description = plot.description ? plot.description : ""
+
+	var newAccordion =  '<div id="plot-details-' + num + '" class="card" onclick="togglePlotFocus(' + num + ')">'
+	newAccordion += '	<div class="card-header" id="heading-' + num + '">'
+	newAccordion += '		<h2 class="mb-0">'
+	newAccordion += '			<button id="plot-' + num + '-name" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-plot-' + num + '" aria-expanded="true" aria-controls="collapse-plot-' + num + '">' + name + '</button>'
+    newAccordion += '		</h2>'
+    newAccordion += '	</div>'
+    newAccordion += '	<div id="collapse-plot-' + num + '" class="collapse" aria-labelledby="heading-plot-' + num + '" data-parent="#plots-accordion">'
+    newAccordion += '	<div class="card-body">'
+    newAccordion += '		<div class="card-body">'
+    newAccordion += '			<div id="plot-' + num + ' description">'
+    newAccordion += '				<p>' + description + '</p>'
+	newAccordion += '			</div>'
+	newAccordion += '		</div>'
+	newAccordion += '	</div>'
+	newAccordion += '</div>'
+
+	$("#plots-accordion").append(newAccordion);
 }
 
 function updatePlotAccordion(plot) {
 
-	$("#plot-" + plotNum + "-name").val(plot.name);
-	$("#plot-" + plotNum + "-description").val(plot.description);
+	$("#plot-" + plot._leaflet_id + "-name").val(plot.name);
+	$("#plot-" + plot._leaflet_id + "-description").val(plot.description);
+	$("#plot-" + plot._leaflet_id + "-description").val(plot.description);
 }
 
 function clearEditPlotModal() {
@@ -121,12 +199,12 @@ function addSavedPlots() {
 		var plot = plots[i];
 		var plotLayer = L.polygon([plot.points]);
 
-		plotLayer._leaflet_id = plot.num;
+		plotLayer._leaflet_id = plot.id;
 		plotLayer.name = plot.name;
 		plotLayer.addTo(map);
 
 	  	featureGroup.addLayer(plotLayer);
-		updatePolygonAreaPopup(plotLayer, units);
+		updatePolygonPopup(plotLayer, units);
 	}
 }
 
@@ -135,25 +213,21 @@ function updateAllPolygonAreas(map) {
 	var units = $("input[type=radio][name=units]:checked");
 
  	featureGroup.eachLayer(function(layer) {
- 		updatePolygonArea(layer, units);
+ 		updatePolygonArea(layer);
+ 		updatePolygonPopup(layer, units);
  	});
 }
 
-function updatePolygonArea(plot, units) {
-
-	if (!units) {
-		units = $("input[type=radio][name=units]:checked");
-	}
-
-	updatePolygonAreaPopup(plot, units);
-  	plot.openPopup();
+function updatePolygonArea(plot) {
+	
+	plot.area = LGeo.area(plot);
 }
 
-function updatePolygonAreaPopup(plot, units) {
+function updatePolygonPopup(plot, units) {
 
-	var area = convertArea(LGeo.area(plot), units.val());
+	var convertedArea = convertArea(plot.area, units.val());
 	var name = plot.name ? plot.name : "Unnamed Plot"
-  	var popUpMessage = "<b>" + name + "</b><br>" + area + ' ' + units.closest('label').text();
+  	var popUpMessage = "<b>" + name + "</b><br>" + convertedArea + ' ' + units.closest('label').text();
 
   	plot.bindPopup(popUpMessage);
 }

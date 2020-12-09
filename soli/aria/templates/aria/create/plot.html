@@ -17,20 +17,20 @@
  <div class="container-fluid p-0 min-vh-100">
         <div class="row justify-content-end no-gutters min-vh-100">
             <div class="col-3" id="plot-details">
-                <div class="accordion" id="plots-accordion">
+                <div class="scrollable" id="plots-accordion">
                     {% for plot in plots %}
-                        <div class="card">
-                            <div class="card-header" id="heading-{{ plot.num }}">
+                        <div id="plot-details-{{ plot.id }}" class="card" onclick="togglePlotFocus({{ plot.id }})">
+                            <div class="card-header" id="heading-{{ plot.id }}">
                                 <h2 class="mb-0">
-                                    <button id="plot-{{ plot.num }}-name" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-plot-{{ plot.num }}" aria-expanded="true" aria-controls="collapse-plot-{{ plot.num }}">
+                                    <button id="plot-{{ plot.id }}-name" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-plot-{{ plot.id }}" aria-expanded="true" aria-controls="collapse-plot-{{ plot.id }}">
                                         {{ plot.name }}
                                     </button>
                                 </h2>
                             </div>
-                            <div id="collapse-plot-{{ plot.num }}" class="collapse" aria-labelledby="heading-plot-{{ plot.num }}" data-parent="#plots-accordion">
+                            <div id="collapse-plot-{{ plot.id }}" class="collapse" aria-labelledby="heading-plot-{{ plot.id }}" data-parent="#plots-accordion">
                                 <div class="card-body">
                                     <div class="card-body">
-                                        <div id="plot-{{ plot.num }} description">
+                                        <div id="plot-{{ plot.id }} description">
                                             <p>{{ plot.description }}</p>
                                         </div>
                                     </div>
@@ -72,16 +72,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend" id="edit-plot-name">
+                        <div class="input-group-prepend">
                             <span class="input-group-text">Plot Name</span>
                         </div>
-                        <input type="text" class="form-control" aria-label="Username" aria-describedby="edit-plot-name">
+                        <input id="edit-plot-name" type="text" class="form-control">
                     </div>
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Plot Description</span>
                         </div>
-                        <textarea class="form-control" aria-label="Plot description"></textarea>
+                        <textarea id="edit-plot-description" class="form-control" aria-label="Plot description"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

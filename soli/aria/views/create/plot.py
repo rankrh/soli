@@ -1,29 +1,48 @@
+import json
+
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from aria.forms.plot import PlotForm
-from aria.models.Points import Points
+from aria.models import Plot
+from aria.models.PlotDetailsList import PlotDetailsList
 from aria.models.plotDetails import PlotDetails
 
 
 def createPlot(request):
-    context = {"plots": 1}
+    plotDetailsList = PlotDetailsList()
+
+    context = {"plots": plotDetailsList.getAllPlotDetails().jsonify()}
     return render(request, "aria/create/plot.html", context)
 
 
 def createPlotAjax(request):
     response = {"errors": []}
     if request.is_ajax() and request.method == "POST":
-        plotForm = PlotForm(request.POST)
+        plotDetails = createNewPlot(request)
+        try:
+            response["plot"] = plotDetails.plot.id
+        except:
+            response["errors"] = plotDetails.plotForm.errors
 
-        if plotForm.is_valid():
-            plot = plotForm.savePlot()
-            points = Points(request.POST, plot)
-            points.savePoints()
+    return JsonResponse(response)
 
-            response["plt_num"] = plot.plt_num
-        else:
-            print(plotForm.errors)
-            response["errors"] = plotForm.errors
+
+def createNewPlot(request):
+    plotDetails = PlotDetails(request)
+    if plotDetails.isValidPlot():
+        plotDetails.savePlotAndPoints()
+
+    return plotDetails
+
+
+def deletePlotsAjax(request):
+    response = {"errors": []}
+
+    if request.is_ajax() and request.method == "POST":
+        plots = json.loads(request.POST["plots"])
+        deleted, rows = Plot.objects.filter(pk__in=plots).delete()
+
+        if deleted == 0:
+            response["errors"] += f"Could not delete plots: {plots}"
 
     return JsonResponse(response)
