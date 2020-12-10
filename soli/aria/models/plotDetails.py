@@ -51,7 +51,7 @@ class PlotDetails:
     def savePoints(self):
 
         if self.points is not None and self.plot is not None:
-            Point.objects.filter(plot=self.plot).delete()
+            Point.objects.filter(shape=self.plot.shape).delete()
 
             for point in self.points:
                 point.save()
@@ -65,7 +65,7 @@ class PlotDetails:
                 for coordinate in coordinateSet:
                     self.points.append(
                         Point(
-                            plot=self.plot,
+                            shape=self.plot.shape,
                             set=setNum,
                             order=len(self.points),
                             lat=coordinate["lat"],
@@ -84,7 +84,7 @@ class PlotDetails:
                 "description": self.plot.description,
                 "id": self.plot.id,
                 "parent": self.plot.parent,
-                "area": self.plot.area,
+                "area": self.plot.shape.area,
                 "points": [[point.lat, point.long] for point in self.points]
             }
 

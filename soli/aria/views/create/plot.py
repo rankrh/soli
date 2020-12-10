@@ -3,8 +3,8 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from aria.models import Plot
-from aria.models.PlotDetailsList import PlotDetailsList
+from aria.models import Plot, Shape
+from aria.models.plotDetailsList import PlotDetailsList
 from aria.models.plotDetails import PlotDetails
 
 
@@ -40,7 +40,7 @@ def deletePlotsAjax(request):
 
     if request.is_ajax() and request.method == "POST":
         plots = json.loads(request.POST["plots"])
-        deleted, rows = Plot.objects.filter(pk__in=plots).delete()
+        deleted, rows = Shape.objects.filter(plot__in=plots).delete()
 
         if deleted == 0:
             response["errors"] += f"Could not delete plots: {plots}"

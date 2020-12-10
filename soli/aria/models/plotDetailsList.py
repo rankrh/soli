@@ -22,8 +22,9 @@ class PlotDetailsList:
     def setPlotDetailsFromPoints(self, points):
 
         if points is not None and points.exists():
-            for point in points.distinct('plot'):
-                self.plotDetails.append(PlotDetails(plot=point.plot, points=points.filter(plot=point.plot)))
+            for point in points.distinct('shape'):
+                plot = Plot.objects.filter(shape=point.shape).get()
+                self.plotDetails.append(PlotDetails(plot=plot, points=points.filter(shape=point.shape)))
 
     def jsonify(self):
 

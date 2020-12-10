@@ -1,6 +1,7 @@
 from django.contrib import admin
 from .models import *
 
+admin.site.register(Shape)
 admin.site.register(Crop)
 admin.site.register(Genus)
 admin.site.register(Grow)

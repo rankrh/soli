@@ -1,3 +1,4 @@
+from .shape import Shape
 from .plot import Plot
 from .crop import Crop
 from .genus import Genus

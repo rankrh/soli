@@ -1,5 +1,7 @@
 from django.db import models
-from .crop import Crop
+
+from . import Shape
+from .shape import POLYGON
 
 
 class Plot(models.Model):
@@ -8,6 +10,14 @@ class Plot(models.Model):
         app_label = "aria"
 
     name = models.CharField(max_length=128, blank=True, default="Unnamed Plot")
+    shape = models.ForeignKey(Shape, null=True, default=None, on_delete=models.CASCADE)
     description = models.CharField(max_length=1024, blank=True, default="")
-    area = models.FloatField(blank=True, null=True)
     parent = models.ForeignKey('self', blank=True, null=True, on_delete=models.CASCADE)
+
+    def save(self):
+
+        if self.shape is None:
+            self.shape = Shape(type=POLYGON)
+            self.shape.save()
+
+        super(Plot, self).save()
