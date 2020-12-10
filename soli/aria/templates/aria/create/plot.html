@@ -17,22 +17,30 @@
  <div class="container-fluid p-0 min-vh-100">
         <div class="row justify-content-end no-gutters min-vh-100">
             <div class="col-3" id="plot-details">
-                <div class="scrollable" id="plots-accordion">
+                <div class="scrollable list-group" id="plots-accordion">
                     {% for plot in plots %}
-                        <div id="plot-details-{{ plot.id }}" class="card" onclick="togglePlotFocus({{ plot.id }})">
-                            <div class="card-header" id="heading-{{ plot.id }}">
-                                <h2 class="mb-0">
-                                    <button id="plot-{{ plot.id }}-name" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-plot-{{ plot.id }}" aria-expanded="true" aria-controls="collapse-plot-{{ plot.id }}">
-                                        {{ plot.name }}
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="collapse-plot-{{ plot.id }}" class="collapse" aria-labelledby="heading-plot-{{ plot.id }}" data-parent="#plots-accordion">
+                        <div id="plot-details-{{ plot.id }}" class="list-group-item" onclick="togglePlotFocus({{ plot.id }})">
+                            <h3>
+                                <div id="plot-{{ plot.id }}-name" class="plot-header text-left" id="heading-{{ plot.id }}" data-toggle="collapse" data-target="#collapse-plot-{{ plot.id }}" aria-expanded="true" aria-controls="collapse-plot-{{ plot.id }}">
+                                    {{ plot.name }}
+                                </div>
+                            </h3>
+                            <div id="collapse-plot-{{ plot.id }}" class="collapse" aria-labelledby="plot-details-{{ plot.id }}" data-parent="#plots-accordion">
                                 <div class="card-body">
-                                    <div class="card-body">
-                                        <div id="plot-{{ plot.id }} description">
-                                            <p>{{ plot.description }}</p>
-                                        </div>
+                                    <div id="plot-{{ plot.id }}-description">
+                                        <p>{{ plot.description }}</p>
+                                    </div>
+                                    <div id="plot-{{ plot.id }}-tools">
+                                        <button class="btn btn-sm btn-light justify-content-center align-self-center" onclick="editPlotDetails(featureGroup.getLayer({{ plot.id }}))">
+                                            <svg viewBox="0 0 8 8" class="icon">
+                                                <use xlink:href="#pencil"></use>
+                                            </svg>
+                                        </button>
+                                        <button class="btn btn-sm btn-light justify-content-center align-self-center" onclick="deletePlot(featureGroup.getLayer({{ plot.id }}))">
+                                            <svg viewBox="0 0 8 8" class="icon">
+                                                <use xlink:href="#trash"></use>
+                                            </svg>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +62,6 @@
                             <input type="radio" name="units" value="miles">Square Miles
                         </label>
                     </div>
-                    <button id="save-area" type="button" class="btn btn-secondary" onclick="savePlotDetails();">Save</button>
                 </div>
             </div>
         </div>
