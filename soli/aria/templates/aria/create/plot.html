@@ -2,11 +2,12 @@
 {% load static %}
 
 {% block includes %}
-    <title>Show drawn polygon area</title>
+    <title>Farm Layout</title>
     {% include "util/maps.html" %}
 {% endblock %}
 
 {% block javascript %}
+    <script src="{% static './aria/js/create/initmap.js' %}" type="text/javascript"></script>
     <script src="{% static './aria/js/create/plot.js' %}" type="text/javascript"></script>
 {% endblock %}
 

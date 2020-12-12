@@ -1,13 +1,23 @@
-L.mapbox.accessToken = 'pk.eyJ1IjoicmFua3JoIiwiYSI6ImNraDFnbjlrcTAxZjMydG4xN2dyNmtoYWUifQ.tlJBm2GyxVZapHdK0_oDyQ';
+L.UnitsControl = L.Control.extend({
+  options: {
+    position: 'topleft'
+  },
+  initialize: function(options) {
+    L.Util.setOptions(this, options);
+  },
+  onAdd: function(map) {
+    var controlElementTag = 'div';
+    var controlElementClass = 'units-control';
+    var controlElement = L.DomUtil.create(controlElementTag, controlElementClass);
+    return controlElement;
+  },
+  onRemove: function(map) {
+  },
 
-const plots = JSON.parse($("#plots-data").text());
+});
 
-var map = L.mapbox.map('map')
-    .setView([40, -100], 4)
-    .addLayer(L.mapbox.styleLayer('mapbox://styles/rankrh/ckhcwof2w17fa19o2uo8pmzdr'))
-    .addControl(L.mapbox.geocoderControl('mapbox.places'));
 
-var featureGroup = L.featureGroup().addTo(map);
+var unitsControl = new L.UnitsControl().addTo(map);
 
 var drawControl = new L.Control.Draw({
   	edit: { featureGroup: featureGroup },
@@ -77,13 +87,6 @@ function togglePlotFocus(plotId) {
 	}
 
 	zoomToBounds(boundedLayer);
-}
-
-function zoomToBounds(boundedLayer) {
-
-	if (boundedLayer) {
-		map.fitBounds(boundedLayer.getBounds());
-	}
 }
 
 function editPlotDetails(plot) {
@@ -213,41 +216,3 @@ function clearEditPlotModal() {
 	$("#edit-plot-description").val("");
 }
 
-function addSavedPlots() {
-
-	var units = $("input[type=radio][name=units]:checked");
-	for (i=0; i < plots.length; i++) {
-		var plot = plots[i];
-		var plotLayer = L.polygon([plot.points]);
-
-		plotLayer._leaflet_id = plot.id;
-		plotLayer.name = plot.name;
-		plotLayer.addTo(map);
-
-	  	featureGroup.addLayer(plotLayer);
-	}
-}
-
-function updateAllPolygonAreas(map) {
-
-	var units = $("input[type=radio][name=units]:checked");
-
- 	featureGroup.eachLayer(function(layer) {
- 		updatePolygonArea(layer);
- 		updatePolygonPopup(layer, units);
- 	});
-}
-
-function updatePolygonArea(plot) {
-	
-	plot.area = LGeo.area(plot);
-}
-
-function updatePolygonPopup(plot, units) {
-
-	var convertedArea = convertArea(plot.area, units.val());
-	var name = plot.name ? plot.name : "Unnamed Plot"
-  	var popUpMessage = "<b>" + name + "</b><br>" + convertedArea + ' ' + units.closest('label').text();
-
-  	plot.bindPopup(popUpMessage);
-}

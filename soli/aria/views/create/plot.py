@@ -15,6 +15,14 @@ def createPlot(request):
     return render(request, "aria/create/plot.html", context)
 
 
+def addPlotDetails(request):
+    plotDetailsList = PlotDetailsList()
+
+    context = {"plots": plotDetailsList.getAllPlotDetails().jsonify()}
+
+    return render(request, "aria/create/plotdetails.html", context)
+
+
 def createPlotAjax(request):
     response = {"errors": []}
     if request.is_ajax() and request.method == "POST":
