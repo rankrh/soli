@@ -8,10 +8,9 @@ class Grow(models.Model):
         db_table = "grow"
         app_label = "aria"
 
-    gr_num = models.AutoField(primary_key=True)
-    gr_cr_num = models.ForeignKey(Crop, db_column="gr_cr_num", on_delete=models.CASCADE)
-    gr_pl_num = models.ForeignKey(Plant, db_column="gr_pl_num", on_delete=models.CASCADE)
-    gr_sun = models.CharField(
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
+    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    sun = models.CharField(
         null=True,
         choices=SUN,
         max_length=1,
@@ -19,7 +18,7 @@ class Grow(models.Model):
         default=None
     )
 
-    gr_soil = models.CharField(
+    soil = models.CharField(
         null=True,
         max_length=30
     )

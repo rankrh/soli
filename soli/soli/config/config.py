@@ -4,6 +4,7 @@ import os
 DIRNAME = os.path.dirname(__file__)
 FILENAME = "/soliConfig.ini"
 
+
 def config(filename=DIRNAME + FILENAME, section='soliConfig'):
     parser = ConfigParser()
     parser.read(filename)

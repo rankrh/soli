@@ -7,14 +7,14 @@ growFormSet = inlineformset_factory(
         Crop,
         Grow,
         fields=[
-            "gr_sun",
-            "gr_soil"
+            "sun",
+            "soil"
         ],
         extra=1,
         can_delete=False,
         widgets={
-            "gr_sun": createRadioInput(choices=SUN),
-            "gr_soil": createTextInput(placeholder="Soil type")
+            "sun": createRadioInput(choices=SUN),
+            "soil": createTextInput(placeholder="Soil type")
         })
 
 

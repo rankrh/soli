@@ -1,6 +1,7 @@
 .icon {
-    width: 33px;
-    height: 33px;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
 }
 
 .icon-rain {
@@ -13,5 +14,9 @@
 
 .icon-sun {
     fill: #fcf25d;
+}
+
+.scrollable {
+	overflow-y: scroll;
 }
 

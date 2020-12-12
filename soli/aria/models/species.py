@@ -4,24 +4,24 @@ from .genus import Genus
 
 class Species(models.Model):
 
-    sp_num = models.AutoField(primary_key=True)
-    sp_name = models.CharField(max_length=30)
-    sp_common_name = models.CharField(max_length=30, null=True)
-    sp_ge_num = models.ForeignKey(Genus, on_delete=models.CASCADE, db_column="sp_ge_num", )
+    name = models.CharField(max_length=30)
+    common_name = models.CharField(max_length=30, null=True)
+    genus = models.ForeignKey(Genus, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "species"
         app_label = "aria"
         unique_together = (
-            "sp_num", "sp_ge_num"
+            "id", "genus"
         )
 
     def __str__(self):
-        genus = str(self.sp_ge_num.ge_name)
-        latinName = f"{genus.title()} {self.sp_name}"
+        genus = str(self.genus.name)
+        latinName = f"{genus.title()} {self.name}"
 
-        if self.sp_common_name:
-            fullName = f"{self.sp_common_name} ({latinName})"
+        if self.common_name:
+            fullName = f"{self.common_name} ({latinName})"
         else:
             fullName = latinName
+
         return fullName

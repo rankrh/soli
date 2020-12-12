@@ -7,16 +7,16 @@ harvestFormset = inlineformset_factory(
     Crop,
     Harvest,
     fields=[
-        "har_begin",
-        "har_end",
-        "har_variety"
+        "begin",
+        "end",
+        "variety"
     ],
     extra=1,
     can_delete=False,
     widgets={
-        "har_begin": createNumberInput("Start Date", 1),
-        "har_end": createNumberInput("End Date", 1),
-        "har_variety": createRadioInput(choices=CROP_TYPE)
+        "begin": createNumberInput("Start Date", 1),
+        "end": createNumberInput("End Date", 1),
+        "variety": createRadioInput(choices=CROP_TYPE)
     }
 )
 

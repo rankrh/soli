@@ -1,12 +1,12 @@
 function convertArea(area, returnUnit) {
 
 	var convertedArea = 0;
-	if (returnUnit === "meters") {
+	if (!returnUnit || returnUnit === "acres") {
+		convertedArea = meters2ToAcres(area);
+	} else if (returnUnit === "meters") {
 		convertedArea = area;
 	} else if (returnUnit === "miles") {
 		convertedArea = meters2ToMiles2(area);
-	} else if (returnUnit === "acres") {
-		convertedArea = meters2ToAcres(area);
 	} else if (returnUnit === "hectares") {
 		convertedArea = meters2ToHectares(area);
 	} else {

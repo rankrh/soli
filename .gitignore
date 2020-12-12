@@ -127,8 +127,6 @@ soliConfig.ini
 .vs/slnx.sqlite
 
 # django migrations
-
-manage.py
 *.sqlite
 *.suo
 

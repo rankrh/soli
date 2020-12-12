@@ -6,8 +6,8 @@ from django import forms
 class CreateGenusForm(forms.ModelForm):
     class Meta:
         model = Genus
-        fields = ["ge_name"]
-        widgets = {"ge_name": createTextInput("Genus Name")}
+        fields = ["name"]
+        widgets = {"name": createTextInput("Genus Name")}
 
     def saveGenus(self, request):
         genus = self.save(commit=False)
@@ -15,5 +15,5 @@ class CreateGenusForm(forms.ModelForm):
         return genus
 
     def isUnique(self):
-        genus = self.cleaned_data['ge_name']
+        genus = self.cleaned_data['name']
         return not Genus.objects.filter(genus=genus).exists()

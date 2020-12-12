@@ -6,8 +6,7 @@ class Genus(models.Model):
         db_table = "genus"
         app_label = "aria"
 
-    ge_num = models.AutoField(primary_key=True)
-    ge_name = models.CharField(max_length=30, unique=True)
+    name = models.CharField(max_length=30, unique=True)
 
     def __str__(self):
         return f"{self.ge_name.title()}"
