@@ -1,4 +1,4 @@
-from aria.models.validation.harvest import CROP_TYPE
+from aria.models.validation.harvestValidation import CROP_TYPE
 from django.core.validators import MinValueValidator
 from django.db import models
 from aria.models import Crop, Plant, Grow

@@ -1,5 +1,5 @@
 from aria.models import Crop
-from aria.models.validation.plant import *
+from aria.models.validation.plantValidation import *
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 

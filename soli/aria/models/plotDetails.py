@@ -83,7 +83,7 @@ class PlotDetails:
                 "name": self.plot.name,
                 "description": self.plot.description,
                 "id": self.plot.id,
-                "parent": self.plot.parent,
+                "parent": self.plot.parent.id if self.plot.parent else None,
                 "area": self.plot.shape.area,
                 "points": [[point.lat, point.long] for point in self.points]
             }

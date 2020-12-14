@@ -1,4 +1,4 @@
-from aria.models.validation.grow import SUN
+from aria.models.validation.growValidation import SUN
 from django.db import models
 from aria.models import Crop, Plant
 

@@ -16,4 +16,34 @@
         <div class="map" id="map"></div>
         {{ plots | json_script:"plots-data" }}
     </section>
+    <div class="modal" id="edit-plot-modal">
+        <input type="hidden" id="edit-plot-id">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" id="edit-plot-header">
+                    <h5 class="modal-title">Plot Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Plot Name</span>
+                        </div>
+                        <input id="edit-plot-name" type="text" class="form-control">
+                    </div>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Plot Description</span>
+                        </div>
+                        <textarea id="edit-plot-description" class="form-control" aria-label="Plot description"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveSubplotDetails()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

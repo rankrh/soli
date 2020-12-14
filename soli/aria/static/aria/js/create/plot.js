@@ -20,7 +20,7 @@ L.UnitsControl = L.Control.extend({
 var unitsControl = new L.UnitsControl().addTo(map);
 
 var drawControl = new L.Control.Draw({
-  	edit: { featureGroup: featureGroup },
+  	edit: { featureGroup: basePlots },
   	draw: {
     	polygon: true,
     	polyline: false,
@@ -40,7 +40,6 @@ map.on('draw:created', function (e) {
 
 map.on('draw:edited', function (e) {
 	e.layers.eachLayer(function(layer) {
-		updatePolygonArea(layer);
 		persistPlot(layer);
 	});
 	updateAllPolygonAreas();
@@ -68,7 +67,7 @@ $("input[type=radio][name=units]").change(
 function initializePlots() {
 
 	addSavedPlots();
-	zoomToBounds(featureGroup);
+	zoomToBounds(basePlots);
 	updateAllPolygonAreas();
 }
 
@@ -80,9 +79,9 @@ function expandPlotDetails(plotId) {
 
 function togglePlotFocus(plotId) {
 
-	var boundedLayer = featureGroup;
+	var boundedLayer = basePlots;
 	if (!$("#collapse-plot-" + plotId).hasClass("show")) {
-		boundedLayer = featureGroup.getLayer(plotId);
+		boundedLayer = basePlots.getLayer(plotId);
 		boundedLayer.openPopup();
 	}
 
@@ -106,7 +105,7 @@ function editPlotDetails(plot) {
 
 function savePlotDetails() {
 
-	var plot = featureGroup.getLayer(Number($("#edit-plot-id").val()));
+	var plot = basePlots.getLayer(Number($("#edit-plot-id").val()));
 
 	plot.name = $("#edit-plot-name").val();
 	plot.description = $("#edit-plot-description").val();
@@ -135,7 +134,7 @@ function persistPlot(plot) {
 		success: function(data) {
 			$("#edit-plot-id").val(data.plot);
 			plot._leaflet_id = data.plot;
-			featureGroup.addLayer(plot);
+			basePlots.addLayer(plot);
 
 			if ($("#plot-details-" + plot._leaflet_id).length == 0) {
 				createPlotAccordion(plot);
@@ -143,29 +142,6 @@ function persistPlot(plot) {
 		}
 	});
 }
-
-function deletePlot(plot) {
-	deletePlots([plot]);
-}
-
-function deletePlots(plots) {
-
-	$.ajax({
-		type: "POST",
-		url: "ajax/delete-plots",
-		dataType: "json",
-		data: {
-			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-			plots: JSON.stringify(plots)
-		},
-		success: function(data) {
-			for (var i = 0; i < plots.length; i++) {
-				deletePlotAccordion(plots[i]);
-			}
-		}
-	});
-}
-
 
 function createPlotAccordion(plot) {
 
@@ -179,7 +155,7 @@ function createPlotAccordion(plot) {
 	newAccordion += '	</div></h3>'
 	newAccordion += '	<div id="collapse-plot-' + num + '" class="collapse" aria-labelledby="heading-plot-' + num + '" data-parent="#plots-accordion">'
 	newAccordion += '		<div class="card-body">'
-	newAccordion += '			<button class="btn btn-sm btn-light justify-content-center align-self-center" onclick="editPlotDetails(featureGroup.getLayer(' + num + '))">'
+	newAccordion += '			<button class="btn btn-sm btn-light justify-content-center align-self-center" onclick="editPlotDetails(basePlots.getLayer(' + num + '))">'
 	newAccordion += '				<svg viewBox="0 0 8 8" class="icon">'
 	newAccordion += '					<use xlink:href="#pencil"></use>'
 	newAccordion += '				</svg>'
@@ -203,10 +179,6 @@ function updatePlotAccordion(plot) {
 function deletePlotAccordion(plotId) {
 
 	$("#plot-details-" + plotId).remove();
-}
-
-function verifyDelete(plot) {
-
 }
 
 function clearEditPlotModal() {

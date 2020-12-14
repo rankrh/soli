@@ -7,7 +7,8 @@ var map = L.mapbox.map('map')
     .addLayer(L.mapbox.styleLayer('mapbox://styles/rankrh/ckhcwof2w17fa19o2uo8pmzdr'))
     .addControl(L.mapbox.geocoderControl('mapbox.places'));
 
-var featureGroup = L.featureGroup().addTo(map);
+var basePlots = L.featureGroup().addTo(map);
+var subdivisions = L.featureGroup().addTo(map);
 
 function addSavedPlots() {
 
@@ -18,20 +19,37 @@ function addSavedPlots() {
 
 		plotLayer._leaflet_id = plot.id;
 		plotLayer.name = plot.name;
+		plotLayer.parent = plot.parent;
 		plotLayer.addTo(map);
 
-	  	featureGroup.addLayer(plotLayer);
+		if (plotLayer.parent) {
+			plotLayer.setStyle({fillColor: '#11a033', fillOpacity:0.5, color:"#074215"});
+			subdivisions.addLayer(plotLayer);
+		} else {
+	  		basePlots.addLayer(plotLayer);
+		}
 	}
 
 	updateAllPolygonAreas();
 }
 
-
 function updateAllPolygonAreas() {
 
 	var units = $("input[type=radio][name=units]:checked");
 
- 	featureGroup.eachLayer(function(layer) {
+	updateBasePlotAreas(units);
+	updateSubPlotAreas(units);
+}
+
+function updateBasePlotAreas(units) {
+ 	basePlots.eachLayer(function(layer) {
+ 		updatePolygonArea(layer);
+ 		updatePolygonPopup(layer, units);
+ 	});
+}
+
+function updateSubPlotAreas(units) {
+ 	subdivisions.eachLayer(function(layer) {
  		updatePolygonArea(layer);
  		updatePolygonPopup(layer, units);
  	});
@@ -61,20 +79,37 @@ function zoomToBounds(boundedLayer) {
 	}
 }
 
-function isMarkerInPlot(marker, plot) {
+function lineInsidePlot(A, B, plot) {
 
-    var points = plot.getLatLngs();
-    var x = marker.getLatLng().lat, y = marker.getLatLng().lng;
+	var inPlot = true;
+	if (A && B && plot) {
+		var line = turf.lineString([[A.getLatLng().lat, A.getLatLng().lng], [B.getLatLng().lat, B.getLatLng().lng]]);
+		var plot = turf.polygon(currentPlot.toGeoJSON().geometry.coordinates);
+		inPlot = turf.lineIntersect(line, plot) == 0;
+	}
 
-    var inside = false;
-    for (var i = 0, j = points.length - 1; i < points.length; j = i++) {
-        var xi = points[i].lat, yi = points[i].lng;
-        var xj = points[j].lat, yj = points[j].lng;
+	return inPlot;
+}
 
-        var intersect = ((yi > y) != (yj > y))
-            && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-        if (intersect) inside = !inside;
-    }
 
-    return inside;
-};
+function deletePlot(plot) {
+	deletePlots([plot]);
+}
+
+function deletePlots(plots) {
+
+	$.ajax({
+		type: "POST",
+		url: "ajax/delete-plots",
+		dataType: "json",
+		data: {
+			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+			plots: JSON.stringify(plots)
+		},
+		success: function(data) {
+			for (var i = 0; i < plots.length; i++) {
+				deletePlotAccordion(plots[i]);
+			}
+		}
+	});
+}
