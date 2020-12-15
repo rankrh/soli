@@ -1,11 +1,12 @@
 from aria.forms.formSets.grow import GrowFormSet
 from aria.forms.formSets.harvest import HarvestFormSet
 from aria.forms.formSets.plant import PlantFormSet
-from aria.models import Species, Crop
 from aria.models.validation.cropValidation import ORGANIC_CHOICES, HYBRID_CHOICES, TREATED_CHOICES
 from django import forms
 
 from .templates.templates import createTextInput, createSelectInput, createTextArea, createRadioInput, createNumberInput
+from ..models.crop import Crop
+from ..models.species import Species
 
 
 class CreateCropForm(forms.ModelForm):

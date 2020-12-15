@@ -1,5 +1,6 @@
 from aria.forms.templates.templates import createNumberInput, createRadioInput
-from aria.models import Crop, Harvest
+from aria.models.crop import Crop
+from aria.models.harvest import Harvest
 from aria.models.validation.harvestValidation import CROP_TYPE
 from django.forms import inlineformset_factory
 

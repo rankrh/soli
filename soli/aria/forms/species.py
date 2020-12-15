@@ -1,8 +1,10 @@
-from aria.models import Genus, Species, Subspecies
 from django import forms
 from django.forms import inlineformset_factory
 
 from .templates.templates import createTextInput, createSelectInput
+from ..models.genus import Genus
+from ..models.species import Species
+from ..models.subspecies import Subspecies
 
 
 class CreateSpeciesForm(forms.ModelForm):

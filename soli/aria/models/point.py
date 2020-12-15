@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from . import Shape
+from aria.models.shape import Shape
 
 
 class Point(models.Model):

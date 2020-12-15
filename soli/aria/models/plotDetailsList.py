@@ -1,5 +1,6 @@
-from aria.models import Point, Plot
+from aria.models.plot import Plot
 from aria.models.plotDetails import PlotDetails
+from aria.models.point import Point
 
 
 class PlotDetailsList:

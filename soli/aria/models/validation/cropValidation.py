@@ -1,6 +1,4 @@
 UNKNOWN = "unknown"
-
-
 ORGANIC = "organic"
 NOT_ORGANIC = "commercial"
 

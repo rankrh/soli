@@ -3,7 +3,8 @@ import json
 from django.shortcuts import get_object_or_404
 
 from aria.forms.plot import PlotForm
-from aria.models import Plot, Point
+from aria.models.plot import Plot
+from aria.models.point import Point
 
 
 class PlotDetails:

@@ -1,6 +1,7 @@
 from aria.forms.templates.templates import createTextInput
-from aria.models import Genus
 from django import forms
+
+from aria.models.genus import Genus
 
 
 class CreateGenusForm(forms.ModelForm):

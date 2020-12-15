@@ -1,5 +1,6 @@
 from aria.forms.templates.templates import createRadioInput, createTextInput
-from aria.models import Crop, Grow
+from aria.models.crop import Crop
+from aria.models.grow import Grow
 from aria.models.validation.growValidation import SUN
 from django.forms import inlineformset_factory, forms
 

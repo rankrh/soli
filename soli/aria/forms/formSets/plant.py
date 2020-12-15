@@ -1,11 +1,13 @@
 from aria.forms.templates.templates import createNumberInput, createSelectInput
-from aria.models import Crop, Plant
 from django.forms import inlineformset_factory
 from django import forms
 
+from aria.models.crop import Crop
+from aria.models.planting import Planting
+
 plantFormSet = inlineformset_factory(
     Crop,
-    Plant,
+    Planting,
     fields=[
         "pattern",
         "spacing",

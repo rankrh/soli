@@ -1,6 +1,7 @@
+from aria.models.crop import Crop
+from aria.models.planting import Planting
 from aria.models.validation.growValidation import SUN
 from django.db import models
-from aria.models import Crop, Plant
 
 
 class Grow(models.Model):
@@ -9,7 +10,7 @@ class Grow(models.Model):
         app_label = "aria"
 
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
-    plant = models.ForeignKey(Plant, on_delete=models.CASCADE)
+    plant = models.ForeignKey(Planting, on_delete=models.CASCADE)
     sun = models.CharField(
         null=True,
         choices=SUN,

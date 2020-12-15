@@ -1,7 +1,4 @@
 from aria.forms.genus import CreateGenusForm
-from aria.forms.templates.templates import createTextInput
-from aria.models import Species, Subspecies
-from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect, JsonResponse
 from aria.forms.species import CreateSpeciesForm, subspeciesFormSet
 from django.shortcuts import render

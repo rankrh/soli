@@ -1,6 +1,6 @@
 from django import forms
 
-from aria.models import Plot
+from aria.models.plot import Plot
 
 
 class PlotForm(forms.ModelForm):

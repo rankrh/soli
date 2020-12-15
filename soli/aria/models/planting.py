@@ -1,10 +1,11 @@
-from aria.models import Crop
-from aria.models.validation.plantValidation import *
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+from aria.models.crop import Crop
+from aria.models.validation.plantValidation import GROW_STYLE, FROST, LOCATION
 
-class Plant(models.Model):
+
+class Planting(models.Model):
     class Meta:
         db_table = "plant"
         app_label = "aria"

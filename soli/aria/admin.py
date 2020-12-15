@@ -1,13 +1,32 @@
 from django.contrib import admin
-from .models import *
+from .models.crop import Crop
+from .models.genus import Genus
+from .models.grow import Grow
+from .models.harvest import Harvest
+from .models.livestock import Livestock
+from .models.planting import Planting
+from .models.plot import Plot
+from .models.plotTypes import *
+from .models.point import Point
+from .models.shape import Shape
+from .models.species import Species
+from .models.subspecies import Subspecies
 
 admin.site.register(Shape)
+admin.site.register(Plot)
 admin.site.register(Crop)
 admin.site.register(Genus)
+admin.site.register(Planting)
 admin.site.register(Grow)
 admin.site.register(Harvest)
-admin.site.register(Plant)
-admin.site.register(Plot)
-admin.site.register(Point)
 admin.site.register(Species)
 admin.site.register(Subspecies)
+admin.site.register(Point)
+admin.site.register(Garden)
+admin.site.register(Livestock)
+admin.site.register(Pasture)
+admin.site.register(Orchard)
+admin.site.register(Field)
+admin.site.register(Silvopasture)
+admin.site.register(Forest)
+
