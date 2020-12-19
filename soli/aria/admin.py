@@ -6,11 +6,16 @@ from .models.harvest import Harvest
 from .models.livestock import Livestock
 from .models.planting import Planting
 from .models.plot import Plot
-from .models.plotTypes import *
 from .models.point import Point
 from .models.shape import Shape
 from .models.species import Species
 from .models.subspecies import Subspecies
+from .models.orchard import Orchard
+from .models.field import Field
+from .models.forest import Forest
+from .models.pasture import Pasture
+from .models.silvopasture import Silvopasture
+from .models.garden import Garden
 
 admin.site.register(Shape)
 admin.site.register(Plot)
@@ -29,4 +34,3 @@ admin.site.register(Orchard)
 admin.site.register(Field)
 admin.site.register(Silvopasture)
 admin.site.register(Forest)
-

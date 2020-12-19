@@ -10,10 +10,12 @@ from aria.models.point import Point
 class PlotDetails:
     plot = None
     plotForm = None
+    type = None
     coordinates = []
     points = []
+    children = []
 
-    def __init__(self, request=None, plot=None, points=None):
+    def __init__(self, request=None, plot=None, points=None, children=None):
 
         self.resetDetails()
         if request is not None:
@@ -23,10 +25,15 @@ class PlotDetails:
 
             self.plotForm = PlotForm(request.POST, instance=self.plot)
             self.coordinates = json.loads(request.POST["points"]) if "points" in request.POST else []
-
-        if plot is not None:
+            self.type = request.POST["type"] if "type" in request.POST else None
+        elif plot is not None:
             self.plot = plot
-            self.points = points
+            self.type = plot.type
+
+        if children:
+            self.children = children
+
+        self.points = points if points is not None else []
 
     def resetDetails(self):
 
@@ -34,6 +41,7 @@ class PlotDetails:
         self.plotForm = None
         self.coordinates = []
         self.points = []
+        self.children = []
 
     def isValidPlot(self):
 
@@ -60,6 +68,8 @@ class PlotDetails:
     def setPoints(self):
 
         if len(self.coordinates) > 0:
+            if self.points is None:
+                self.points = []
             setNum = 0
 
             for coordinateSet in self.coordinates:
@@ -86,6 +96,8 @@ class PlotDetails:
                 "id": self.plot.id,
                 "parent": self.plot.parent.id if self.plot.parent else None,
                 "area": self.plot.shape.area,
+                "type": self.plot.type,
+                "children": [child.jsonify() for child in self.children] if self.children else None,
                 "points": [[point.lat, point.long] for point in self.points]
             }
 

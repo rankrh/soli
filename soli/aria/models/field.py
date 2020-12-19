@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models import CASCADE
-
-from aria.models.plotTypes.plotType import PlotType
+from aria.models.plot import Plot
 
 
 class Field(models.Model):
@@ -9,5 +8,5 @@ class Field(models.Model):
         db_table = "field"
         app_label = "aria"
 
-    plot = models.ForeignKey(PlotType, on_delete=CASCADE)
+    plot = models.ForeignKey(Plot, on_delete=CASCADE)
 

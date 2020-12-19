@@ -66,7 +66,7 @@ $("input[type=radio][name=units]").change(
 
 function initializePlots() {
 
-	addSavedPlots();
+	addSavedPlots(plotJSON);
 	zoomToBounds(basePlots);
 	updateAllPolygonAreas();
 }
@@ -101,20 +101,6 @@ function editPlotDetails(plot) {
 	}
 
 	$("#edit-plot-modal").modal("toggle");
-}
-
-function savePlotDetails() {
-
-	var plot = basePlots.getLayer(Number($("#edit-plot-id").val()));
-
-	plot.name = $("#edit-plot-name").val();
-	plot.description = $("#edit-plot-description").val();
-
-	persistPlot(plot);
-	updatePlotAccordion(plot);
-	updatePolygonArea(plot);
-	updatePolygonPopup(plot, $("input[type=radio][name=units]:checked"))
-	clearEditPlotModal();
 }
 
 function persistPlot(plot) {

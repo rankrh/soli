@@ -1,6 +1,6 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoicmFua3JoIiwiYSI6ImNraDFnbjlrcTAxZjMydG4xN2dyNmtoYWUifQ.tlJBm2GyxVZapHdK0_oDyQ';
 
-const plots = JSON.parse($("#plots-data").text());
+const plotJSON = JSON.parse($("#plots-data").text());
 
 var map = L.mapbox.map('map')
     .setView([40, -100], 4)
@@ -10,27 +10,53 @@ var map = L.mapbox.map('map')
 var basePlots = L.featureGroup().addTo(map);
 var subdivisions = L.featureGroup().addTo(map);
 
-function addSavedPlots() {
+function setPlotInformation(plotData) {
 
-	var units = $("input[type=radio][name=units]:checked");
+	var plot = L.polygon([plotData.points]);
+	plot._leaflet_id = plotData.id;
+	plot.name = plotData.name;
+	plot.parent = plotData.parent;
+	plot.type = plotData.type ? plotData.type : "unknown";
+
+	return plot;
+}
+
+function addSavedChildPlots(childPlots) {
+
+	for (j=0; j<childPlots.length; j++) {
+		var childPlotData = childPlots[j];
+		var childPlot = setPlotInformation(childPlotData);
+
+		childPlot.setStyle({
+			fillColor: plotColors[childPlot.type].fill,
+			fillOpacity:plotVisibility.child,
+			color:plotColors[childPlot.type].outline
+		});
+
+		subdivisions.addLayer(childPlot);
+	}
+}
+
+function addSavedPlots(plots) {
+
 	for (i=0; i < plots.length; i++) {
-		var plot = plots[i];
-		var plotLayer = L.polygon([plot.points]);
+		var plotData = plots[i];
+		var plot = setPlotInformation(plotData);
 
-		plotLayer._leaflet_id = plot.id;
-		plotLayer.name = plot.name;
-		plotLayer.parent = plot.parent;
-		plotLayer.addTo(map);
-
-		if (plotLayer.parent) {
-			plotLayer.setStyle({fillColor: '#11a033', fillOpacity:0.5, color:"#074215"});
-			subdivisions.addLayer(plotLayer);
-		} else {
-	  		basePlots.addLayer(plotLayer);
+		plot.setStyle({fillOpacity: plotVisibility.parent});
+		basePlots.addLayer(plot);
+		if (plotData.children) {
+			addSavedChildPlots(plotData.children);
 		}
+
+		plot.addTo(map);
 	}
 
-	updateAllPolygonAreas();
+	subdivisions.eachLayer(function(layer) {
+		layer.on("click", function(e) {
+			zoomToSubPlot(e.target._leaflet_id);
+		});
+	});
 }
 
 function updateAllPolygonAreas() {
@@ -67,7 +93,13 @@ function updatePolygonPopup(plot, units) {
 	var unitName = units.closest('label').text();
 	unitName = unitName ? unitName : "acres";
 
-  	var popUpMessage = "<b>" + name + "</b><br>" + convertedArea + ' ' + unitName;
+  	var popUpMessage = "<div id=\"popup-" + plot._leaflet_id + "\">";
+  	popUpMessage += "<b>" + name + "</b><br>";
+  	if (plot.type && plot.type != "unknown") {
+  		popUpMessage += "(" + plotColors[plot.type].name + ")<br>"
+  	}
+  	popUpMessage += convertedArea + ' ' + unitName;
+  	popUpMessage += "</div>";
 
   	plot.bindPopup(popUpMessage);
 }
@@ -112,4 +144,35 @@ function deletePlots(plots) {
 			}
 		}
 	});
+}
+
+function saveSubplotDetails() {
+
+	var plot = subdivisions.getLayer(Number($("#edit-plot-id").val()));
+
+	plot.name = $("#edit-plot-name").val();
+	plot.description = $("#edit-plot-description").val();
+	plot.type = $("#edit-plot-type").val();
+
+	persistSubplot(plot);
+	updateUIAfterSave(plot);
+}
+
+
+function savePlotDetails() {
+
+	var plot = basePlots.getLayer(Number($("#edit-plot-id").val()));
+	plot.name = $("#edit-plot-name").val();
+	plot.description = $("#edit-plot-description").val();
+
+	persistPlot(plot);
+	updateUIAfterSave(plot);
+}
+
+function updateUIAfterSave(plot) {
+
+	updatePlotAccordion(plot);
+	updatePolygonArea(plot);
+	updatePolygonPopup(plot, $("input[type=radio][name=units]:checked"))
+	clearEditPlotModal();
 }

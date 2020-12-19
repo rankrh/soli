@@ -6,9 +6,9 @@ from aria.models.plot import Plot
 class PlotForm(forms.ModelForm):
     class Meta:
         model = Plot
-        fields = ["name", "description", "parent"]
+        fields = ["name", "description", "parent", "type"]
 
-    def savePlot(self):
+    def savePlot(self, plotType=None):
         plot = self.save(commit=False)
         plot.save()
 

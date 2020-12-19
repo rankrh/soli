@@ -11,7 +11,7 @@ from aria.models.shape import Shape
 def createPlot(request):
     plotDetailsList = PlotDetailsList()
 
-    context = {"plots": plotDetailsList.getAllPlotDetails().jsonify()}
+    context = {"plots": plotDetailsList.getParentPlots().jsonify()}
     return render(request, "aria/create/plot.html", context)
 
 

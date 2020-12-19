@@ -35,7 +35,7 @@ var drawControl = new L.Control.Draw({
 map.on(L.Draw.Event.CREATED, function(e) {
 
 	var plot = e.layer;
-	plot.setStyle({fillColor: '#11a033', fillOpacity:0.5, color:"#074215"})
+	plot.setStyle({fillColor: plotColors.unknown.fill, fillOpacity:0.5, color:plotColors.unknown.outline})
 	updatePolygonArea(plot);
 	persistSubplot(plot);
 	editPlotDetails(plot);
@@ -91,7 +91,7 @@ function persistSubplot(plot) {
 
 function initializePlots() {
 
-	addSavedPlots();
+	addSavedPlots(plotJSON);
 	updateAllPolygonAreas();
 	var firstPlot = basePlots.getLayers()[0];
 
@@ -118,22 +118,24 @@ function editPlotDetails(plot) {
 	$("#edit-plot-modal").modal("toggle");
 }
 
-function saveSubplotDetails() {
-
-	var plot = basePlots.getLayer(Number($("#edit-plot-id").val()));
-
-	plot.name = $("#edit-plot-name").val();
-	plot.description = $("#edit-plot-description").val();
-
-	persistSubplot(plot);
-	updatePlotAccordion(plot);
-	updatePolygonArea(plot);
-	updatePolygonPopup(plot, $("input[type=radio][name=units]:checked"))
-	clearEditPlotModal();
-}
-
 function updatePlotAccordion(plot) {
 
 	$("#plot-" + plot._leaflet_id + "-name").text(plot.name);
 	$("#plot-" + plot._leaflet_id + "-description").text(plot.description);
+}
+
+function zoomToSubPlot(plotId) {
+
+	var plotBtn = $("#subplot-" + plotId);
+	if (!plotBtn.hasClass("active")) {
+		var plot = subdivisions.getLayer(plotId);
+		zoomToBounds(plot);
+		plot.openPopup();
+		unselectAllSubplots();
+		plotBtn.addClass("active");
+	}
+}
+
+function unselectAllSubplots() {
+	$("button[id^='subplot-']").removeClass("active");
 }
