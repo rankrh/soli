@@ -17,7 +17,7 @@ class CreateCropForm(forms.ModelForm):
     class Meta:
         model = Crop
         fields = [
-            "variety",
+            "name",
             "description",
             "company",
             "organic",
@@ -26,7 +26,7 @@ class CreateCropForm(forms.ModelForm):
         ]
 
         widgets = {
-            "variety": createTextInput("Variety"),
+            "name": createTextInput("Name"),
             "description": createTextArea("Description"),
             "company": createTextInput("Company"),
             "organic": createRadioInput(choices=ORGANIC_CHOICES),

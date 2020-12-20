@@ -13,13 +13,14 @@ class Grow(models.Model):
     plant = models.ForeignKey(Planting, on_delete=models.CASCADE)
     sun = models.CharField(
         null=True,
+        blank=True,
         choices=SUN,
         max_length=1,
-        blank=False,
         default=None
     )
 
     soil = models.CharField(
         null=True,
+        blank=True,
         max_length=30
     )

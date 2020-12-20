@@ -13,7 +13,7 @@
                 <form method="POST">
                     <div class="input-group">
                         <div class="input-group mb-3">
-                            {{ speciesForm.ge_num }}
+                            {{ speciesForm.genus }}
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#createGenus">
                                     Add New<New></New>
@@ -21,9 +21,9 @@
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            {{ speciesForm.sp_name }}
-                            {{ speciesForm.sp_common_name }}
-                            {{ subspecies.sub_name }}
+                            {{ speciesForm.name }}
+                            {{ speciesForm.common_name }}
+                            {{ subspecies.name }}
                         </div>
                         <button type="submit" class="ml-3 btn btn-primary">Submit</button>
                     </div>
@@ -43,7 +43,7 @@
                     <div class="alert alert-danger" id="addGenusModal-errors" role="alert" style="display: none;">
                     </div>
                     <form method="POST" id="addGenusForm">
-                        {{ genusForm.ge_name }}
+                        {{ genusForm.name }}
                     </form>
                 </div>
                 <div class="modal-footer">

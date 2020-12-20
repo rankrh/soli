@@ -26,7 +26,7 @@ class CreateSpeciesForm(forms.ModelForm):
 
     def saveSpecies(self, request):
         species = self.save(commit=False)
-        species.sp_ge_num = Genus(ge_num=request.POST["genus"])
+        species.genus = Genus(id=request.POST["genus"])
         species.save()
 
 

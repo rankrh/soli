@@ -8,7 +8,7 @@ class CreateGenusForm(forms.ModelForm):
     class Meta:
         model = Genus
         fields = ["name"]
-        widgets = {"name": createTextInput("Genus Name")}
+        widgets = {"name": createTextInput("Genus Name", "genus_name")}
 
     def saveGenus(self, request):
         genus = self.save(commit=False)

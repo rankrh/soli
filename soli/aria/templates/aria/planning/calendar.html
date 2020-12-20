@@ -1,0 +1,14 @@
+{% extends "aria/base.html" %}
+{% load static %}
+
+{% block content %}
+    {% for event in events %}
+        {{ event }}
+    {% endfor %}
+    {% for harvest in harvests %}
+        {{ harvest.crop }}
+        {{ harvest.plant.date }}{{ harvest.plant.frost }}
+        {{ harvest.plant.transplant.date }}{{ harvest.plant.transplant.date }}
+        {{ harvest.begin }}-{{ harvest.end }} weeks after planting.
+    {% endfor %}
+{% endblock %}

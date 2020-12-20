@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models import CASCADE
 
 from aria.models.validation.plotTypes import TYPES, FOREST
+from .climate import Climate
 from .shape import POLYGON, Shape
 
 
@@ -23,6 +24,7 @@ class Plot(models.Model):
         null=True,
         default=None
     )
+    zone = models.ForeignKey(Climate, null=True, blank=True, on_delete=CASCADE)
 
     def save(self):
 

@@ -50,11 +50,13 @@ class Planting(models.Model):
     transplant = models.ForeignKey(
         "self",
         null=True,
+        blank=True,
         db_column="pl_transplant",
         on_delete=models.CASCADE)
 
     temperature = models.SmallIntegerField(
         null=True,
+        blank=True,
         validators=[
             MinValueValidator(-50),
             MaxValueValidator(50)
@@ -63,6 +65,7 @@ class Planting(models.Model):
 
     germination = models.SmallIntegerField(
         null=True,
+        blank=True,
         validators=[
             MinValueValidator(1),
             MaxValueValidator(365)
@@ -71,6 +74,7 @@ class Planting(models.Model):
 
     depth = models.SmallIntegerField(
         null=True,
+        blank=True,
         validators=[
             MinValueValidator(0),
             MaxValueValidator(1000)

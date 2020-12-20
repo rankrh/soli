@@ -9,4 +9,4 @@ class Genus(models.Model):
     name = models.CharField(max_length=30, unique=True)
 
     def __str__(self):
-        return f"{self.ge_name.title()}"
+        return f"{self.name.title()}"

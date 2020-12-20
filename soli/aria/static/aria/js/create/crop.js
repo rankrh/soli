@@ -22,18 +22,12 @@ function toggleSuccession() {
 
 function previousPlantingScheme() {
 
-	var currentPage = getCurrentPage();
-	var previousPage = currentPage - 1;
-
-	goToPage(previousPage);
+	goToPage(getCurrentPage() - 1);
 }
 
 function nextPlantingScheme() {
 
-	var currentPage = getCurrentPage();
-	var nextPage = currentPage + 1;
-
-	goToPage(nextPage);
+	goToPage(getCurrentPage() + 1);
 }
 
 function getCurrentPage() {
@@ -73,17 +67,17 @@ function getPlantingSchemeJson() {
 
 	var plantingScheme = {
 		"schemeId": $("#planting-schemes-body").find("tr").length + 1,
-		"variety": $("input[name='har_variety']:checked"),
-		"location": $("input[name='pl_location']:checked"),
+		"variety": $("input[name='variety']:checked"),
+		"location": $("input[name='location']:checked"),
 		"transplantWeeks": $("#transplant"),
-		"sun": $("input[name='gr_sun']:checked"),
-		"plantDate": $("input[name='pl_date']"),
+		"sun": $("input[name='sun']:checked"),
+		"plantDate": $("input[name='date']"),
 		"isBefore": $("#beforeOrAfter").val() < 0,
-		"frost": $("select[name='pl_frost'] option:selected"),
+		"frost": $("select[name='frost'] option:selected"),
 		"succession": $("#succession").prop("checked"),
 		"successionPeriod": $("input[name=succession]"),
 		"successionTime": $("input[name=times]"),
-		"pattern": $("input[name=pl_pattern]:checked")
+		"pattern": $("input[name=pattern]:checked")
 	};
 
 	plantingScheme["plantDateFormatted"] = (plantingScheme.isBefore ? "-" : "+") + plantingScheme.plantDate.val();

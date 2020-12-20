@@ -28,8 +28,8 @@ def createGenus(request):
         createGenusForm = CreateGenusForm(request.POST)
         if createGenusForm.is_valid():
             genus = createGenusForm.saveGenus(request)
-            response["ge_num"] = genus.ge_num
-            response["ge_name"] = genus.ge_name
+            response["id"] = genus.id
+            response["name"] = genus.name
         else:
             response["errors"].append(createGenusForm.errors)
     return JsonResponse(response)

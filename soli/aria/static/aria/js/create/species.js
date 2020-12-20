@@ -9,7 +9,7 @@ function createGenus() {
 		dataType: 'json',
 		data: {
 			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-			ge_name: $("input[name='ge_name']").val()
+			name: $("#genus_name").val()
 		}
 	}, _defineProperty(_$$ajax, 'dataType', 'json'), _defineProperty(_$$ajax, 'success', function success(data) {
 		createGenusSuccess(data);

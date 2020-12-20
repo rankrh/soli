@@ -12,11 +12,14 @@ def createNumberInput(placeholder=None, minimum=None, maximum=None):
     return forms.NumberInput(attrs=attributes)
 
 
-def createTextInput(placeholder):
+def createTextInput(placeholder, id=None):
     attributes = {
         'class': 'form-control',
-        'placeholder': placeholder
+        'placeholder': placeholder,
     }
+
+    if id:
+        attributes["id"] = id
 
     return forms.TextInput(attrs=attributes)
 

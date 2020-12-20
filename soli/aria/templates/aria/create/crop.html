@@ -11,13 +11,13 @@
         <div class="card m-5">
             <div class="card-body">
                 <div class="container">
-                    <form method="POST">
+                    <form id="crop-form" method="POST">
                         <div class="row mb-3">
                             <div class="col">
-                                {{ cropForm.cr_variety }}
+                                {{ cropForm.name }}
                             </div>
                             <div class="col input-group">
-                                {{ cropForm.cr_sp_num }}
+                                {{ cropForm.species }}
                                 <div class="input-group-append">
                                     <a role="button" class="btn btn-secondary" href="{% url 'createSpecies' %}">Add New<New></New></a>
                                 </div>
@@ -25,12 +25,12 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-6 pull-right">
-                                {{ cropForm.cr_company }}
+                                {{ cropForm.company }}
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col">
-                                {{ cropForm.cr_description }}
+                                {{ cropForm.description }}
                             </div>
                         </div>
                         <div id="planting-schemes" style="display:none">
@@ -55,7 +55,7 @@
                                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addPlantingScheme">
                                     Add Planting Scheme<New></New>
                                 </button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button onclick="$('#crop-form').submit()" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                         <div class="modal" id="addPlantingScheme" tabindex="-1" role="dialog" aria-hidden="true">
@@ -70,7 +70,7 @@
                                                 <h4 class="modal-title">What type of crop is this?</h4>
                                             </div>
                                             <div id="variety" class="btn-group btn-group-toggle my-3 col" data-toggle="buttons">
-                                                {% for option in cropForm.harvest.form.har_variety %}
+                                                {% for option in cropForm.harvest.form.variety %}
                                                     <label class="btn btn-outline-info">
                                                         {{ option }}
                                                     </label>
@@ -82,7 +82,7 @@
                                                 <h4 class="modal-title">Where should this crop be planted?</h4>
                                             </div>
                                             <div id="location" class="btn-group btn-group-toggle my-3 col" data-toggle="buttons">
-                                                {% for option in cropForm.plant.form.pl_location %}
+                                                {% for option in cropForm.plant.form.location %}
                                                     <label class="btn btn-outline-info">
                                                         {{ option }}
                                                     </label>
@@ -101,7 +101,7 @@
                                                 <h4 class="modal-title">How much sun does this crop need?</h4>
                                             </div>
                                             <div id="sun" class="btn-group btn-group-toggle my-3 col" data-toggle="buttons">
-                                                {% for option in cropForm.grow.form.gr_sun %}
+                                                {% for option in cropForm.grow.form.sun %}
                                                     <label class="btn btn-outline-info">
                                                         {{ option }}
                                                     </label>
@@ -114,7 +114,7 @@
                                             </div>
                                             <div id="timing">
                                                 <div>
-                                                    {{ cropForm.plant.form.pl_date }}
+                                                    {{ cropForm.plant.form.date }}
                                                 </div>
                                                 <span>weeks</span>
                                                 <div>
@@ -124,7 +124,7 @@
                                                     </select>
                                                 </div>
                                                 <div>
-                                                    {{ cropForm.plant.form.pl_frost }}
+                                                    {{ cropForm.plant.form.frost }}
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="succession" onchange="toggleSuccession();">
@@ -146,7 +146,7 @@
                                                 <h4 class="modal-title">How should this crop be planted?</h4>
                                             </div>
                                             <div class="btn-group btn-group-toggle my-3 col" data-toggle="buttons" id="pattern">
-                                                {% for option in cropForm.plant.form.pl_pattern %}
+                                                {% for option in cropForm.plant.form.pattern %}
                                                     <label class="btn btn-outline-info" for="{{ option.id_for_label }}" name="pattern">
                                                         {{ option }}
                                                     </label>

@@ -1,10 +1,10 @@
 from django.urls import path
 from .views import *
 from .views.create.plot import addPlotDetails
+from .views.planning.calendar import createCalendar
 
 urlpatterns = [
 	path("", index, name="index"),
-
 
 	# Create
 	path("create/crop", createCrop, name="createCrop"),
@@ -19,4 +19,7 @@ urlpatterns = [
 
 	# Display
 	path("display/crops", displayCrops, name="displayCrops"),
+
+	#Planning
+	path("calendar", createCalendar, name="createCalendar"),
 ]
