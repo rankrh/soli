@@ -1,5 +1,8 @@
 from django.contrib import admin
+
+from .models.climate import Climate
 from .models.crop import Crop
+from .models.farm import Farm
 from .models.genus import Genus
 from .models.grow import Grow
 from .models.harvest import Harvest
@@ -34,3 +37,5 @@ admin.site.register(Orchard)
 admin.site.register(Field)
 admin.site.register(Silvopasture)
 admin.site.register(Forest)
+admin.site.register(Climate)
+admin.site.register(Farm)

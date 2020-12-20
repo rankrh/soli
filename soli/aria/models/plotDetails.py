@@ -98,7 +98,8 @@ class PlotDetails:
                 "area": self.plot.shape.area,
                 "type": self.plot.type,
                 "children": [child.jsonify() for child in self.children] if self.children else None,
-                "points": [[point.lat, point.long] for point in self.points]
+                "points": [[point.lat, point.long] for point in self.points],
+                "climate": self.plot.climate
             }
 
         return json

@@ -4,6 +4,7 @@ from django.db.models import CASCADE
 
 from aria.models.validation.plotTypes import TYPES, FOREST
 from .climate import Climate
+from .farm import Farm
 from .shape import POLYGON, Shape
 
 
@@ -13,6 +14,7 @@ class Plot(models.Model):
         app_label = "aria"
 
     name = models.CharField(max_length=128, blank=True, default="Unnamed Plot")
+    farm = models.ForeignKey(Farm, on_delete=CASCADE)
     owner = models.ForeignKey(User, on_delete=CASCADE)
     shape = models.ForeignKey(Shape, null=True, default=None, on_delete=CASCADE)
     description = models.CharField(max_length=1024, blank=True, default="")
@@ -24,7 +26,6 @@ class Plot(models.Model):
         null=True,
         default=None
     )
-    zone = models.ForeignKey(Climate, null=True, blank=True, on_delete=CASCADE)
 
     def save(self):
 
