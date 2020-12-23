@@ -6,5 +6,7 @@ from aria.models.crop import Crop
 
 class Event(models.Model):
 
-    date = models.DateField()
-    crop = models.ForeignKey(Crop, on_delete=CASCADE)
+    startDate = models.DateField()
+    endDate = models.DateField()
+    details = models.CharField(max_length=128)
+    description = models.CharField(max_length=512)

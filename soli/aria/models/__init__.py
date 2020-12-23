@@ -2,9 +2,9 @@ import aria.models.shape
 import aria.models.plot
 import aria.models.crop
 import aria.models.genus
-import aria.models.planting
-import aria.models.grow
-import aria.models.harvest
+import aria.models.plantingplan
+import aria.models.growplan
+import aria.models.harvestplan
 import aria.models.species
 import aria.models.subspecies
 import aria.models.point

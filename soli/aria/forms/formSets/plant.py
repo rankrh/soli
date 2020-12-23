@@ -3,11 +3,11 @@ from django.forms import inlineformset_factory
 from django import forms
 
 from aria.models.crop import Crop
-from aria.models.planting import Planting
+from aria.models.plantingplan import PlantingPlan
 
 plantFormSet = inlineformset_factory(
     Crop,
-    Planting,
+    PlantingPlan,
     fields=[
         "pattern",
         "spacing",

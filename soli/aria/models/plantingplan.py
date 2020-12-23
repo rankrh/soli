@@ -5,9 +5,9 @@ from aria.models.crop import Crop
 from aria.models.validation.plantValidation import GROW_STYLE, FROST, LOCATION
 
 
-class Planting(models.Model):
+class PlantingPlan(models.Model):
     class Meta:
-        db_table = "plant"
+        db_table = "plantingPlan"
         app_label = "aria"
 
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE)

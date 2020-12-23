@@ -4,10 +4,10 @@ from .models.climate import Climate
 from .models.crop import Crop
 from .models.farm import Farm
 from .models.genus import Genus
-from .models.grow import Grow
-from .models.harvest import Harvest
+from .models.growplan import GrowPlan
+from .models.harvestplan import HarvestPlan
 from .models.livestock import Livestock
-from .models.planting import Planting
+from .models.plantingplan import PlantingPlan
 from .models.plot import Plot
 from .models.point import Point
 from .models.shape import Shape
@@ -24,9 +24,9 @@ admin.site.register(Shape)
 admin.site.register(Plot)
 admin.site.register(Crop)
 admin.site.register(Genus)
-admin.site.register(Planting)
-admin.site.register(Grow)
-admin.site.register(Harvest)
+admin.site.register(PlantingPlan)
+admin.site.register(GrowPlan)
+admin.site.register(HarvestPlan)
 admin.site.register(Species)
 admin.site.register(Subspecies)
 admin.site.register(Point)
