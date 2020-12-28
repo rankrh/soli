@@ -1,3 +1,4 @@
+from aria.models.farm import Farm
 from aria.models.plot import Plot
 from aria.models.plotDetails import PlotDetails
 from aria.models.point import Point
@@ -8,23 +9,31 @@ class PlotDetailsList:
 
     plotDetails = []
 
-    def __init__(self):
+    def __init__(self, owner):
         self.plotDetails = []
+        self.owner = owner
+        self.farm = Farm.objects.filter(owner=self.owner).get()
 
     def getPlotDetailsByPlotName(self, name):
-        self.setPlotDetailsFromPoints(Point.objects.filter(plot__in=Plot.objects.filter(name=name)))
+
+        if self.owner is not None:
+            self.setPlotDetailsFromPoints(
+                Point.objects.filter(plot__in=Plot.objects.filter(owner=self.owner, name=name))
+            )
 
         return self
 
-    def getAllPlotDetails(self):
-        plots = Plot.objects.filter(owner=2)
-        self.setPlotDetailsFromPlots(plots)
+    def getPlotDetailsForUser(self):
+        if self.owner is not None:
+            plots = Plot.objects.filter(owner=self.owner)
+            self.setPlotDetailsFromPlots(plots)
 
         return self
 
     def getParentPlots(self):
-        plots = Plot.objects.filter(owner=2, parent__isnull=True)
-        self.setPlotDetailsFromPlots(plots)
+        if self.owner is not None:
+            plots = Plot.objects.filter(owner=self.owner, parent__isnull=True)
+            self.setPlotDetailsFromPlots(plots)
 
         return self
 
@@ -39,6 +48,8 @@ class PlotDetailsList:
 
                 self.plotDetails.append(
                     PlotDetails(
+                        owner=self.owner,
+                        farm=self.farm,
                         plot=plot,
                         points=points.filter(shape=plot.shape),
                         children=childDetails

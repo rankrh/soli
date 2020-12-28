@@ -3,6 +3,7 @@ import json
 from django.shortcuts import get_object_or_404
 
 from aria.forms.plot import PlotForm
+from aria.models.farm import Farm
 from aria.models.plot import Plot
 from aria.models.point import Point
 
@@ -14,10 +15,13 @@ class PlotDetails:
     coordinates = []
     points = []
     children = []
+    owner = None
+    farm = None
 
-    def __init__(self, request=None, plot=None, points=None, children=None):
+    def __init__(self, owner=None, farm=None, request=None, plot=None, points=None, children=None):
 
         self.resetDetails()
+
         if request is not None:
             plotId = request.POST.get("id")
             if plotId is not None:
@@ -26,12 +30,20 @@ class PlotDetails:
             self.plotForm = PlotForm(request.POST, instance=self.plot)
             self.coordinates = json.loads(request.POST["points"]) if "points" in request.POST else []
             self.type = request.POST["type"] if "type" in request.POST else None
+            self.owner = request.user
+            self.farm = Farm.objects.get(owner=self.owner)
         elif plot is not None:
             self.plot = plot
             self.type = plot.type
 
         if children:
             self.children = children
+
+        if farm is not None:
+            self.farm = farm
+
+        if owner is not None:
+            self.owner = owner
 
         self.points = points if points is not None else []
 
@@ -42,6 +54,8 @@ class PlotDetails:
         self.coordinates = []
         self.points = []
         self.children = []
+        self.owner = None
+        self.farm = None
 
     def isValidPlot(self):
 
@@ -50,7 +64,7 @@ class PlotDetails:
     def savePlotAndPoints(self):
 
         if self.plotForm is not None:
-            self.plot = self.plotForm.savePlot()
+            self.plot = self.plotForm.savePlot(owner=self.owner, farm=self.farm)
         else:
             self.plot.save()
 
@@ -99,7 +113,6 @@ class PlotDetails:
                 "type": self.plot.type,
                 "children": [child.jsonify() for child in self.children] if self.children else None,
                 "points": [[point.lat, point.long] for point in self.points],
-                "climate": self.plot.climate
             }
 
         return json

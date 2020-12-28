@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import *
+from .views.create.farm import createFarm
 from .views.create.plot import addPlotDetails
 from .views.planning.calendar import createCalendar
 
@@ -7,6 +8,7 @@ urlpatterns = [
 	path("", index, name="index"),
 
 	# Create
+	path("create/farm", createFarm, name="createFarm"),
 	path("create/crop", createCrop, name="createCrop"),
 	path("create/species", createSpecies, name="createSpecies"),
 	path("create/ajax/genus", createGenus, name="createGenus"),

@@ -18,57 +18,87 @@
     </section>
     <div class="container-fluid p-0 min-vh-100">
         <div class="row justify-content-end no-gutters min-vh-100">
-            <div class="col-3" id="plot-details">
-                <div class="scrollable list-group" id="plots-accordion">
-                    {% for plot in plots %}
-                        <div id="plot-details-{{ plot.id }}" class="list-group-item" onclick="togglePlotFocus({{ plot.id }})">
-                            <h3>
-                                <div id="plot-{{ plot.id }}-name" class="plot-header text-left" id="heading-{{ plot.id }}" data-toggle="collapse" data-target="#collapse-plot-{{ plot.id }}" aria-expanded="true" aria-controls="collapse-plot-{{ plot.id }}">
-                                    {{ plot.name }}
-                                </div>
-                            </h3>
-                            <div id="collapse-plot-{{ plot.id }}" class="collapse" aria-labelledby="plot-details-{{ plot.id }}" data-parent="#plots-accordion">
-                                <div class="card-body">
-                                    <div id="plot-{{ plot.id }}-description">
-                                        <p>{{ plot.description }}</p>
+            <div class="card col-3" id="plot-details">
+                <div id="farm-details"{% if not farm %}style="display:none;"{% endif %}>
+                    <div class="card-header" id="farm">
+                      {{ farm.name }}
+                    </div>
+                    <div class="card-body scrollable list-group" id="plots-accordion">
+                        {% for plot in plots %}
+                            <div id="plot-details-{{ plot.id }}" class="list-group-item" onclick="togglePlotFocus({{ plot.id }})">
+                                <h3>
+                                    <div id="plot-{{ plot.id }}-name" class="plot-header text-left" id="heading-{{ plot.id }}" data-toggle="collapse" data-target="#collapse-plot-{{ plot.id }}" aria-expanded="true" aria-controls="collapse-plot-{{ plot.id }}">
+                                        {{ plot.name }}
                                     </div>
-                                    <div id="plot-{{ plot.id }}-tools">
-                                        <button class="btn btn-sm btn-light justify-content-center align-self-center" onclick="editPlotDetails(featureGroup.getLayer({{ plot.id }}))">
-                                            <svg viewBox="0 0 8 8" class="icon">
-                                                <use xlink:href="#pencil"></use>
-                                            </svg>
-                                        </button>
-                                        <button class="btn btn-sm btn-light justify-content-center align-self-center" onclick="deletePlot(featureGroup.getLayer({{ plot.id }}))">
-                                            <svg viewBox="0 0 8 8" class="icon">
-                                                <use xlink:href="#trash"></use>
-                                            </svg>
-                                        </button>
+                                </h3>
+                                <div id="collapse-plot-{{ plot.id }}" class="collapse" aria-labelledby="plot-details-{{ plot.id }}" data-parent="#plots-accordion">
+                                    <div class="card-body">
+                                        <div id="plot-{{ plot.id }}-description">
+                                            <p>{{ plot.description }}</p>
+                                        </div>
+                                        <div id="plot-{{ plot.id }}-tools">
+                                            <button class="btn btn-sm btn-light justify-content-center align-self-center" onclick="editPlotDetails(featureGroup.getLayer({{ plot.id }}))">
+                                                <svg viewBox="0 0 8 8" class="icon">
+                                                    <use xlink:href="#pencil"></use>
+                                                </svg>
+                                            </button>
+                                            <button class="btn btn-sm btn-light justify-content-center align-self-center" onclick="deletePlot(featureGroup.getLayer({{ plot.id }}))">
+                                                <svg viewBox="0 0 8 8" class="icon">
+                                                    <use xlink:href="#trash"></use>
+                                                </svg>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        {% endfor %}
+                    </div>
+                    <div class="align-bottom">
+                        <div id="unit-buttons" class="btn-group btn-group-toggle" role="group" aria-label="Units">
+                            <label class="btn btn-primary btn-sm">
+                                <input type="radio" name="units" value="acres" checked="checked">Acres
+                            </label>
+                            <label class="btn btn-primary btn-sm">
+                                <input type="radio" name="units" value="meters">Square Meters
+                            </label>
+                            <label class="btn btn-primary btn-sm">
+                                <input type="radio" name="units" value="hectares">Hectares
+                            </label>
+                            <label class="btn btn-primary btn-sm">
+                                <input type="radio" name="units" value="miles">Square Miles
+                            </label>
                         </div>
-                    {% endfor %}
+                    </div>
                 </div>
-                <div class="align-bottom">
-                    <div id="unit-buttons" class="btn-group btn-group-toggle" role="group" aria-label="Units">
-                        <label class="btn btn-primary btn-sm">
-                            <input type="radio" name="units" value="acres" checked="checked">Acres
-                        </label>
-                        <label class="btn btn-primary btn-sm">
-                            <input type="radio" name="units" value="meters">Square Meters
-                        </label>
-                        <label class="btn btn-primary btn-sm">
-                            <input type="radio" name="units" value="hectares">Hectares
-                        </label>
-                        <label class="btn btn-primary btn-sm">
-                            <input type="radio" name="units" value="miles">Square Miles
-                        </label>
+                <div id="no-farm-data-block"{% if farm %}style="display:none;"{% endif %}>
+                    <div class="vh-100 jumbotron d-flex align-items-center" >
+                    <div class="container">
+                        <h1>No Plot Data</h1>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     {{ plots | json_script:"plots-data" }}
+    {{ farm.id | json_script:"farm-data" }}
+    <div class="modal" id="create-farm-modal">
+        <div class="modal-dialog">
+            <div id="farm-modal-content" class="modal-content">
+                <div class="modal-header" id="create-farm-header">
+                    <h5 class="modal-title">Farm Details</h5>
+                </div>
+                <div class="modal-body" id="create-farm-modal-body">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" onclick="saveFarm()">Save</button>
+                </div>
+            </div>
+            <div id="farm-spinner" class="modal-content spinner-grow text-success" role="status" style="display: none">
+                <span class="sr-only">Saving Farm Details...</span>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="edit-plot-modal">
         <input type="hidden" id="edit-plot-id">
         <div class="modal-dialog">

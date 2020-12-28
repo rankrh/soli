@@ -3,22 +3,30 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render
 
+from aria.models.farm import Farm
 from aria.models.plotDetailsList import PlotDetailsList
 from aria.models.plotDetails import PlotDetails
 from aria.models.shape import Shape
 
 
 def createPlot(request):
-    plotDetailsList = PlotDetailsList()
+    current_user = request.user
+    plotDetailsList = PlotDetailsList(current_user)
+    farm = Farm.objects.filter(owner=current_user).first()
 
-    context = {"plots": plotDetailsList.getParentPlots().jsonify()}
+    context = {
+        "plots": plotDetailsList.getParentPlots().jsonify(),
+        "farm": farm
+        }
     return render(request, "aria/create/plot.html", context)
 
 
 def addPlotDetails(request):
-    plotDetailsList = PlotDetailsList()
+    plotDetailsList = PlotDetailsList(owner=request.user)
 
-    context = {"plots": plotDetailsList.getAllPlotDetails().jsonify()}
+    context = {
+        "plots": plotDetailsList.getPlotDetailsForUser().jsonify()
+    }
 
     return render(request, "aria/create/plotdetails.html", context)
 
@@ -27,18 +35,14 @@ def createPlotAjax(request):
     response = {"errors": []}
     if request.is_ajax() and request.method == "POST":
         plotDetails = createNewPlot(request)
-        try:
-            response["plot"] = plotDetails.plot.id
-        except:
-            response["errors"] = plotDetails.plotForm.errors
+        response["plot"] = plotDetails.plot.id
 
     return JsonResponse(response)
 
 
 def createNewPlot(request):
-    plotDetails = PlotDetails(request)
-    if plotDetails.isValidPlot():
-        plotDetails.savePlotAndPoints()
+    plotDetails = PlotDetails(request=request)
+    plotDetails.savePlotAndPoints()
 
     return plotDetails
 

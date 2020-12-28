@@ -8,8 +8,10 @@ class PlotForm(forms.ModelForm):
         model = Plot
         fields = ["name", "description", "parent", "type"]
 
-    def savePlot(self, plotType=None):
+    def savePlot(self, farm, owner):
         plot = self.save(commit=False)
+        plot.farm = farm
+        plot.owner = owner
         plot.save()
 
         return plot

@@ -93,15 +93,21 @@ function initializePlots() {
 
 	addSavedPlots(plotJSON);
 	updateAllPolygonAreas();
-	var firstPlot = basePlots.getLayers()[0];
+	var firstPlot = basePlots.getLayer(plotJSON[0].id);
 
 	if (firstPlot) {
-		zoomToBounds(firstPlot);
+		map.fitBounds(firstPlot.getBounds());
 		firstPlot.getPopup().openPopup();
 		currentPlot = firstPlot;
 	}
 }
 
+function zoomToBounds(boundedLayer) {
+
+	if (boundedLayer) {
+		map.fitBounds(boundedLayer.getBounds());
+	}
+}
 
 function editPlotDetails(plot) {
 

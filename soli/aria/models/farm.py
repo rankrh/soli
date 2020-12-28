@@ -8,8 +8,8 @@ from aria.models.point import Point
 
 class Farm(models.Model):
 
-    owner = models.ForeignKey(User, on_delete=CASCADE)
-    location = models.ForeignKey(Point, on_delete=CASCADE)
+    owner = models.OneToOneField(User, on_delete=CASCADE)
+    location = models.ForeignKey(Point, null=True, blank=True, on_delete=CASCADE)
     name = models.CharField(max_length=128)
     logo = models.ImageField(null=True, blank=True)
     climate = models.ForeignKey(Climate, null=True, blank=True, on_delete=CASCADE)

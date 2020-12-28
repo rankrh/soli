@@ -104,13 +104,6 @@ function updatePolygonPopup(plot, units) {
   	plot.bindPopup(popUpMessage);
 }
 
-function zoomToBounds(boundedLayer) {
-
-	if (boundedLayer) {
-		map.fitBounds(boundedLayer.getBounds());
-	}
-}
-
 function lineInsidePlot(A, B, plot) {
 
 	var inPlot = true;
@@ -149,13 +142,25 @@ function deletePlots(plots) {
 function saveSubplotDetails() {
 
 	var plot = subdivisions.getLayer(Number($("#edit-plot-id").val()));
+	var subplotDetails = $("#subplot-" + plot._leaflet_id);
 
 	plot.name = $("#edit-plot-name").val();
 	plot.description = $("#edit-plot-description").val();
 	plot.type = $("#edit-plot-type").val();
 
 	persistSubplot(plot);
-	updateUIAfterSave(plot);
+	updatePolygonArea(plot);
+	updatePolygonPopup(plot, $("input[type=radio][name=units]:checked"))
+	clearEditPlotModal();
+
+	if (subplotDetails.length) {
+		$("#subplot-" + plot._leaflet_id).text(plot.name);
+	} else {
+		var div = "<div id=\"subplot-" + plot._leaflet_id + "\" type=\"button\" class=\"list-group-item list-group-item-action\" onclick=\"zoomToSubPlot(" + plot._leaflet_id + ")\">";
+		div += plot.name;
+		div += "</div>";
+		$("#plot-" + currentPlot._leaflet_id + "-subplots").append(div);
+	}
 }
 
 
@@ -175,4 +180,11 @@ function updateUIAfterSave(plot) {
 	updatePolygonArea(plot);
 	updatePolygonPopup(plot, $("input[type=radio][name=units]:checked"))
 	clearEditPlotModal();
+}
+
+function clearEditPlotModal() {
+
+	$("#edit-plot-modal").modal("toggle");
+	$("#edit-plot-name").val("");
+	$("#edit-plot-description").val("");
 }

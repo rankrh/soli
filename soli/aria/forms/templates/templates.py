@@ -1,5 +1,6 @@
 from django import forms
 
+
 def createNumberInput(placeholder=None, minimum=None, maximum=None):
 
     attributes = {
@@ -58,6 +59,15 @@ def createRadioInput(placeholder=None, choices=[], onchange=None):
         attributes["onchange"] = onchange
 
     return forms.RadioSelect(attrs=attributes, choices=choices)
+
+
+def createImageUpload(id=None):
+
+    attrs = {}
+    if id is not None:
+        attrs["id"] = id
+
+    return forms.ClearableFileInput(attrs=attrs)
 
 
 def updateAttributes(attributes, attrs):

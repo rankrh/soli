@@ -1,3 +1,5 @@
+let farm = JSON.parse($("#farm-data").text())
+
 L.UnitsControl = L.Control.extend({
   options: {
     position: 'topleft'
@@ -15,7 +17,6 @@ L.UnitsControl = L.Control.extend({
   },
 
 });
-
 
 var unitsControl = new L.UnitsControl().addTo(map);
 
@@ -66,9 +67,58 @@ $("input[type=radio][name=units]").change(
 
 function initializePlots() {
 
-	addSavedPlots(plotJSON);
-	zoomToBounds(basePlots);
-	updateAllPolygonAreas();
+	if (farm) {
+		addSavedPlots(plotJSON);
+		zoomToBounds(basePlots);
+		updateAllPolygonAreas();
+	} else {
+		$.ajax({
+			type: "GET",
+			url: "farm",
+			dataType: "html",
+
+			success: function(data) {
+				$("#create-farm-modal-body").html(data);
+				$("#create-farm-modal").modal('toggle');
+			},
+		});
+	}
+}
+
+function createFarmSidebar() {
+
+	$("#farm").text($("#farm-name").val());
+	$("#farm-details").show();
+	$("#no-farm-data-block").hide();
+}
+
+function saveFarm() {
+
+	var spinner = $("#farm-spinner");
+	var modalBody = $("#farm-modal-content");
+
+	$.ajax({
+		type: "POST",
+		url: "farm",
+		dataType: "json",
+		data: {
+			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
+			name: $("#farm-name").val(),
+			logo: $("#farm-logo").val()
+		},
+		success: function(data) {
+			$("#create-farm-modal").modal('toggle');
+			farmId = data.id;
+			createFarmSidebar();
+		},
+		error: function(data) {
+			$("#farm-modal-content").show();
+			$("#farm-spinner").hide();
+		}
+	});
+
+	modalBody.hide();
+	spinner.show();
 }
 
 function expandPlotDetails(plotId) {
@@ -167,10 +217,9 @@ function deletePlotAccordion(plotId) {
 	$("#plot-details-" + plotId).remove();
 }
 
-function clearEditPlotModal() {
+function zoomToBounds(boundedLayer) {
 
-	$("#edit-plot-modal").modal("toggle");
-	$("#edit-plot-name").val("");
-	$("#edit-plot-description").val("");
+	if (boundedLayer && boundedLayer.getLayers().length) {
+		map.fitBounds(boundedLayer.getBounds());
+	}
 }
-
