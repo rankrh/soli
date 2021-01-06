@@ -1,14 +1,12 @@
 {% load static %}
 
-{% block content %}
-    <div>
-        <p>Looks like you haven't started a farm yet.  Supply a name and a logo so that we can keep track of all your farm's data.</p>
+<div>
+    <p>Looks like you haven't started a farm yet.  Supply a name and a logo so that we can keep track of all your farm's data.</p>
+</div>
+<div class="input-group">
+    {{ farmForm.name }}
+    <div class="custom-file">
+        {{ farmForm.logo }}
+        <label class="custom-file-label" for="farm-logo">Logo</label>
     </div>
-    <div class="input-group">
-        {{ farmForm.name }}
-        <div class="custom-file">
-            {{ farmForm.logo }}
-            <label class="custom-file-label" for="farm-logo">Logo</label>
-        </div>
-    </div>
-{% endblock %}
+</div>

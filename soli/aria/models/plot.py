@@ -2,8 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models import CASCADE
 
-from aria.models.validation.plotTypes import TYPES, FOREST
-from .climate import Climate
+from aria.models.validation.plotTypes import TYPES
 from .farm import Farm
 from .shape import POLYGON, Shape
 

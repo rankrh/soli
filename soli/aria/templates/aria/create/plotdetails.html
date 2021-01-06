@@ -8,7 +8,9 @@
 
 {% block javascript %}
     <script src="{% static './aria/style/plotColors.js' %}"></script>
-    <script src="{% static './aria/js/create/initmap.js' %}" type="text/javascript"></script>
+    <script src="{% static './aria/js/create/initializeMap.js' %}" type="text/javascript"></script>
+    <script src="{% static './aria/js/create/mapUtilities.js' %}" type="text/javascript"></script>
+    <script src="{% static './aria/js/create/plotUtilities.js' %}" type="text/javascript"></script>
     <script src="{% static './aria/js/create/plotdetails.js' %}" type="text/javascript"></script>
 {% endblock %}
 
@@ -20,34 +22,15 @@
     <div class="container-fluid p-0 min-vh-100">
         <div class="row justify-content-end no-gutters min-vh-100">
             <div class="col-3" id="plot-details">
-                <div>
-                    {% for plot in plots %}
-                        {% if plot.parent is None %}
-                            <div class="card" {% if not forloop.first %}style="display: none;"{% endif%}>
-                                <h3>
-                                    <div id="plot-{{ plot.id }}-name" class="card-header plot-header text-left" id="heading-{{ plot.id }}" data-toggle="collapse" data-target="#collapse-plot-{{ plot.id }}" aria-expanded="true" aria-controls="collapse-plot-{{ plot.id }}">
-                                        {{ plot.name }}
-                                    </div>
-                                </h3>
-                                <div class="card-body">
-                                      <div id="plot-{{ plot.id }}-subplots" class="list-group list-group-flush">
-                                          {% for child in plot.children %}
-                                              <div id="subplot-{{child.id}}" type="button" class="list-group-item list-group-item-action" onclick="zoomToSubPlot({{child.id}})">
-                                                  {{ child.name }}
-                                              </div>
-                                          {% endfor %}
-                                      </div>
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
+                <div id="plot-details-sidebar">
+                    {% include './plotDetailsSidebar.html' with plots=plots %}
                 </div>
                 <nav aria-label="Primary plots">
                     <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
+                        <li class="page-item" onclick="previousPlot()">
                             <a class="page-link" href="#" tabindex="-1">Previous</a>
                         </li>
-                        <li class="page-item">
+                        <li class="page-item" onclick="nextPlot()">
                             <a class="page-link" href="#">Next</a>
                         </li>
                     </ul>
@@ -55,45 +38,5 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="edit-plot-modal">
-        <input type="hidden" id="edit-plot-id">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header" id="edit-plot-header">
-                    <h5 class="modal-title">Plot Details</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Plot Name</span>
-                        </div>
-                        <input id="edit-plot-name" type="text" class="form-control">
-                    </div>
-                    <div class="input-group mb-3">
-                        <select class="custom-select" id="edit-plot-type">
-                            <option selected>Plot Type</option>
-                            <option value="G">Garden</option>
-                            <option value="P">Pasture</option>
-                            <option value="S">Silvopasture</option>
-                            <option value="O">Orchard</option>
-                            <option value="F">Field</option>
-                            <option value="W">Forest</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Plot Description</span>
-                        </div>
-                        <textarea id="edit-plot-description" class="form-control" aria-label="Plot description"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" onclick="saveSubplotDetails()">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include './addPlotDetailsModal.html' %}
 {% endblock %}

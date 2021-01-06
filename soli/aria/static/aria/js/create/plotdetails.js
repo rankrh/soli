@@ -1,5 +1,84 @@
-var subdivisions = L.featureGroup().addTo(map);
-var currentPlot = null;
+map.on(L.Draw.Event.CREATED, function(e) {
+	var plot = e.layer;
+	plot.setStyle({fillColor: plotColors.unknown.fill, fillOpacity:0.5, color:plotColors.unknown.outline})
+	updatePolygonArea(plot);
+	persistSubplot(plot);
+});
+
+map.on(L.Draw.Event.EDITED, function (e) {
+	e.layers.eachLayer(function(layer) {
+		persistSubplot(layer);
+	});
+	updatePlotAreas(subdivisions, "acres");
+});
+
+map.on("click", function (e) {
+	unselectAllSubplots();
+});
+
+map.on('draw:deleted', function (e) {
+
+	var plotsToDelete = []
+
+	e.layers.eachLayer(function(layer) {
+		plotsToDelete.push(layer._leaflet_id)
+	});
+
+	deletePlots(
+		plotsToDelete,
+		successFunction = function(data) {
+			for (var i = 0; i < plotsToDelete.length; i++) {
+				deleteSubPlotAccordion(plotsToDelete[i]);
+			}
+
+			if (!subdivisions.getLayers().length) {
+				$("#no-plots-header").show();
+			}
+		}
+	);
+});
+
+$(initializePlots());
+
+function deleteSubPlotAccordion(plot) {
+
+	$("#subplot-" + plot).remove();
+}
+
+function saveSubplotDetails() {
+
+	var plot = subdivisions.getLayer(Number($("#edit-plot-id").val()));
+	var subplotDetails = $("#subplot-" + plot._leaflet_id);
+
+	plot.name = $("#edit-plot-name").val();
+	plot.description = $("#edit-plot-description").val();
+	plot.type = $("#edit-plot-type").val();
+
+	persistSubplot(plot);
+	updatePolygonArea(plot);
+	updatePolygonPopup(plot, $("input[type=radio][name=units]:checked").text());
+	updatePolygonColor(plot, plotColors[plot.type].fill, plotVisibility.child, plotColors[plot.type].outline);
+	clearEditPlotModal();
+
+	$("#subplot-" + plot._leaflet_id + "-name").text(plot.name);
+
+}
+
+function updateUIAfterSave(plot) {
+
+	updatePlotAccordion(plot);
+	updatePolygonArea(plot);
+	updatePolygonPopup(plot, $("input[type=radio][name=units]:checked"))
+	clearEditPlotModal();
+}
+
+function clearEditPlotModal() {
+
+	$("#edit-plot-modal").modal("toggle");
+	$("#edit-plot-name").val("");
+	$("#edit-plot-description").val("");
+}
+
 var curPt = null;
 
 var drawControl = new L.Control.Draw({
@@ -7,13 +86,24 @@ var drawControl = new L.Control.Draw({
   		featureGroup: subdivisions,
   	},
   	draw: {
-    	polygon: true,
+    	polygon: {
+            icon: new L.DivIcon({
+			  iconSize: [8, 8],
+			  className: 'leaflet-div-icon leaflet-drawing-icon',
+			}),
+            shapeOptions: {
+                color: '#FF0000',
+                opacity: 1,
+                weight: 2
+            }
+        },
     	polyline: true,
     	rectangle: false,
     	circle: false,
     	marker: true,
   	}
-}).addTo(map);
+})
+.addTo(map);
 
 /*map.on(L.Draw.Event.DRAWVERTEX , function(e) {
 	var layers = e.layers.getLayers();
@@ -32,81 +122,42 @@ var drawControl = new L.Control.Draw({
 	}
 });*/
 
-map.on(L.Draw.Event.CREATED, function(e) {
-
-	var plot = e.layer;
-	plot.setStyle({fillColor: plotColors.unknown.fill, fillOpacity:0.5, color:plotColors.unknown.outline})
-	updatePolygonArea(plot);
-	persistSubplot(plot);
-	editPlotDetails(plot);
-});
-
-map.on(L.Draw.Event.EDITED, function (e) {
-	e.layers.eachLayer(function(layer) {
-		persistSubplot(layer);
-	});
-	updateAllPolygonAreas();
-});
-
-map.on('draw:deleted', function (e) {
-
-	var plotsToDelete = []
-
-	e.layers.eachLayer(function(layer) {
-		plotsToDelete.push(layer._leaflet_id)
-	});
-
-	deletePlots(plotsToDelete);
-});
-
-$(initializePlots());
-
-function persistSubplot(plot) {
-
-	$.ajax({
-		type: "POST",
-		url: "ajax/details",
-		dataType: "json",
-		data: {
-			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
-			id: plot._leaflet_id,
-			name: plot.name,
-			description: plot.description,
-			area: plot.area,
-			type: plot.type,
-			parent: currentPlot._leaflet_id,
-			points: JSON.stringify(plot.getLatLngs())
-		},
-		success: function(data) {
-			$("#edit-plot-id").val(data.plot);
-			plot._leaflet_id = data.plot;
-			subdivisions.addLayer(plot);
-
-			if ($("#plot-details-" + plot._leaflet_id).length == 0) {
-				//createPlotAccordion(plot);
-			}
-		}
-	});
-}
 
 function initializePlots() {
 
 	addSavedPlots(plotJSON);
-	updateAllPolygonAreas();
+	var units = $("input[type=radio][name=units]:checked").val();
+
+	updatePlotAreas(basePlots, units);
+	updatePlotAreas(subdivisions, units);
 	var firstPlot = basePlots.getLayer(plotJSON[0].id);
 
 	if (firstPlot) {
 		map.fitBounds(firstPlot.getBounds());
 		firstPlot.getPopup().openPopup();
 		currentPlot = firstPlot;
+		currentPlotIndex = 0;
 	}
 }
 
-function zoomToBounds(boundedLayer) {
+function persistSubplot(plot) {
 
-	if (boundedLayer) {
-		map.fitBounds(boundedLayer.getBounds());
-	}
+	persistPlot(plot,
+		successFunction=function(data) {
+			var plotHTML = $(data);
+			var plotId = plotHTML.attr("data-id");
+			if (plot._leaflet_id != plotId) {
+				$("#no-plots-header").hide();
+				plot._leaflet_id = plotId;
+				subdivisions.addLayer(plot);
+				$("#plot-" + currentPlot._leaflet_id + "-subplots").append(plotHTML);
+				editPlotDetails(plot);
+			} else {
+			}
+		},
+		errorFunction=function(data) {},
+		returnPage="aria/create/subplotDetails"
+	);
 }
 
 function editPlotDetails(plot) {
@@ -130,18 +181,22 @@ function updatePlotAccordion(plot) {
 	$("#plot-" + plot._leaflet_id + "-description").text(plot.description);
 }
 
-function zoomToSubPlot(plotId) {
+function nextPlot() {
 
-	var plotBtn = $("#subplot-" + plotId);
-	if (!plotBtn.hasClass("active")) {
-		var plot = subdivisions.getLayer(plotId);
-		zoomToBounds(plot);
-		plot.openPopup();
-		unselectAllSubplots();
-		plotBtn.addClass("active");
-	}
+	currentPlotIndex = currentPlotIndex + 1 < basePlots.getLayers().length ? currentPlotIndex + 1 : 0;
+	focusCurrentPlot();
 }
 
-function unselectAllSubplots() {
-	$("button[id^='subplot-']").removeClass("active");
+function previousPlot() {
+
+	currentPlotIndex = currentPlotIndex - 1 >= 0 ? currentPlotIndex - 1 : basePlots.getLayers().length - 1;
+	focusCurrentPlot();
+}
+
+function focusCurrentPlot() {
+
+	currentPlot = basePlots.getLayers()[currentPlotIndex];
+	map.fitBounds(currentPlot.getBounds());
+	$("div[id^='plot-overview-']").hide();
+	$("#plot-overview-" + currentPlot._leaflet_id).show();
 }

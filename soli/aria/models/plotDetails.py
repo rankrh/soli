@@ -111,6 +111,7 @@ class PlotDetails:
                 "parent": self.plot.parent.id if self.plot.parent else None,
                 "area": self.plot.shape.area,
                 "type": self.plot.type,
+                "get_type_display": self.plot.get_type_display(),
                 "children": [child.jsonify() for child in self.children] if self.children else None,
                 "points": [[point.lat, point.long] for point in self.points],
             }
