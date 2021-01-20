@@ -18,7 +18,7 @@
                             <div class="col input-group">
                                 {{ cropForm.species }}
                                 <div class="input-group-append">
-                                    <a role="button" class="btn btn-secondary" href="{% url 'createSpecies' %}">Add New<New></New></a>
+                                    <a role="button" class="btn btn-primary" href="{% url 'createSpecies' %}">Add New<New></New></a>
                                 </div>
                             </div>
                         </div>
@@ -32,157 +32,131 @@
                                 {{ cropForm.description }}
                             </div>
                         </div>
-                        <div id="planting-schemes" style="display:none">
-                            <h3>Planting Schemes</h3>
-                            <table id="planting-schemes-table" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Type</th>
-                                        <th>Location</th>
-                                        <th>Sun</th>
-                                        <th>Timing</th>
-                                        <th>Succession</th>
-                                        <th>Pattern</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="planting-schemes-body">
-                                </tbody>
-                            </table>
-                        </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#planting-modal">
+                            Add Planting Information<New></New>
+                        </button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#care-modal">
+                            Add Care Information<New></New>
+                        </button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#harvest-modal">
+                            Add Harvest Information<New></New>
+                        </button>
                         <div class="row justify-content-end mb-3">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addPlantingScheme">
-                                    Add Planting Scheme<New></New>
-                                </button>
-                                <button onclick="$('#crop-form').submit()" class="btn btn-primary">Submit</button>
-                            </div>
+                            <button class="btn btn-primary">Submit</button>
                         </div>
-                        <div class="modal" id="addPlantingScheme" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog" id="addPlantingSchemeModal">
-                                <!-- Modal content-->
-                                <div class="modal-content" id="addPlantingSchemeModal-content">
-                                    <div class="modal-body" id="addPlantingSchemeModal-body">
-                                        <div class="alert alert-danger" id="addPlantingSchemeModal-errors" role="alert" style="display: none;">
-                                        </div>
-                                        <div id="page-1">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">What type of crop is this?</h4>
+                        <div class="modal fade" id="planting-modal">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Planting Instructions</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="planting-form-1">
+                                            <div class="input-group mb-3">
+                                                {{ plantingFormSet.form.location }}
+                                                {{ plantingFormSet.form.pattern }}
                                             </div>
-                                            <div id="variety" class="btn-group btn-group-toggle my-3 col" data-toggle="buttons">
-                                                {% for option in cropForm.harvest.form.variety %}
-                                                    <label class="btn btn-outline-info">
-                                                        {{ option }}
-                                                    </label>
-                                                {% endfor %}
+                                            <div class="input-group mb-3">
+                                                {{ plantingFormSet.form.interRowSpacing }}
+                                                <span class="input-group-text">Inches between plants</span>
                                             </div>
-                                        </div>
-                                        <div id="page-2" style="display: none;">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">Where should this crop be planted?</h4>
+                                            <div class="input-group mb-3">
+                                                {{ plantingFormSet.form.rowSpacing }}
+                                                <span class="input-group-text">Inches between rows</span>
                                             </div>
-                                            <div id="location" class="btn-group btn-group-toggle my-3 col" data-toggle="buttons">
-                                                {% for option in cropForm.plant.form.location %}
-                                                    <label class="btn btn-outline-info">
-                                                        {{ option }}
-                                                    </label>
-                                                {% endfor %}
+                                            <div class="input-group mb-3">
+                                                {{ plantingFormSet.form.germination }}
+                                                <span class="input-group-text">Days to gemination</span>
                                             </div>
-                                            <div class="row my-3" id="transplant-date" style="display: none;">
-                                                <splan class="mx-3 text-center input-group-addon">Transplant after</splan>
-                                                <div class="col-xs-12">
-                                                    <input type="number" name="transplant" class="form-control number"min="0" id="transplant">
-                                                </div>
-                                                <span class="mx-3 text-center input-group-addon">weeks.</span>
+                                            <div class="input-group mb-3">
+                                                {{ plantingFormSet.form.depth }}
+                                                <span class="input-group-text">Inches below surface</span>
+                                                {{ plantingFormSet.form.temperature }}
+                                                <span class="input-group-text">°F</span>
                                             </div>
-                                        </div>
-                                        <div id="page-3" style="display: none;">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">How much sun does this crop need?</h4>
-                                            </div>
-                                            <div id="sun" class="btn-group btn-group-toggle my-3 col" data-toggle="buttons">
-                                                {% for option in cropForm.grow.form.sun %}
-                                                    <label class="btn btn-outline-info">
-                                                        {{ option }}
-                                                    </label>
-                                                {% endfor %}
+                                            <div class="input-group mb-3">
+                                                {{ plantingFormSet.form.date }}
+                                                <span class="input-group-text">week(s)</span>
+                                                <select name="beforeAfter" class="custom-select" id="id_frost">
+                                                    <option value="1">after</option>
+                                                    <option value="-">before</option>
+                                                </select>
+                                                {{ plantingFormSet.form.frost }}
                                             </div>
                                         </div>
-                                        <div id="page-4" style="display:none;">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">When should this crop be planted?</h4>
-                                            </div>
-                                            <div id="timing">
-                                                <div>
-                                                    {{ cropForm.plant.form.date }}
-                                                </div>
-                                                <span>weeks</span>
-                                                <div>
-                                                    <select name="beforeOrAfter" class="custom-select" id="beforeOrAfter">
-                                                        <option value="-1">before</option>
-                                                        <option value="1">after</option>
-                                                    </select>
-                                                </div>
-                                                <div>
-                                                    {{ cropForm.plant.form.frost }}
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" id="succession" onchange="toggleSuccession();">
-                                                    <label class="form-check-label" for="succession">
-                                                        Succession
-                                                    </label>
-                                                </div>
-                                                <div id="succession-data" style="display: none;">
-                                                    <splan>Plant every</splan>
-                                                    <input type="number" name="succession" class="form-control number"min="0" id="time-between">
-                                                    <span>weeks for</span>
-                                                    <input type="number" name="times" class="form-control number"min="0" id="times">
-                                                    <span>sessions.</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="page-5" style="display:none">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title">How should this crop be planted?</h4>
-                                            </div>
-                                            <div class="btn-group btn-group-toggle my-3 col" data-toggle="buttons" id="pattern">
-                                                {% for option in cropForm.plant.form.pattern %}
-                                                    <label class="btn btn-outline-info" for="{{ option.id_for_label }}" name="pattern">
-                                                        {{ option }}
-                                                    </label>
-                                                {% endfor %}
-                                            </div>
-                                        </div>
-                                        <div id="page-6" style="display:none;">
-                                            <splan class="mx-3 text-center input-group-addon">Harvest</splan>
-                                            <div class="col-xs-12">
-                                                {{ cropForm.harvest.form.begin }}
-                                            </div>
-                                            <splan class="mx-3 text-center input-group-addon">to</splan>
-                                            <div class="col-xs-12">
-                                                {{ cropForm.harvest.form.end }}
-                                            </div>
-                                            <splan class="mx-3 text-center input-group-addon">days after planting</splan>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <div class="text-right" role="group" aria-label="Prev/Next">
-                                                <button id="previousPlantingScheme" type="button" class="btn btn-primary" onclick="window.parent.previousPlantingScheme();" style="display: none;">Previous</button>
-                                                <button id="nextPlantingScheme" type="button" class="btn btn-primary" onclick="window.parent.nextPlantingScheme();">Next</button>
-                                                <button id="submitPlantingScheme" type="button" class="btn btn-primary" onclick="window.parent.addPlantingScheme();" style="display: none;" data-toggle="modal" data-target="#addPlantingScheme">Submit</button>
+                                        <div id="succession-form-1">
+                                            <div class="input-group mb-3">
+                                                <input class="form-check-input" type="checkbox" id="succession-1">
+                                                <label class="form-check-label" for="succession-1">
+                                                    Succession?
+                                                </label>
+                                                <span class="input-group-text">Then every</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {{ cropForm.plant.management_form }}
-                        {{ cropForm.grow.management_form }}
-                        {{ cropForm.harvest.management_form }}
+                        <div class="modal fade" id="care-modal">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Planting Instructions</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="care-form-1">
+                                            <div class="input-group mb-3">
+                                                {{ careFormSet.form.water }}
+                                                <span class="input-group-text">Inches of water per week</span>
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                {{ careFormSet.form.soil }}
+                                                {{ careFormSet.form.sun }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="harvest-modal">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Planting Instructions</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div id="harvest-form-1">
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">Harvest</span>
+                                                {{ harvestFormSet.form.variety }}
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                {{ harvestFormSet.form.begin }}
+                                                <span class="input-group-text">to</span>
+                                                {{ harvestFormSet.form.end }}
+                                                <span class="input-group-text">weeks after planting/transplanting</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {{ plantingFormSet.management_form }}
+                        {{ careFormSet.management_form }}
                         {% csrf_token %}
                     </form>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 {% endblock %}
 

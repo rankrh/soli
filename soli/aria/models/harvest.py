@@ -1,5 +1,5 @@
 from aria.models.crop import Crop
-from aria.models.grow import Grow
+from aria.models.cropCare import CropCare
 from aria.models.planting import Planting
 from aria.models.validation.harvestValidation import CROP_TYPE
 from django.core.validators import MinValueValidator
@@ -13,7 +13,7 @@ class Harvest(models.Model):
 
     crop = models.ForeignKey(Crop,on_delete=models.CASCADE)
     plant = models.ForeignKey(Planting, on_delete=models.CASCADE)
-    grow = models.ForeignKey(Grow, on_delete=models.CASCADE)
+    care = models.ForeignKey(CropCare, on_delete=models.CASCADE)
     begin = models.IntegerField(
         null=True,
         validators=[

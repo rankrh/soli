@@ -19,7 +19,13 @@ class Planting(models.Model):
         default=None
     )
 
-    spacing = models.SmallIntegerField(
+    rowSpacing = models.SmallIntegerField(
+        validators=[
+            MinValueValidator(0)
+        ]
+    )
+
+    interRowSpacing = models.SmallIntegerField(
         validators=[
             MinValueValidator(0)
         ]

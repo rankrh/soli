@@ -3,7 +3,7 @@ import aria.models.plot
 import aria.models.crop
 import aria.models.genus
 import aria.models.planting
-import aria.models.grow
+import aria.models.cropCare
 import aria.models.harvest
 import aria.models.species
 import aria.models.subspecies

@@ -3,7 +3,6 @@ LEAFY_GREEN = "G"
 FRUIT = "F"
 NUT = "N"
 SEED = "S"
-LEGUME = "L"
 
 CROP_TYPE = [
 	(ROOT, "Root"),
@@ -11,5 +10,4 @@ CROP_TYPE = [
 	(FRUIT, "Fruit"),
 	(NUT, "Nut"),
 	(SEED, "Seed"),
-	(LEGUME, "Legume")
 ]

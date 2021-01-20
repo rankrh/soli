@@ -5,11 +5,11 @@ TRELLIS = "T"
 SCATTER = "S"
 
 GROW_STYLE = [
-    (ROW, "Row"),
-    (MOUND, "Mound"),
-    (POT, "Pot"),
-    (TRELLIS, "Trellis"),
-    (SCATTER, "Scatter"),
+    (ROW, "in rows"),
+    (MOUND, "in mounds"),
+    (POT, "in pots"),
+    (TRELLIS, "on trellises"),
+    (SCATTER, "by scattering"),
 ]
 
 GROW_STYLE_FORMATTED = [

@@ -1,6 +1,3 @@
-from aria.forms.formSets.grow import GrowFormSet
-from aria.forms.formSets.harvest import HarvestFormSet
-from aria.forms.formSets.plant import PlantFormSet
 from aria.models.validation.cropValidation import ORGANIC_CHOICES, HYBRID_CHOICES, TREATED_CHOICES
 from django import forms
 
@@ -9,10 +6,7 @@ from ..models.crop import Crop
 from ..models.species import Species
 
 
-class CreateCropForm(forms.ModelForm):
-    plant = PlantFormSet()
-    grow = GrowFormSet()
-    harvest = HarvestFormSet()
+class CropForm(forms.ModelForm):
 
     class Meta:
         model = Crop
@@ -22,7 +16,8 @@ class CreateCropForm(forms.ModelForm):
             "company",
             "organic",
             "treated",
-            "hybrid"
+            "hybrid",
+            "species"
         ]
 
         widgets = {
@@ -35,13 +30,15 @@ class CreateCropForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
-        super(CreateCropForm, self).__init__(*args, **kwargs)
+        super(CropForm, self).__init__(*args, **kwargs)
         self.fields["species"] = forms.ModelChoiceField(
             queryset=Species.objects.all(),
             widget=createSelectInput("Crop species", ["font-italic"]),
         )
         self.fields["species"].empty_label = "Species"
 
-    def saveCrop(self, request):
+    def saveCrop(self):
         crop = self.save(commit=False)
         crop.save()
+
+        return crop

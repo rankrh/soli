@@ -4,7 +4,7 @@ from .models.climate import Climate
 from .models.crop import Crop
 from .models.farm import Farm
 from .models.genus import Genus
-from .models.grow import Grow
+from .models.cropCare import CropCare
 from .models.harvest import Harvest
 from .models.livestock import Livestock
 from .models.planting import Planting
@@ -25,7 +25,7 @@ admin.site.register(Plot)
 admin.site.register(Crop)
 admin.site.register(Genus)
 admin.site.register(Planting)
-admin.site.register(Grow)
+admin.site.register(CropCare)
 admin.site.register(Harvest)
 admin.site.register(Species)
 admin.site.register(Subspecies)

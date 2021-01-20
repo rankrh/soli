@@ -1,31 +1,30 @@
-from aria.forms.templates.templates import createNumberInput, createRadioInput
+from aria.forms.templates.templates import createNumberInput, createRadioInput, createSelectInput
 from aria.models.crop import Crop
 from aria.models.harvest import Harvest
-from aria.models.validation.harvestValidation import CROP_TYPE
-from django.forms import inlineformset_factory
-
-harvestFormset = inlineformset_factory(
-    Crop,
-    Harvest,
-    fields=[
-        "begin",
-        "end",
-        "variety"
-    ],
-    extra=1,
-    can_delete=False,
-    widgets={
-        "begin": createNumberInput("Start Date", 1),
-        "end": createNumberInput("End Date", 1),
-        "variety": createRadioInput(choices=CROP_TYPE)
-    }
-)
+from django.forms import inlineformset_factory, ModelForm
 
 
-class HarvestFormSet(harvestFormset):
+class HarvestForm(ModelForm):
+    class Meta:
+        model = Harvest
 
-    def __init__(self, *args, **kwargs):
-        super(HarvestFormSet, self).__init__(*args, **kwargs)
+        fields = [
+            "begin",
+            "end",
+            "variety"
+        ]
 
-        for form in self.forms:
-            form.empty_permitted = False
+        widgets = {
+            "begin": createNumberInput(1),
+            "end": createNumberInput(1),
+            "variety": createSelectInput()
+        }
+
+    def saveHarvest(self, crop):
+        harvest = self.save(commit=False)
+        harvest.crop = crop
+
+        harvest.save()
+
+
+HarvestFormSet = inlineformset_factory(Crop, Harvest, HarvestForm, extra=1)
