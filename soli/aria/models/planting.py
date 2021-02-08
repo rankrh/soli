@@ -53,12 +53,14 @@ class Planting(models.Model):
         default=None
     )
 
-    transplant = models.ForeignKey(
-        "self",
+    transplant = models.SmallIntegerField(
         null=True,
         blank=True,
-        db_column="pl_transplant",
-        on_delete=models.CASCADE)
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(52)
+        ]
+    )
 
     temperature = models.SmallIntegerField(
         null=True,

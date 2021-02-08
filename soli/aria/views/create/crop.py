@@ -27,10 +27,18 @@ def createCrop(request):
         return HttpResponseRedirect("/aria/display/crops")
 
     else:
+        plantingFormset = PlantingFormSet()
+
+        print(plantingFormset)
+        print(plantingFormset.form.__dict__)
+        print(plantingFormset.__dict__)
+
         context = {
             "cropForm": CropForm(),
-            "plantingFormSet": PlantingFormSet(),
+            "plantingFormSet": plantingFormset,
             "careFormSet": CropCareFormSet(),
             "harvestFormSet": HarvestFormSet()
         }
+
+
         return render(request, "aria/create/crop.html", context)

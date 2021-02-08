@@ -21,11 +21,12 @@ class CropCareForm(ModelForm):
             "water": createNumberInput(placeholder="Inches of water", minimum=0)
         }
 
-        def saveCare(self, crop):
-            care = self.save(commit=False)
-            care.crop = crop
+    def saveCare(self, crop, planting):
+        care = self.save(commit=False)
+        care.crop = crop
+        care.plant = planting
 
-            care.save()
+        care.save()
 
 
 CropCareFormSet = inlineformset_factory(Crop, CropCare, CropCareForm, extra=1)

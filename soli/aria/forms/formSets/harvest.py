@@ -20,9 +20,10 @@ class HarvestForm(ModelForm):
             "variety": createSelectInput()
         }
 
-    def saveHarvest(self, crop):
+    def saveHarvest(self, crop, planting):
         harvest = self.save(commit=False)
         harvest.crop = crop
+        harvest.plant = planting
 
         harvest.save()
 

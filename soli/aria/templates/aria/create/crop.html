@@ -42,7 +42,7 @@
                             Add Harvest Information<New></New>
                         </button>
                         <div class="row justify-content-end mb-3">
-                            <button class="btn btn-primary">Submit</button>
+                            <button class="btn btn-primary" onclick="$('#crop-form').submit()">Submit</button>
                         </div>
                         <div class="modal fade" id="planting-modal">
                             <div class="modal-dialog modal-dialog-scrollable">
@@ -54,47 +54,10 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <div id="planting-form-1">
-                                            <div class="input-group mb-3">
-                                                {{ plantingFormSet.form.location }}
-                                                {{ plantingFormSet.form.pattern }}
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                {{ plantingFormSet.form.interRowSpacing }}
-                                                <span class="input-group-text">Inches between plants</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                {{ plantingFormSet.form.rowSpacing }}
-                                                <span class="input-group-text">Inches between rows</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                {{ plantingFormSet.form.germination }}
-                                                <span class="input-group-text">Days to gemination</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                {{ plantingFormSet.form.depth }}
-                                                <span class="input-group-text">Inches below surface</span>
-                                                {{ plantingFormSet.form.temperature }}
-                                                <span class="input-group-text">°F</span>
-                                            </div>
-                                            <div class="input-group mb-3">
-                                                {{ plantingFormSet.form.date }}
-                                                <span class="input-group-text">week(s)</span>
-                                                <select name="beforeAfter" class="custom-select" id="id_frost">
-                                                    <option value="1">after</option>
-                                                    <option value="-">before</option>
-                                                </select>
-                                                {{ plantingFormSet.form.frost }}
-                                            </div>
-                                        </div>
-                                        <div id="succession-form-1">
-                                            <div class="input-group mb-3">
-                                                <input class="form-check-input" type="checkbox" id="succession-1">
-                                                <label class="form-check-label" for="succession-1">
-                                                    Succession?
-                                                </label>
-                                                <span class="input-group-text">Then every</span>
-                                            </div>
+                                        <div id="planting-form">
+                                            {% for form in plantingFormSet %}
+                                                {% include './plantinginformation.html' with form=form formNum=forloop.counter0 %}
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
@@ -116,8 +79,10 @@
                                                 <span class="input-group-text">Inches of water per week</span>
                                             </div>
                                             <div class="input-group mb-3">
-                                                {{ careFormSet.form.soil }}
                                                 {{ careFormSet.form.sun }}
+                                            </div>
+                                            <div class="input-group mb-3">
+                                                {{ careFormSet.form.soil }}
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +116,7 @@
                             </div>
                         </div>
                         {{ plantingFormSet.management_form }}
-                        {{ careFormSet.management_form }}
+                        {{ harvestFormSet.management_form }}
                         {% csrf_token %}
                     </form>
                 </div>

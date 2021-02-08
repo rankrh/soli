@@ -19,7 +19,8 @@ class PlantingForm(forms.ModelForm):
             "location",
             "temperature",
             "germination",
-            "depth"
+            "depth",
+            "transplant"
         ]
 
         widgets = {
@@ -31,7 +32,9 @@ class PlantingForm(forms.ModelForm):
             "location": createSelectInput(),
             "temperature": createNumberInput("Ideal soil temperature"),
             "germination": createNumberInput("Days to germination", 0),
-            "depth": createNumberInput("Seed depth", 0)
+            "depth": createNumberInput("Seed depth", 0),
+            "transplant": createNumberInput("Weeks", 0)
+
         }
 
     def savePlanting(self, crop):

@@ -12,8 +12,6 @@ class Harvest(models.Model):
         app_label = "aria"
 
     crop = models.ForeignKey(Crop,on_delete=models.CASCADE)
-    plant = models.ForeignKey(Planting, on_delete=models.CASCADE)
-    care = models.ForeignKey(CropCare, on_delete=models.CASCADE)
     begin = models.IntegerField(
         null=True,
         validators=[
