@@ -2,6 +2,7 @@ import json
 
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views import View
 
 from aria.models.farm import Farm
 from aria.models.plotDetailsList import PlotDetailsList
@@ -10,23 +11,59 @@ from aria.models.shape import Shape
 from aria.models.validation.plotTypes import TYPES
 
 
-def createPlot(request):
-    if request.user:
-        current_user = request.user
-        plotDetailsList = PlotDetailsList(current_user)
-        farm = Farm.objects.filter(owner=current_user).first()
+class PlotCreator(View):
 
-        context = {
-            "plots": plotDetailsList.getParentPlots().jsonify(),
-            "farm": farm
+    page = ""
+    template = ""
+    user = None
+    context = {}
+    plotDetailsList = None
+    farm = None
+
+    def get(self, request):
+        self.user = request.user
+        self.page = request.path
+        if self.user.id is not None:
+            self.plotDetailsList = PlotDetailsList(request.user)
+            self.farm = Farm.objects.filter(owner=request.user).first()
+            self.template = "aria/create/plot.html"
+            self.context = {
+                "plots": self.plotDetailsList.getPlotDetailsForUser().jsonify(),
+                "farm": self.farm,
+                "plotTypes": self.plotTypes
             }
-    else:
-        context = {}
 
-    return render(request, "aria/create/plot.html", context)
+        else:
+
+        return render(request, self.template, self.context)
+
+    def post(self, request):
+        pass
+
+
+def createPlot(request):
+
+    page = ""
+    context = {}
+    if request.user.id is not None:
+        plotDetailsList = PlotDetailsList(request.user)
+        farm = Farm.objects.filter(owner=request.user).first()
+
+        if request.method == "GET":
+            page = "aria/create/plot.html"
+            context = {
+                "plots": plotDetailsList.getParentPlots().jsonify(),
+                "farm": farm
+            }
+
+        elif request.method == "POST":
+            return addPlotDetails(request)
+
+    return render(request, page, context)
 
 
 def addPlotDetails(request):
+
     if request.user.id is not None:
         plotDetailsList = PlotDetailsList(owner=request.user)
 

@@ -2,7 +2,7 @@ import json
 
 from django.shortcuts import get_object_or_404
 
-from aria.forms.plot import PlotForm
+from aria.forms.plotForm import PlotForm
 from aria.models.farm import Farm
 from aria.models.plot import Plot
 from aria.models.point import Point

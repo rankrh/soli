@@ -1,4 +1,4 @@
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from aria.models.crop import Crop
@@ -8,11 +8,22 @@ from aria.models.validation.careValidation import SUN
 
 class CropCare(models.Model):
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
-    plant = models.ForeignKey(Planting, on_delete=models.CASCADE)
-    sun = models.CharField(
-        choices=SUN,
-        max_length=1,
-        default=None
+    sunMin = models.SmallIntegerField(
+        null=True,
+        blank=True,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(24)
+        ]
+    )
+
+    sunMax = models.SmallIntegerField(
+        null=True,
+        blank=True,
+        validators=[
+            MinValueValidator(0),
+            MaxValueValidator(24)
+        ]
     )
 
     soil = models.CharField(
@@ -22,7 +33,14 @@ class CropCare(models.Model):
     )
 
     water = models.SmallIntegerField(
+        null=True,
+        blank=True,
         validators=[
             MinValueValidator(0)
         ]
+    )
+
+    frostHardy = models.BooleanField(
+        null=True,
+        blank=True
     )

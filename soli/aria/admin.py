@@ -19,6 +19,7 @@ from .models.forest import Forest
 from .models.pasture import Pasture
 from .models.silvopasture import Silvopasture
 from .models.garden import Garden
+from .models.plantingDate import PlantingDate
 
 admin.site.register(Shape)
 admin.site.register(Plot)
@@ -39,3 +40,4 @@ admin.site.register(Silvopasture)
 admin.site.register(Forest)
 admin.site.register(Climate)
 admin.site.register(Farm)
+admin.site.register(PlantingDate)

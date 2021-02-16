@@ -2,7 +2,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 
-from aria.forms.farm import CreateFarmForm
+from aria.forms.farmForm import CreateFarmForm
 from aria.models.farm import Farm
 
 

@@ -1,59 +1,23 @@
 <div class="input-group mb-3">
-    {{ form.location }}
-</div>
-<div class="input-group mb-3">
-    {{ form.date }}
-    <span class="input-group-text">week(s)</span>
-    <select name="beforeAfter" class="custom-select" id="before_after_frost-1">
-        <option value="1">after</option>
-        <option value="-">before</option>
-    </select>
-    {{ form.frost }}
-</div>
-<div class="input-group mb-3" id="transplant-{{ formNum }}">
-    <span class="input-group-text">Transplant after</span>
-    {{ form.date }}
-    <span class="input-group-text">week(s)</span>
-</div>
-<div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
-    <button class="btn btn-primary" value="additional" name="more-plantings-{{formNum}}" id="additional-{{formNum}}" onclick="addPlanting();">
-        Add Additional Planting
-    </button>
-</div>
-</div>
-<div id="succession">
-    <div class="input-group mb-3" id="additional-planting-details" style="display: none;">
-        <input type="number" name="date" value="1" class="form-control number" placeholder="None" min="0" max="None"
-               required="" id="additional_date-1">
-        <span class="input-group-text">week(s)</span>
-        <select name="beforeAfter" class="custom-select" id="additional-before-after-1">
-            <option value="1">after</option>
-            <option value="-">before</option>
-        </select>
-        <select name="frost" class="custom-select" placeholder="" id="additional-frost-1">
-            <option value="F">First frost</option>
-            <option value="L">Last frost</option>
-        </select>
-        <button type="button" class="btn btn-danger">
-            <span>&times;</span>
-        </button>
-    </div>
-</div>
-<hr/>
-<div class="input-group mb-3">
     <span class="input-group-text">Plant</span>
     {{ form.pattern }}
 </div>
 <div class="input-group mb-3">
-    {{ form.interRowSpacing }}
+    {{ form.interRowSpacingMin }}
+    <span class="input-group-text">to</span>
+    {{ form.interRowSpacingMax }}
     <span class="input-group-text">Inches between plants</span>
 </div>
 <div class="input-group mb-3">
-    {{ form.rowSpacing }}
+    {{ form.rowSpacingMin }}
+    <span class="input-group-text">to</span>
+    {{ form.rowSpacingMax }}
     <span class="input-group-text">Inches between rows</span>
 </div>
 <div class="input-group mb-3">
-    {{ form.germination }}
+    {{ form.germinationStart }}
+    <span class="input-group-text">to</span>
+    {{ form.germinationEnd }}
     <span class="input-group-text">Days to germination</span>
 </div>
 <div class="input-group mb-3">
@@ -61,6 +25,8 @@
     <span class="input-group-text">Inches below surface</span>
 </div>
 <div class="input-group mb-3">
-    {{ form.temperature }}
+    {{ form.soilTemperatureMin }}
+    <span class="input-group-text">to</span>
+    {{ form.soilTemperatureMax }}
     <span class="input-group-text">°F</span>
 </div>

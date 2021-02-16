@@ -1,0 +1,22 @@
+<div id="all-planting-dates">
+    <h4>Planting Dates</h4>
+    <div id="id_plantingdate_set-{{formNum}}-dates">
+        <div class="input-group mb-3">
+            {{ form.location }}
+            {{ form.date }}
+            <span class="input-group-text">week(s)</span>
+            {{ form.beforeOrAfter }}
+            {{ form.frost }}
+        </div>
+        <div class="input-group mb-3" id="id_plantingdate_set-{{ formNum }}-transplant">
+            <span class="input-group-text">Transplant after</span>
+            {{ form.date }}
+            <span class="input-group-text">week(s)</span>
+        </div>
+    </div>
+</div>
+<div class="btn-group btn-group-toggle mb-3 float-right" data-toggle="buttons">
+    <button class="btn btn-primary" value="additional" name="more-plantings-{{formNum}}" id="additional-{{formNum}}" onclick="addPlanting();">
+        Add Additional Planting
+    </button>
+</div>

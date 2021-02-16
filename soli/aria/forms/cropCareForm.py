@@ -1,7 +1,6 @@
 from aria.forms.templates.templates import createRadioInput, createTextInput, createNumberInput, createSelectInput
 from aria.models.crop import Crop
 from aria.models.cropCare import CropCare
-from aria.models.validation.careValidation import SUN
 from django.forms import inlineformset_factory, ModelForm
 
 
@@ -10,21 +9,22 @@ class CropCareForm(ModelForm):
         model = CropCare
 
         fields = [
-            "sun",
+            "sunMin",
+            "sunMax",
             "soil",
             "water"
         ]
 
         widgets = {
-            "sun": createSelectInput(),
+            "sunMin": createNumberInput(minimum=0, maximum=24),
+            "sunMax": createNumberInput(minimum=0, maximum=24),
             "soil": createTextInput(placeholder="Soil type"),
             "water": createNumberInput(placeholder="Inches of water", minimum=0)
         }
 
-    def saveCare(self, crop, planting):
+    def saveCare(self, crop):
         care = self.save(commit=False)
         care.crop = crop
-        care.plant = planting
 
         care.save()
 

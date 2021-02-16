@@ -15,15 +15,14 @@ class HarvestForm(ModelForm):
         ]
 
         widgets = {
-            "begin": createNumberInput(1),
-            "end": createNumberInput(1),
+            "begin": createNumberInput(minimum=1),
+            "end": createNumberInput(minimum=1),
             "variety": createSelectInput()
         }
 
-    def saveHarvest(self, crop, planting):
+    def saveHarvest(self, crop):
         harvest = self.save(commit=False)
         harvest.crop = crop
-        harvest.plant = planting
 
         harvest.save()
 

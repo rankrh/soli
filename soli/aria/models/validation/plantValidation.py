@@ -30,7 +30,6 @@ FROST = [
 
 INSIDE = "I"
 OUTSIDE = "O"
-TRANSPLANT = "T"
 
 LOCATION = [
     (INSIDE, "Start inside"),

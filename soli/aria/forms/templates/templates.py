@@ -35,16 +35,18 @@ def createTextArea(placeholder, rows=5):
     return forms.Textarea(attributes)
 
 
-def createSelectInput(placeholder="", extraClasses=[]):
+def createSelectInput(placeholder="", extraClasses=[], attrs={}):
 
     classes = "custom-select"
     for extraClass in extraClasses:
         classes += " " + str(extraClass)
 
     attributes = {
-        'class': classes,
-        'placeholder': placeholder,
-    }
+        **{
+            'class': classes,
+            'placeholder': placeholder,
+        },
+        **attrs}
 
     return forms.Select(attrs=attributes)
 

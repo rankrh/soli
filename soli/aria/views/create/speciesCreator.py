@@ -1,6 +1,6 @@
-from aria.forms.genus import CreateGenusForm
+from aria.forms.genusForm import CreateGenusForm
 from django.http import HttpResponseRedirect, JsonResponse
-from aria.forms.species import CreateSpeciesForm, subspeciesFormSet
+from aria.forms.speciesForm import CreateSpeciesForm, subspeciesFormSet
 from django.shortcuts import render
 
 
