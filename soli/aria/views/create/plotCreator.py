@@ -2,43 +2,12 @@ import json
 
 from django.http import JsonResponse
 from django.shortcuts import render
-from django.views import View
 
 from aria.models.farm import Farm
 from aria.models.plotDetailsList import PlotDetailsList
 from aria.models.plotDetails import PlotDetails
 from aria.models.shape import Shape
 from aria.models.validation.plotTypes import TYPES
-
-
-class PlotCreator(View):
-
-    page = ""
-    template = ""
-    user = None
-    context = {}
-    plotDetailsList = None
-    farm = None
-
-    def get(self, request):
-        self.user = request.user
-        self.page = request.path
-        if self.user.id is not None:
-            self.plotDetailsList = PlotDetailsList(request.user)
-            self.farm = Farm.objects.filter(owner=request.user).first()
-            self.template = "aria/create/plot.html"
-            self.context = {
-                "plots": self.plotDetailsList.getPlotDetailsForUser().jsonify(),
-                "farm": self.farm,
-                "plotTypes": self.plotTypes
-            }
-
-        else:
-
-        return render(request, self.template, self.context)
-
-    def post(self, request):
-        pass
 
 
 def createPlot(request):
