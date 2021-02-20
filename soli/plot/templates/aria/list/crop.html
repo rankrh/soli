@@ -1,0 +1,32 @@
+{% extends "aria/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="card m-5">
+        <div class="card-body">
+            <div class="accordion" id="cropTable">
+                {% for crop in crops %}
+                <div class="card z-depth-0 bordered">
+                    <div aria-controls="crop_{{ crop.pk }}_body" aria-expanded="true" class="card-header"
+                         data-target="#crop_{{ crop.pk }}_body" data-toggle="collapse"
+                         id="crop_{{ crop.pk }}_heading">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" type="button">
+                                {{ crop.name }} - {{ crop.species }}
+                            </button>
+                        </h5>
+                    </div>
+                    <div aria-labelledby="crop_{{ crop.pk }}_heading" class="collapse" id="crop_{{ crop.pk }}_body">
+                        <div class="card-body">
+                            {{ crop.description }}
+                            {{ crop.company }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

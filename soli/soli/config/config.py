@@ -1,5 +1,5 @@
-from configparser import ConfigParser
 import os
+from configparser import ConfigParser
 
 DIRNAME = os.path.dirname(__file__)
 FILENAME = "/soliConfig.ini"

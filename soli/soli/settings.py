@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from .config import config
+
 from django.core.exceptions import ImproperlyConfigured
+
+from .config import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,7 +41,20 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'aria.apps.AriaConfig',
+    'account',
+    'animal',
+    'crop',
+    'farm',
+    'field',
+    'forest',
+    'garden',
+    'geometry',
+    'orchard',
+    'pasture',
+    'plot',
+    'schedule',
+    'silvopasture',
+    'taxonomy',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

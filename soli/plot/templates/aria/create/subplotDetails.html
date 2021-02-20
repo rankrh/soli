@@ -1,0 +1,20 @@
+<button aria-controls="collapse-plot-{{ child.id }}" aria-expanded="true" class="list-group-item list-group-item-action" data-id="{{ child.id }}"
+        data-target="#collapse-plot-{{ child.id }}" data-toggle="collapse" id="subplot-{{child.id}}"
+        onclick="zoomToSubPlot({{child.id}})" type="button">
+    <div id="subplot-{{child.id}}-name">
+        {{ child.name }}
+    </div>
+    <div aria-labelledby="plot-details-{{ child.id }}" class="collapse" data-parent="#subplot-{{child.id}}"
+         id="collapse-plot-{{ child.id }}">
+        <div class="card-body">
+            <div id="plot-{{ child.id }}-description">
+                {{ child.get_type_display | title }}
+                {% if child.description %}
+                <p>{{ child.description }}</p>
+                {% endif %}
+            </div>
+            <div id="plot-{{ child.id }}-tools">
+            </div>
+        </div>
+    </div>
+</button>

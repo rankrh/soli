@@ -1,0 +1,28 @@
+{% load static %}
+
+{% for plot in plots %}
+{% if plot.parent is None %}
+<div %}style="display: none;" class="card" endif%} forloop.first id="plot-overview-{{ plot.id }}" if not {% {%>
+    <h3>
+        <div aria-controls="collapse-plot-{{ plot.id }}" aria-expanded="true" class="card-header plot-header text-left"
+             data-target="#collapse-plot-{{ plot.id }}" data-toggle="collapse" id="plot-{{ plot.id }}-name"
+             id="heading-{{ plot.id }}">
+            {{ plot.name }}
+        </div>
+    </h3>
+    <div class="card-body">
+        <div class="list-group" id="plot-{{ plot.id }}-subplots">
+            {% if plot.children %}
+            {% for child in plot.children %}
+            {% include './subplotDetails.html' with child=child %}
+            {% endfor %}
+            {% endif %}
+            <div %} %}style="display: none;" class="alert alert-secondary" endif id="no-plots-header" if
+                 plot.children role="alert" {% {%>
+                No Plot Data
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
