@@ -1,0 +1,61 @@
+{% extends 'pageLayout.html' %}
+{% load static %}
+    
+{% block includes %}
+    {% include "util/maps.html" %}
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/maps/initmap.js' %}" type="text/javascript"></script>
+    <script src="{% static './farm/createFarm.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block pageContent %}
+    <div class="row">
+        <div class="col-lg">
+            <form id="farm-form" class="card mb-4" method="POST">
+                {% csrf_token %}
+                <div class="card-header">
+                    <h3>
+                        Your Farm
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="input-group">
+                        {{ farmForm.name }}
+                        <div class="input-group-append">
+                            <span class="input-group-text">Est.</span>
+                        </div>
+                        {{ farmForm.year }}
+                        <div class="custom-file">
+                            {{ farmForm.logo }}
+                            <label class="custom-file-label" for="farm-logo">Logo</label>
+                        </div>
+                        <input type="hidden" name="location" id="id_location">
+                    </div>
+                </div>
+                <div class="card-body row">
+                    <div class="col-lg">
+                        <h4>Headquarters</h4>
+                        <div class="map map-md" id="map">
+                        </div>
+                    </div>
+                    <div class="col-lg">
+                        <h4>Farm Details</h4>
+                        <div class="input-group mb-3">
+                            {{ farmForm.description }}
+                        </div>
+                        <div class="input-group mb-3">
+                            {{ climateForm.zone }}
+                        <div class="input-group mb-3">
+                        <div>
+                            {{ climateForm.lastFrost }}
+                            {{ climateForm.firstFrost }}
+                        </div>
+                        <input class="btn btn-primary pull-right" type="submit" value="OK">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,9 +1,0 @@
-{% extends 'base.html' %}
-
-{% block content %}
-    {% if user.is_authenticated %}
-        {% include 'account/memberHome.html' %}
-    {% else %}
-        {% include 'account/unregisteredHome.html' %}
-    {% endif %}
-{% endblock %}

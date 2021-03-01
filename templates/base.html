@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+{% load static %}
+<html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta charset="utf-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+
+        <!-- Bootstrap CSS -->
+        <link href="{% static '/css/bootstrap/bootstrap.css' %}" rel="stylesheet"/>
+        <link href="{% static '/css/bootstrap/bootstrap-grid.css' %}" rel="stylesheet"/>
+        <link href="{% static '/css/bootstrap/bootstrap-reboot.css' %}" rel="stylesheet"/>
+
+        <!-- Aria CSS -->
+        <link href="{% static '/css/soli/style.css' %}" rel="stylesheet"/>
+
+        <!-- Utils -->
+        <script src="{% static 'js/common/math-utils.js' %}"></script>
+
+        <!--jQuery and Bootstrap js-->
+        <script src="{% static 'js/jQuery/jQuery-3.4.1.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/bootstrap/bootstrap.bundle.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/bootstrap/bootstrap.js' %} " type="text/javascript"></script>
+        <script src="{% static 'js/bootstrap/bootstrap.min.js' %} " type="text/javascript"></script>
+        <script src="{% static 'js/common/ajax.js' %}" type="text/javascript"></script>
+
+        <!-- Iconic javascript -->
+        <script src="{% static 'js/iconic/svg-injector.min.js' %}"></script>
+
+        {% block includes %}{% endblock %}
+    </head>
+    <body id="page-top">
+    <img class="iconic-sprite" src="{% static 'icons/sprite/open-iconic.svg' %}" style="display:none;"/>
+    {% block content %}{% endblock %}
+    <script>
+                // Elements to inject
+                var mySVGsToInject = document.querySelectorAll('.iconic-sprite');
+
+                // Do the injection
+                SVGInjector(mySVGsToInject);
+
+    </script>
+    {% block javascript %}{% endblock %}
+    <!--<script src="{% static 'js/common/nav.js' %}" type="text/javascript"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    </body>
+</html>
