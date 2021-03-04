@@ -11242,3 +11242,11 @@ footer.sticky-footer .copyright {
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
 }
+
+.logo-sm {
+	height: 96px;
+}
+
+.logo-md {
+	height: 128px;
+}

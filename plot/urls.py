@@ -1,7 +1,6 @@
 from django.urls import path
 
-from .views import *
-from .views.create.plotCreator import addPlotDetails, createPlot
+from farm.views.plot import addPlotDetails, createPlot, createPlotAjax, deletePlotsAjax
 
 urlpatterns = [
     path("create/plot", createPlot, name="createPlot"),

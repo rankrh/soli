@@ -1,5 +1,9 @@
 var headquarters;
 
+$(document).ready(function() {
+	initializeMap("map", [40, -100], 4, true)
+});
+
 var drawControl = new L.Control.Draw({
   	draw: {
     	polygon: false,

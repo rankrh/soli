@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 from farm.models.farm import Farm
 from geometry.models.point import Point
 from plot.forms.plotForm import PlotForm
-from plot.models.plot import Plot
+from farm.models.plot import Plot
 
 
 class PlotDetails:

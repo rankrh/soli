@@ -21,10 +21,10 @@
                     </div>
                      <div class="card-body">
                          <div class="row">
-                             <div class="col col-lg">
+                             <div class="col col-8">
                                  <div>{{ farm.climate.zone }}</div>
                              </div>
-                             <div id="farm-map-{{ farm.id }}" class="col-4 map map-sm" data-farmId="{{ farm.id }}" data-lat="{{ farm.location.lat }}" data-long="{{ farm.location.long }}">
+                             <div id="farm-map-{{ farm.id }}" class="col-md map map-md" data-farmId="{{ farm.id }}" data-lat="{{ farm.location.lat }}" data-long="{{ farm.location.long }}">
                              </div>
                          </div>
                      </div>
@@ -37,7 +37,7 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <h4>
-                        <a class="btn btn-sm btn-primary btn-circle stretched-link" href="farm/create">+</a>
+                        <a class="btn btn-sm btn-primary btn-circle stretched-link" href="{% url 'createFarm' %}">+</a>
                         Create a Farm
                     </h4>
                 </div>

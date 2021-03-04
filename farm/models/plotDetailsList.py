@@ -1,8 +1,8 @@
 from farm.models.farm import Farm
 from geometry.models.point import Point
 from geometry.models.shape import Shape
-from plot.models.plot import Plot
-from plot.models.plotDetails import PlotDetails
+from farm.models.plot import Plot
+from farm.models.plotDetails import PlotDetails
 
 
 class PlotDetailsList:

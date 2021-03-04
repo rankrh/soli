@@ -5,9 +5,9 @@ from django.shortcuts import render
 
 from farm.models.farm import Farm
 from geometry.models.shape import Shape
-from plot.models.plotDetails import PlotDetails
-from plot.models.plotDetailsList import PlotDetailsList
-from plot.models.validation.plotTypes import TYPES
+from farm.models.plotDetails import PlotDetails
+from farm.models.plotDetailsList import PlotDetailsList
+from farm.models.validation.plotTypes import TYPES
 
 
 def createPlot(request):

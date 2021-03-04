@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import CASCADE
 
 from animal.models.animal import Animal
-from plot.models.plot import Plot
+from farm.models.plot import Plot
 
 
 class Pasture(models.Model):

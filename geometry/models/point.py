@@ -15,3 +15,6 @@ class Point(models.Model):
     set = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     lat = models.FloatField()
     long = models.FloatField()
+
+    def getCoordinates(self):
+        return (self.lat, self.long)

@@ -1,6 +1,6 @@
 from django import forms
 
-from plot.models.plot import Plot
+from farm.models.plot import Plot
 
 
 class PlotForm(forms.ModelForm):

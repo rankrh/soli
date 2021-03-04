@@ -4,7 +4,7 @@ from django.db.models import CASCADE
 
 from farm.models.farm import Farm
 from geometry.models.shape import POLYGON, Shape
-from plot.models.validation.plotTypes import TYPES
+from farm.models.validation.plotTypes import TYPES
 
 
 class Plot(models.Model):
