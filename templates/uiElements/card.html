@@ -1,0 +1,30 @@
+{% comment %}
+
+Params:
+    - id
+    - size:
+        - sm
+        - md
+        - lg
+        - full
+    - header
+    - content
+{% endcomment%}
+
+{% load common %}
+
+<div class="{{ size | getColumnSize }}">
+    <div class="card border-left-primary shadow mb-4">
+        {% if header %}
+            <div id="{{ id }}-header" class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">{{ header }}</h6>
+            </div>
+        {% endif %}
+        <div id="{{ id }}-content" class="card-body">
+            {% block content %}{% endblock %}
+            {% if content %}
+                {{ content }}
+            {% endif %}
+        </div>
+    </div>
+</div>

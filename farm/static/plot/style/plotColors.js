@@ -1,4 +1,4 @@
-const plotColors = {
+var plotColors = {
 	"unknown": {
 		"name": "Unknown",
 		"fill": "#808780",

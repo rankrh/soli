@@ -8,10 +8,10 @@ from farm.models.plotDetails import PlotDetails
 class PlotDetailsList:
     plotDetails = []
 
-    def __init__(self, owner):
+    def __init__(self, owner, farm=None):
         self.plotDetails = []
         self.owner = owner
-        self.farm = Farm.objects.filter(owner=self.owner)
+        self.farm = farm if farm is not None else Farm.objects.filter(owner=self.owner)
 
     def getPlotDetailsByPlotName(self, name):
 

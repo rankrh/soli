@@ -17,4 +17,4 @@ class Point(models.Model):
     long = models.FloatField()
 
     def getCoordinates(self):
-        return (self.lat, self.long)
+        return self.lat, self.long

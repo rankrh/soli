@@ -91,24 +91,6 @@
 </div>
 {{ plots | json_script:"plots-data" }}
 {{ farm.id | json_script:"farm-data" }}
-<div class="modal" id="create-farm-modal">
-    <div class="modal-dialog">
-        <div class="modal-content" id="farm-modal-content">
-            <div class="modal-header" id="create-farm-header">
-                <h5 class="modal-title">Farm Details</h5>
-            </div>
-            <div class="modal-body" id="create-farm-modal-body">
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="saveFarm()" type="button">Save</button>
-            </div>
-        </div>
-        <div class="modal-content spinner-grow text-success" id="farm-spinner" role="status" style="display: none">
-            <span class="sr-only">Saving Farm Details...</span>
-        </div>
-    </div>
-</div>
-
 <div class="modal" id="edit-plot-modal">
     <input id="edit-plot-id" type="hidden">
     <div class="modal-dialog">

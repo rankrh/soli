@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'plot',
     'schedule',
     'taxonomy',
+    'utility',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

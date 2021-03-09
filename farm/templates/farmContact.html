@@ -1,0 +1,51 @@
+{% extends 'uiElements/card.html' %}
+
+{% block content %}
+<div class="card-body contact text-center">
+    <ul class="text-lg-left list-unstyled">
+        {% if farm.address %}
+            <li>
+                <p><i class="fas fa-map-marker-alt pr-1"></i>{{ farm.address }}</p>
+                {% if farm.address2 %}
+                    <p>{{ farm.address2 }}</p>
+                {% endif %}
+                {% if farm.city and farm.state %}
+                    <p>{{ farm.city}}, {{ farm.state }}
+                {% elif farm.city %}
+                    <p>{{ farm.city }}</p>
+                {% elif farm.state %}
+                    <p>{{ farm.state }}</p>
+                {% endif %}
+            </li>
+        {% endif %}
+        {% if farm.phone %}
+            <li>
+                <p><i class="fas fa-phone pr-1"></i>{{ farm.phone }}</p>
+            </li>
+        {% endif %}
+        {% if farm.email %}
+            <li>
+                <p><i class="fas fa-envelope pr-1"></i>{{ farm.email }}</p>
+            </li>
+        {% endif %}
+    </ul>
+    <hr class="hr-light my-4">
+    <ul class="list-inline text-center list-unstyled">
+        <li class="list-inline-item">
+            <a class="p-2 fa-lg tw-ic">
+                <i class="fab fa-twitter"></i>
+            </a>
+         </li>
+        <li class="list-inline-item">
+            <a class="p-2 fa-lg li-ic">
+                <i class="fab fa-linkedin-in"> </i>
+            </a>
+        </li>
+        <li class="list-inline-item">
+            <a class="p-2 fa-lg ins-ic">
+                <i class="fab fa-instagram"> </i>
+            </a>
+        </li>
+    </ul>
+</div>
+{% endblock %}

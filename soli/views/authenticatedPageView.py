@@ -17,7 +17,7 @@ class AuthenticatedPageView(View):
         self.user = self.request.user
 
         if not self.userIsAuthenticated():
-            raise ValidationError
+            raise ValidationError("Unauthenticated User")
 
     def userIsAuthenticated(self):
         return self.user.id is not None

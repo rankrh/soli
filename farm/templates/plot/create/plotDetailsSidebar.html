@@ -2,7 +2,7 @@
 
 {% for plot in plots %}
 {% if plot.parent is None %}
-<div %}style="display: none;" class="card" endif%} forloop.first id="plot-overview-{{ plot.id }}" if not {% {%>
+<div class="card" id="plot-overview-{{ plot.id }}">
     <h3>
         <div aria-controls="collapse-plot-{{ plot.id }}" aria-expanded="true" class="card-header plot-header text-left"
              data-target="#collapse-plot-{{ plot.id }}" data-toggle="collapse" id="plot-{{ plot.id }}-name"
