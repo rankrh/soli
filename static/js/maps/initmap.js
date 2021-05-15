@@ -3,8 +3,8 @@ L.mapbox.accessToken = 'pk.eyJ1IjoicmFua3JoIiwiYSI6ImNraDFnbjlrcTAxZjMydG4xN2dyN
 function initializeMap(container, coordinates, zoom, search) {
 
 	var map = L.mapbox.map(container)
-    .setView(coordinates, zoom)
-    .addLayer(L.mapbox.styleLayer('mapbox://styles/rankrh/ckhcwof2w17fa19o2uo8pmzdr'));
+        .setView(coordinates, zoom)
+        .addLayer(L.mapbox.styleLayer('mapbox://styles/rankrh/ckhcwof2w17fa19o2uo8pmzdr'));
 
     if (search) {
     	map.addControl(L.mapbox.geocoderControl('mapbox.places'));

@@ -1,15 +1,12 @@
-<div id="add-farm" class="row">
-    <div class="col-lg">
-        <div class="card mb-4">
-            <div class="card-header">
-                <h4>
-                    <a class="btn btn-sm btn-primary btn-circle stretched-link" href="{% url 'createFarm' %}">+</a>
-                    Create a Farm
-                </h4>
-            </div>
-            <div class="card-body">
-                Your farms are the broadest level of organization.  They contain all information about the fields, gardens, and animals.
-            </div>
-        </div>
-    </div>
-</div>
+{% extends 'uiElements/card.html' %}
+
+{% block header %}
+    <h4>
+        <a class="btn btn-sm btn-primary btn-circle stretched-link" href="{% url 'createFarm' %}">+</a>
+        Create a Farm
+    </h4>
+{% endblock %}
+
+{% block content %}
+    <p>Your farms are the broadest level of organization.  They contain all information about the fields, gardens, and animals.</p>
+{% endblock %}

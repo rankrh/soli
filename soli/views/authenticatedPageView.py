@@ -1,20 +1,12 @@
 from django.core.exceptions import ValidationError
-from django.shortcuts import render
-from django.views import View
 
 from farm.models.farm import Farm
+from soli.views.pageView import PageView
 
 
-class AuthenticatedPageView(View):
-
-    request = None
-    context = {}
-    page = None
-    user = None
-
+class AuthenticatedPageView(PageView):
     def construct(self, request):
-        self.request = request
-        self.user = self.request.user
+        super().construct(request)
 
         if not self.userIsAuthenticated():
             raise ValidationError("Unauthenticated User")
@@ -26,7 +18,7 @@ class AuthenticatedPageView(View):
         if self.userIsAuthenticated():
             farms = Farm.objects.filter(owner=self.user)
 
-            self.context["user"] = self.user,
+            self.context["user"] = self.user
             self.context["farms"] = farms
 
-            return render(self.request, page, self.context)
+            return super().renderPage(page)

@@ -30,7 +30,8 @@ map.on('draw:edited', function (e) {
 
 map.on('draw:deleted', function (e) {
 
-	var plotsToDelete = []
+	let plotsToDelete = [];
+
 	e.layers.eachLayer(function(layer) {
 		plotsToDelete.push(layer.id)
 	});
@@ -112,6 +113,7 @@ function findPlotArea(plot) {
 }
 
 function deletePlots(plots) {
+
 	$.ajax({
 		type: "POST",
 		url: "plots/delete",
@@ -119,7 +121,7 @@ function deletePlots(plots) {
 		data : {
 			csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val(),
 			farm: farmId,
-			plots: plotsToDelete
+			plots: JSON.stringify(plots)
 		}
 	});
 }
@@ -166,4 +168,6 @@ function zoomToBounds(boundedLayer) {
 
 function savePlotDetails(plotId) {
 
+    persistPlot(basePlots.getLayer(2));
+    $("#edit-plot-modal").modal("hide");
 }

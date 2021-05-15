@@ -9,9 +9,11 @@ $(document).ready(function() {
 function loadMaps() {
 	$("div[id^='farm-map-']").each(function() {
 		var farm = $(this);
+        let coordinates = getFarmCoordinates(farm);
+        let valid = coordinatesAreValid(coordinates);
 
-        coordinates = getFarmCoordinates(farm);
-        zoom = getZoom(coordinates);
+        let zoom = valid ? 16 : 4;
+        coordinates = valid ? coordinates : [40, -100];
 
     	maps[farm.attr("data-farmId")] = L.mapbox.map(this)
 			.setView(coordinates, zoom)
@@ -20,18 +22,12 @@ function loadMaps() {
 	});
 }
 
-function getZoom(coordinates) {
-
-    return coordinates == [40, -100] ? 4 : 16;
-}
-
 function getFarmCoordinates(farm) {
 
-    coordinates = [farm.attr("data-lat"), farm.attr("data-long")]
+    return [farm.attr("data-lat"), farm.attr("data-long")]
+}
 
-    if (!coordinates) {
-        coordinates = [40, -100];
-    }
+function coordinatesAreValid(coordinates) {
 
-	return coordinates;
+    return coordinates.filter(x => x !== "").length == 2;
 }

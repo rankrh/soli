@@ -1,17 +1,45 @@
-<div class="card mb-4">
-    <a href="{% url 'farmOverview' farm.slug %}" class="card-header">
-        <h4>{{ farm }}</h4>
-        {{ farm.logo }}
+{% extends 'uiElements/card.html' %}
+
+{% block header %}
+    <a id="{{ farm.name }}" href="{% url 'farmOverview' farm.slug %}" class="text-decoration-none d-sm-flex align-items-center justify-content-between mb-4">
+        {% if farm.logo %}
+            <div class="col-2 mx-auto">
+                <img class="img-fluid" src="{{ farm.logo.url }}" alt="{{ farm.name }} Logo"/>
+            </div>
+        {% endif %}
+        <div class="col-md-12 col-lg-10 text-center text-lg-left align-self-center">
+            <h2>
+                {{ farm }}
+            </h2>
+        </div>
     </a>
-     <div class="card-body">
-         <div class="row">
-             <div class="col col-8">
-                 {% if farm.climate.zone %}
-                     <div>{{ farm.climate.zone }}</div>
-                 {% endif %}
-             </div>
-             <div id="farm-map-{{ farm.id }}" class="col-md map map-md" data-farmId="{{ farm.id }}" data-lat="{{ farm.location.lat }}" data-long="{{ farm.location.long }}">
-             </div>
-         </div>
-     </div>
- </div>
+{% endblock %}
+
+{% if cards %}
+    {% block content %}
+        <div class="row">
+            {% if "overview" in cards %}
+                {% if farm.description %}
+                    {% include 'uiElements/card.html' with id="description" size="lg" content=farm.description %}
+                {% endif %}
+                {% if climate.zone %}
+                    {% include "climate/templates/climate_overview.html" with size="md" climate=farm.climate %}
+                {% endif %}
+            {% endif %}
+
+            {% if "contact" in cards %}
+                {% if farm.address or farm.phone or farm.email %}
+                    {% include 'contactCard.html' with size="md" farm=farm header="contact" id="contact"%}
+                {% endif %}
+            {% endif %}
+
+            {% if "map" in cards %}
+                <div class="row">
+                     <div id="farm-map-{{ farm.id }}" class="col-md map map-md" data-farmId="{{ farm.id }}" data-lat="{{ farm.location.lat }}" data-long="{{ farm.location.long }}">
+                     </div>
+                </div>
+            {% endif %}
+        </div>
+
+    {% endblock %}
+{% endif %}

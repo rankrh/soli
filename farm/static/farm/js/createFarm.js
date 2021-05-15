@@ -1,17 +1,14 @@
 var headquarters;
-
-$(document).ready(function() {
-	initializeMap("map", [40, -100], 4, true)
-});
+var map = initializeMap("map", [40, -100], 4, true)
 
 var drawControl = new L.Control.Draw({
-  	draw: {
-    	polygon: false,
-    	polyline: false,
-    	rectangle: false,
-    	circle: false,
-    	marker: true
-  	}
+    draw: {
+        polygon: false,
+        polyline: false,
+        rectangle: false,
+        circle: false,
+        marker: true
+    }
 }).addTo(map);
 
 map.on('draw:created', function (e) {

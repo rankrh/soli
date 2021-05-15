@@ -14,12 +14,10 @@ Params:
 {% load common %}
 
 <div class="{{ size | getColumnSize }}">
-    <div class="card border-left-primary shadow mb-4">
-        {% if header %}
-            <div id="{{ id }}-header" class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">{{ header }}</h6>
-            </div>
-        {% endif %}
+    <div class="card mb-4 {% if shadow %}border-left-primary shadow {% endif %}">
+        <div id="{{ id }}-header" class="card-header py-3 ">
+            {% block header %}{% endblock %}
+        </div>
         <div id="{{ id }}-content" class="card-body">
             {% block content %}{% endblock %}
             {% if content %}

@@ -1,6 +1,10 @@
-from soli.pageRender import renderPage
+from soli.views.authenticatedPageView import AuthenticatedPageView
 
 
-def home(request):
+class Home(AuthenticatedPageView):
+    def get(self, request):
 
-    return renderPage(request, "account/home.html")
+        self.construct(request)
+        self.context["cards"] = ["overview"]
+
+        return self.renderPage("account/home.html")
