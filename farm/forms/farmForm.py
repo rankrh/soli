@@ -1,8 +1,12 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
 from farm.models.farm import Farm
-from formTemplates.inputFields import createImageUpload, createTextInput, createYearInput, createTextArea
+from formTemplates.inputFields import (
+    createImageUpload,
+    createTextInput,
+    createYearInput,
+    createTextArea,
+)
 from geometry.models.point import Point
 
 
@@ -12,18 +16,13 @@ class FarmForm(forms.ModelForm):
 
     class Meta:
         model = Farm
-        fields = [
-            "name",
-            "logo",
-            "year",
-            "description"
-        ]
+        fields = ["name", "logo", "year", "description"]
 
         widgets = {
             "name": createTextInput(placeholder="Farm Name", id="plot-name"),
             "logo": createImageUpload(id="plot-logo"),
             "year": createYearInput(),
-            "description": createTextArea()
+            "description": createTextArea(),
         }
 
     def saveFarm(self, climate):
@@ -42,10 +41,13 @@ class FarmForm(forms.ModelForm):
             self.location.save()
 
     def getCoordinates(self):
+        coordinates = []
+
         try:
-            coordinates = [float(coord) for coord in self.data["location"].split(",")]
+            location = self.data["location"].split(",")
+            if len(location) == 2:
+                coordinates = [float(coord) for coord in location]
         except Exception as e:
-            coordinates = []
             print(e)
 
         return coordinates

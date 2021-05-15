@@ -2,11 +2,10 @@
 {% load static %}
 
 {% block includes %}
-    {% include "util/maps.html" %}
+    {% include "maps.html" %}
 {% endblock %}
 
 {% block javascript %}
-    <!--<script src="{% static 'js/maps/initmap.js' %}" type="text/javascript"></script>-->
     <script src="{% static './account/memberHome.js' %}" type="text/javascript"></script>
 {% endblock %}
 
@@ -14,37 +13,9 @@
     <div id="my-farms" class="row">
         <div class="col-lg">
             {% for farm in farms %}
-                 <div class="card mb-4">
-                    <div class="card-header">
-                        <h4>{{ farm }}</h4>
-                        {{ farm.logo }}
-                    </div>
-                     <div class="card-body">
-                         <div class="row">
-                             <div class="col col-8">
-                                 <div>{{ farm.climate.zone }}</div>
-                             </div>
-                             <div id="farm-map-{{ farm.id }}" class="col-md map map-md" data-farmId="{{ farm.id }}" data-lat="{{ farm.location.lat }}" data-long="{{ farm.location.long }}">
-                             </div>
-                         </div>
-                     </div>
-                 </div>
+                 {% include "farm/templates/farmCard.html" with farm=farm %}
             {% endfor %}
         </div>
     </div>
-    <div id="add-farm" class="row">
-        <div class="col-lg">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h4>
-                        <a class="btn btn-sm btn-primary btn-circle stretched-link" href="{% url 'createFarm' %}">+</a>
-                        Create a Farm
-                    </h4>
-                </div>
-                <div class="card-body">
-                    Your farms are the broadest level of organization.  They contain all information about the fields, gardens, and animals.
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include "farm/templates/createFarmBanner.html" %}
 {% endblock %}

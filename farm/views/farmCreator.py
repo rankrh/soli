@@ -19,10 +19,7 @@ class FarmCreator(View):
         self.request = request
 
         if self.request.user.id is not None:
-            self.context = {
-                "farmForm": FarmForm(),
-                "climateForm": ClimateForm()
-            }
+            self.context = {"farmForm": FarmForm(), "climateForm": ClimateForm()}
         return renderPage(request, "createFarm.html", self.context)
 
     def post(self, request):
@@ -32,13 +29,20 @@ class FarmCreator(View):
             self.createFarm()
             self.createFarmClimate()
 
-            if self.farmDataIsValid():
+            if self.farm.is_valid():
                 self.saveAllFarmData()
 
         return HttpResponseRedirect("/")
 
     def farmDataIsValid(self):
-        return self.farm.is_valid() and self.climate.is_valid()
+
+        valid = self.farm.is_valid() and self.climate.is_valid()
+
+        if not valid:
+            print(self.farm.errors)
+            print(self.climate.errors)
+
+        return valid
 
     def saveAllFarmData(self):
         self.climate = self.climate.saveClimate(self.farm)

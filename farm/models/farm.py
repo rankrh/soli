@@ -12,21 +12,20 @@ YEAR_CHOICES = [(year, year) for year in range(1900, date.today().year + 1)]
 
 
 class Farm(models.Model):
-
     class Meta:
         db_table = "farm"
         app_label = "farm"
         unique_together = ["owner", "name"]
 
     owner = models.ForeignKey(User, on_delete=CASCADE)
-    location = models.ForeignKey(Point, on_delete=CASCADE)
+    location = models.ForeignKey(Point, on_delete=CASCADE, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True)
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, default=f"My Farm")
     logo = models.ImageField(null=True, blank=True, upload_to="logos")
-    climate = models.ForeignKey(Climate, on_delete=CASCADE)
+    climate = models.ForeignKey(Climate, on_delete=CASCADE, blank=True, null=True)
     year = models.IntegerField(choices=YEAR_CHOICES, default=datetime.now().year)
     slug = models.SlugField(unique=False)
-    phone = models.IntegerField(null=True, blank=True) # placeholder
+    phone = models.IntegerField(null=True, blank=True)  # placeholder
     email = models.EmailField(null=True, blank=True)
     address = models.CharField(max_length=128, null=True, blank=True)
     address2 = models.CharField(max_length=128, null=True, blank=True)

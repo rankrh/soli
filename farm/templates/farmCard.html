@@ -1,0 +1,17 @@
+<div class="card mb-4">
+    <a href="{% url 'farmOverview' farm.slug %}" class="card-header">
+        <h4>{{ farm }}</h4>
+        {{ farm.logo }}
+    </a>
+     <div class="card-body">
+         <div class="row">
+             <div class="col col-8">
+                 {% if farm.climate.zone %}
+                     <div>{{ farm.climate.zone }}</div>
+                 {% endif %}
+             </div>
+             <div id="farm-map-{{ farm.id }}" class="col-md map map-md" data-farmId="{{ farm.id }}" data-lat="{{ farm.location.lat }}" data-long="{{ farm.location.long }}">
+             </div>
+         </div>
+     </div>
+ </div>

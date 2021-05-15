@@ -5,17 +5,13 @@ from climate.models.hardinessZone import HardinessZone
 
 
 class Climate(models.Model):
-
     class Meta:
         db_table = "climate"
         app_label = "climate"
 
     zone = models.ForeignKey(
-        HardinessZone,
-        null=False,
-        blank=False,
-        on_delete=CASCADE,
-        default=13)
+        HardinessZone, null=True, blank=True, on_delete=CASCADE, default=13
+    )
 
-    firstFrost = models.DateField()
-    lastFrost = models.DateField()
+    firstFrost = models.DateField(null=True, blank=True)
+    lastFrost = models.DateField(null=True, blank=True)

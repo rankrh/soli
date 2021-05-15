@@ -10,14 +10,28 @@ function loadMaps() {
 	$("div[id^='farm-map-']").each(function() {
 		var farm = $(this);
 
-		maps[farm.attr("data-farmId")] = L.mapbox.map(this)
-			.setView(getFarmCoordinates(farm), 16)
+        coordinates = getFarmCoordinates(farm);
+        zoom = getZoom(coordinates);
+
+    	maps[farm.attr("data-farmId")] = L.mapbox.map(this)
+			.setView(coordinates, zoom)
 			.addLayer(L.mapbox.styleLayer('mapbox://styles/rankrh/ckhcwof2w17fa19o2uo8pmzdr'));
 
 	});
 }
 
+function getZoom(coordinates) {
+
+    return coordinates == [40, -100] ? 4 : 16;
+}
+
 function getFarmCoordinates(farm) {
 
-	return [farm.attr("data-lat"), farm.attr("data-long")];
+    coordinates = [farm.attr("data-lat"), farm.attr("data-long")]
+
+    if (!coordinates) {
+        coordinates = [40, -100];
+    }
+
+	return coordinates;
 }
