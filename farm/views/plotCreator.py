@@ -1,12 +1,10 @@
 import json
 
-from django.http import JsonResponse
 from django.shortcuts import render
 
 from farm.models.farm import Farm
 from farm.models.plot import Plot
 from farm.models.plotDetailsList import PlotDetailsList
-from farm.models.validation.plotTypes import TYPES
 from geometry.models.point import Point
 from geometry.models.shape import Shape, POLYGON
 from soli.views.authenticatedPageView import AuthenticatedPageView
@@ -33,14 +31,12 @@ class PlotCreator(AuthenticatedPageView):
         self.context["farm"] = farm
         self.context["plots"] = plots.getParentPlots().jsonify()
 
-        return self.renderPage("plotOverview.html")
+        return self.render("plotOverview.html")
 
     def post(self, request, slug):
         self.params = request.POST
         farm = Farm.objects.filter(
-            slug=slug,
-            owner=request.user,
-            id=self.params["farm"]
+            slug=slug, owner=request.user, id=self.params["farm"]
         ).get()
 
         if self.plotExists():
@@ -48,11 +44,7 @@ class PlotCreator(AuthenticatedPageView):
             points, shape = self.updatePlotBoundaries(plot)
         else:
             points, shape = self.createPlotBoundaries()
-            plot = Plot(
-                owner=request.user,
-                farm=farm,
-                shape=shape
-            )
+            plot = Plot(owner=request.user, farm=farm, shape=shape)
 
         savePlotDetails(plot, points, shape)
         self.context["plot"] = plot
@@ -73,10 +65,6 @@ class PlotCreator(AuthenticatedPageView):
         vertexes = []
         points1 = json.loads(self.params["points"])[0]
         for point in points1:
-            vertexes.append(Point(
-                shape=shape,
-                lat=point["lat"],
-                long=point["lng"]
-            ))
+            vertexes.append(Point(shape=shape, lat=point["lat"], long=point["lng"]))
         points = vertexes
         return points, shape

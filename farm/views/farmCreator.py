@@ -1,13 +1,12 @@
 from django.http import HttpResponseRedirect
-from django.views import View
 
 from climate.forms.climateForm import ClimateForm
 from farm.forms.farmForm import FarmForm
 
-from soli.pageRender import renderPage
+from soli.views.authenticatedPageView import AuthenticatedPageView
 
 
-class FarmCreator(View):
+class FarmCreator(AuthenticatedPageView):
     farm = None
     climate = None
     request = None
@@ -16,14 +15,15 @@ class FarmCreator(View):
     context = {}
 
     def get(self, request):
-        self.request = request
+        self.construct(request)
 
         if self.request.user.id is not None:
-            self.context = {"farmForm": FarmForm(), "climateForm": ClimateForm()}
-        return renderPage(request, "createFarm.html", self.context)
+            self.context["farmForm"] = FarmForm()
+            self.context["climateForm"] = ClimateForm()
+        return self.render("createFarm.html")
 
     def post(self, request):
-        self.request = request
+        self.construct(request)
 
         if self.request.user.id is not None:
             self.createFarm()

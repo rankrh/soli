@@ -14,4 +14,4 @@ class FarmOverview(AuthenticatedPageView):
 
         self.context["cards"] = ["map", "contact", "overview"]
 
-        return self.renderPage("farmOverview.html")
+        return self.render("farmOverview.html")

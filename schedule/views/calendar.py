@@ -1,10 +1,11 @@
 from soli.views.authenticatedPageView import AuthenticatedPageView
 
 
-class Home(AuthenticatedPageView):
+class Calendar(AuthenticatedPageView):
     def get(self, request):
-
         self.construct(request)
-        self.context["cards"] = ["overview"]
 
-        return self.render("account/home.html")
+        return self.render("calendar.html")
+
+    def post(self):
+        pass

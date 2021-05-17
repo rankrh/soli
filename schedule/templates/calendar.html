@@ -1,0 +1,13 @@
+{% extends 'pageLayout.html' %}
+{% load static %}
+
+{% block includes %}
+    <script src="{% static 'js/utility/date/moment.js' %}"></script>
+    <link href="{% static 'css/fullcalendar-5.7.0/lib/main.css' %}" rel="stylesheet"/>
+    <script src="{% static 'js/fullcalendar-5.7.0/lib/main.js' %}"></script>
+    <script src="{% static './schedule/js/calendar.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block pageContent %}
+    <div id="calendar"></div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'pageLayout.html' %}
+{% load static %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block name %}Crops{% endblock %}
+
+{% block pageContent %}
+    {% for crop in crops %}
+        {{ crop }}
+    {% endfor %}
+{% endblock %}

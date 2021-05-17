@@ -5,11 +5,15 @@ from django.conf.urls.static import static
 from soli import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('', include("account.urls")),
+    path("", include("account.urls")),
+    path("accounts/", include("django.contrib.auth.urls")),
     path("plot/", include("plot.urls")),
-    path("myfarms/", include("farm.urls"))
+    path("myfarms/", include("farm.urls")),
+    path("calendar/", include("schedule.urls")),
+    path("seedbank/", include("seedbank.urls")),
+    path("herd/", include("herd.urls")),
+    path("admin/crop/", include("crop.urls")),
+    path("admin/", admin.site.urls),
 ]
 
 if settings.DEBUG:
