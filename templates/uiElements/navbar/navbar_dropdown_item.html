@@ -1,0 +1,6 @@
+<a class="collapse-item"
+   href="{% if item.url_params %}
+            {% url item.url item.url_params|join:' ' %}
+         {% else %}
+           {% url item.url %}
+         {% endif %}">{{ item.name }}</a>

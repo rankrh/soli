@@ -21,6 +21,7 @@ class Species(AdministratorPageView):
         self.construct(request)
 
         createSpeciesForm = CreateSpeciesForm(request.POST)
+
         if createSpeciesForm.is_valid():
             createSpeciesForm.saveSpecies(request)
             return self.redirect("/admin/crop/")

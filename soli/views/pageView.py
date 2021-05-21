@@ -4,14 +4,10 @@ from django.views import View
 
 
 class PageView(View):
-    request = None
-    context = {}
-    page = None
-    user = None
-
     def construct(self, request):
         self.request = request
         self.user = self.request.user
+        self.context = {}
 
     def render(self, page):
         return render(self.request, page, self.context)

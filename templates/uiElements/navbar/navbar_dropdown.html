@@ -1,0 +1,10 @@
+<div id="collapse-{{ section.id }}"
+        class="collapse"
+        aria-labelledby="{{ section.id }}"
+        data-bs-parent="#accordionSidebar">
+    <div class="bg-white py-2 collapse-inner rounded">
+        {% for subsection in section.subsections %}
+            {% include 'uiElements/navbar/navbar_dropdown_section.html' with section=subsection %}
+        {% endfor %}
+    </div>
+</div>

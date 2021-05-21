@@ -1,0 +1,32 @@
+{% extends 'uiElements/card.html' %}
+
+{% block header %}
+    <h4>General Information</h4>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row mb-3">
+        <div class="col">
+            {{ cropForm.name }}
+        </div>
+        <div class="col input-group">
+            {{ cropForm.species }}
+            <div class="input-group-append">
+                <a class="btn btn-primary" href="{% url 'addSpecies' %}" role="button">Add New
+                    <New></New>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-6 pull-right">
+            {{ cropForm.company }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            {{ cropForm.description }}
+        </div>
+    </div>
+{% endblock %}

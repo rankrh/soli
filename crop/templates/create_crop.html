@@ -9,95 +9,22 @@
 
 {% block pageContent %}
 <div class="container">
-    <div class="card m-5">
-        <div class="card-body">
-            <div class="container">
-                <form id="crop-form" method="POST">
-                    <h4>General Information</h4>
-                    <div class="row mb-3">
-                        <div class="col">
-                            {{ cropForm.name }}
-                        </div>
-                        <div class="col input-group">
-                            {{ cropForm.species }}
-                            <div class="input-group-append">
-                                <a class="btn btn-primary" href="{% url 'addSpecies' %}" role="button">Add New
-                                    <New></New>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-6 pull-right">
-                            {{ cropForm.company }}
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col">
-                            {{ cropForm.description }}
-                        </div>
-                    </div>
-                    <hr/>
-                    <div>
-                        <h4>Planting Instructions</h4>
-                    </div>
-                    <div>
-                        <div id="planting-form">
-                            {% for form in plantingFormSet %}
-                            {% include './plantinginformation.html' with form=form formNum=forloop.counter0 %}
-                            {% endfor %}
-                        </div>
-                        <hr/>
-                        <div id="planting-date-form">
-                            {% for form in plantingDateFormSet %}
-                            {% include './plantingdateinformation.html' with form=form formNum=forloop.counter0 %}
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div>
-                        <h4>Care Instructions</h4>
-                    </div>
-                    <div id="care-form-1">
-                        <div class="input-group mb-3">
-                            {{ careFormSet.form.water }}
-                            <span class="input-group-text">Inches of water per week</span>
-                        </div>
-                        <div class="input-group mb-3">
-                            {{ careFormSet.form.sunMin }}
-                            <span class="input-group-text">to</span>
-                            {{ careFormSet.form.sunMax }}
-                        </div>
-                        <div class="input-group mb-3">
-                            {{ careFormSet.form.soil }}
-                        </div>
-                    </div>
-                    <div>
-                        <h4>Harvest Instructions</h4>
-                    </div>
-                    <div id="harvest-form-1">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Harvest</span>
-                            {{ harvestFormSet.0.variety }}
-                        </div>
-                        <div class="input-group mb-3">
-                            {{ harvestFormSet.0.begin }}
-                            <span class="input-group-text">to</span>
-                            {{ harvestFormSet.0.end }}
-                            <span class="input-group-text">weeks after planting/transplanting</span>
-                        </div>
-                    </div>
-                    <div class="row justify-content-end mb-3">
-                        <button class="btn btn-primary" onclick="$('#crop-form').submit()">Submit</button>
-                    </div>
-                    {{ plantingFormSet.management_form }}
-                    {{ plantingDateFormSet.management_form }}
-                    {{ careFormSet.management_form }}
-                    {{ harvestFormSet.management_form }}
-                    {% csrf_token %}
-                </form>
-            </div>
+    <form class="mb-5" id="crop-form" method="POST">
+        <div id="crop-information" class="row justify-content-center accordion">
+            {% include 'details/general_information_card.html' with size="lg" crop=crop id="general-information" accordion=True show=True parent="crop-information" %}
+            {% include 'details/planting_information_card.html' with size="lg" planting=planting.0 plantingDate=plantingDate.0 id="planting-information" accordion=True parent="crop-information" %}
+            {% include 'details/care_information_card.html' with size="lg" care=care.0 id="care-information" accordion=True parent="crop-information" %}
+            {% include 'details/harvest_information_card.html' with size="lg" harvest=harvest.0 id="harvest-information" accordion=True parent="crop-information" %}
         </div>
-    </div>
+        <div class="row justify-content-center">
+            <button class="btn btn-primary" onclick="$('#crop-form').submit()">Create Crop</button>
+        </div>
+        {{ planting.management_form }}
+        {{ plantingDate.management_form }}
+        {{ care.management_form }}
+        {{ harvest.management_form }}
+        {% csrf_token %}
+    </form>
 </div>
 {% endblock %}
 

@@ -1,0 +1,4 @@
+{% include 'uiElements/navbar/navbar_section_header.html' with section=section %}
+{% if section.subsections %}
+    {% include 'uiElements/navbar/navbar_dropdown.html' with section=section %}
+{% endif %}

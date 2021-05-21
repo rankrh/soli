@@ -7,7 +7,21 @@
 {% block name %}Crops{% endblock %}
 
 {% block pageContent %}
-    {% for crop in crops %}
-        {{ crop }}
-    {% endfor %}
+    <div class="row">
+        <div class="col-lg-9">
+            {% for sp in species %}
+                {{ sp }}
+                {% for crop in sp.crop_set.all %}
+                    {{ crop }}
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div class="col-lg-3">
+            <div class="accordion" id="species-sidebar">
+                {% for sp in species %}
+                    {% include 'species_sidebar.html' with id=sp.id group="species" species=sp parent="species-sidebar"  %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

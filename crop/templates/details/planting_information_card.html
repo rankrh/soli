@@ -1,0 +1,43 @@
+{% extends 'uiElements/card.html' %}
+{% block header %}
+    <h4>Planting Instructions</h4>
+{% endblock %}
+
+{% block content %}
+    <div class="input-group mb-3">
+        <span class="input-group-text">Plant</span>
+        {{ planting.pattern }}
+    </div>
+    <div class="input-group mb-3">
+        {{ planting.interRowSpacingMin }}
+        <span class="input-group-text">to</span>
+        {{ planting.interRowSpacingMax }}
+        <span class="input-group-text">Inches between plants</span>
+    </div>
+    <div class="input-group mb-3">
+        {{ planting.rowSpacingMin }}
+        <span class="input-group-text">to</span>
+        {{ planting.rowSpacingMax }}
+        <span class="input-group-text">Inches between rows</span>
+    </div>
+    <div class="input-group mb-3">
+        {{ planting.germinationStart }}
+        <span class="input-group-text">to</span>
+        {{ planting.germinationEnd }}
+        <span class="input-group-text">Days to germination</span>
+    </div>
+    <div class="input-group mb-3">
+        {{ planting.depth }}
+        <span class="input-group-text">Inches below surface</span>
+    </div>
+    <div class="input-group mb-3">
+        {{ planting.soilTemperatureMin }}
+        <span class="input-group-text">to</span>
+        {{ planting.soilTemperatureMax }}
+        <span class="input-group-text">°F</span>
+    </div>
+    <hr class="mb-3"/>
+    <div id="planting-date-planting">
+        {% include './plantingdateinformation.html' with plantingDate=plantingDate plantingNum=forloop.counter0 %}
+    </div>
+{% endblock %}

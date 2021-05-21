@@ -1,15 +1,10 @@
-<div id="plot-details-{{ plot.id }}" class="accordion-item" data-plot="{{ plot.id }}">
-    <h3 class="accordion-header" id="plot-{{plot.id}}-heading" data-toggle="collapse" data-target="#plot-{{plot.id}}-collapse" aria-expanded="true" aria-controls="plot-{{plot.id}}-collapse">
-        <button class="btn btn-block text-left" type="button">
-            {{ plot.name }}
-        </button>
-    </h3>
-    <div id="plot-{{plot.id}}-collapse" class="accordion collapse" aria-labelledby="plot-{{plot.id}}-heading" data-parent="#plots-sidebar">
-        <div class="card-body">
-            {% if plot.description %}
-                {{ plot.description }}
-            {% endif %}
-        </div>
-    </div>
-</div>
-<hr/>
+{% extends 'uiElements/accordion_menu.html' %}
+
+{% block title %}
+    {{ plot.name }}
+{% endblock %}
+{% block body %}
+    {% if plot.description %}
+        {{ plot.description }}
+    {% endif %}
+{% endblock %}

@@ -20,69 +20,9 @@
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
                 <!-- Nav Item - Dashboard -->
-                <li class="nav-item">
-                    <a class="nav-link" href="/">
-                        <i class="fas fa-fw fa-home"></i>
-                        <span>Home</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{% url 'calendar' %}">
-                        <i class="fas fa-fw fa-calendar-alt"></i>
-                        <span>Garden Schedule</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{% url 'seedbank' %}">
-                        <i class="fas fa-fw fa-seedling"></i>
-                        <span>Seed Bank</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link collapsed" href="{% url 'herd' %}">
-                        <i class="fas fa-fw fa-horse"></i>
-                        <span>Animals</span>
-                    </a>
-                </li>
-
-                {% if user.is_staff %}
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapse-admin" aria-expanded="true" aria-controls="collapse-admin">
-                            <i class="fas fa-fw fa-tools"></i>
-                            <span>Administration</span>
-                        </a>
-                        <div id="collapse-admin" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                            <div class="bg-white py-2 collapse-inner rounded">
-                                <h6 class="collapse-header">Crops</h6>
-                                <a class="collapse-item" href="{% url 'listCrops' %}">All Crops</a>
-                                <a class="collapse-item" href="{% url 'addCrop' %}">Add Crop</a>
-                                <a class="collapse-item" href="{% url 'addSpecies' %}">Add Species</a>
-                                <div class="collapse-divider"></div>
-                                <h6 class="collapse-header">Livestock</h6>
-                                <a class="collapse-item" href="blank.html">Blank Page</a>
-                            </div>
-                        </div>
-                    </li>
-                {% endif %}
-
-                {% if farms %}
-                    <hr class="sidebar-divider">
-                    <div class="sidebar-heading">
-                        My Farms
-                    </div>
-                    {% for farm in farms %}
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapse-{{ farm.slug }}" aria-expanded="true" aria-controls="collapse-{{ farm.slug }}">
-                                <span>{{ farm.name }}</span>
-                            </a>
-                            <div id="collapse-{{ farm.slug }}" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                                <div class="bg-white py-2 collapse-inner rounded">
-                                    <a class="collapse-item" href="{% url 'farmOverview' farm.slug %}">Overview</a>
-                                    <a class="collapse-item" href="{% url 'plotOverview' farm.slug %}">Plots</a>
-                                </div>
-                            </div>
-                        </li>
-                    {% endfor %}
-                {% endif %}
+                {% for section in sidebar.sections %}
+                    {% include 'uiElements/navbar/navbar_section.html' with section=section %}
+                {% endfor %}
 
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">

@@ -12,7 +12,7 @@ class Genus(AdministratorPageView):
         self.construct(request)
 
         response = {"errors": []}
-        if request.is_ajax() and request.method == "POST":
+        if request.is_ajax():
             createGenusForm = CreateGenusForm(request.POST)
             if createGenusForm.is_valid():
                 genus = createGenusForm.saveGenus(request)

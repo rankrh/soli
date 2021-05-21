@@ -51,9 +51,9 @@ class CropCreator(AuthenticatedPageView):
         self.construct(request)
 
         self.context["cropForm"] = CropForm()
-        self.context["plantingFormSet"] = PlantingFormSet()
-        self.context["plantingDateFormSet"] = PlantingDateFormSet()
-        self.context["careFormSet"] = CropCareFormSet()
-        self.context["harvestFormSet"] = HarvestFormSet()
+        self.context["planting"] = PlantingFormSet()
+        self.context["plantingDate"] = PlantingDateFormSet()
+        self.context["care"] = CropCareFormSet()
+        self.context["harvest"] = HarvestFormSet()
 
         return self.render("create_crop.html")

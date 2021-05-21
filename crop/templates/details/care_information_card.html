@@ -1,0 +1,21 @@
+{% extends 'uiElements/card.html' %}
+{% block header %}
+    <h4>Care Instructions</h4>
+{% endblock %}
+
+{% block content %}
+    <div id="care-form-1">
+        <div class="input-group mb-3">
+            {{ care.water }}
+            <span class="input-group-text">Inches of water per week</span>
+        </div>
+        <div class="input-group mb-3">
+            {{ care.sunMin }}
+            <span class="input-group-text">to</span>
+            {{ care.sunMax }}
+        </div>
+        <div class="input-group mb-3">
+            {{ care.soil }}
+        </div>
+    </div>
+{% endblock %}

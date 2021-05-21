@@ -1,0 +1,17 @@
+{% if section.subsections or section.section_groups %}
+    <hr class="sidebar-divider"/>
+    {% if section.heading %}
+        <div class="sidebar-heading">
+            {{ section.heading }}
+        </div>
+    {% endif %}
+{% endif %}
+<li class="nav-item{% if section.subsections %} active{% endif %}" id="{{ section.id }}">
+    {% if section.section_groups %}
+        {% for section in section.section_groups %}
+            {% include 'uiElements/navbar/navbar_section_body.html' with section=section %}
+        {% endfor %}
+    {% else %}
+        {% include 'uiElements/navbar/navbar_section_body.html' with section=section %}
+    {% endif %}
+</li>

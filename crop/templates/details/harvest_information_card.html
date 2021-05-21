@@ -1,0 +1,19 @@
+{% extends 'uiElements/card.html' %}
+{% block header %}
+    <h4>Harvest Instructions</h4>
+{% endblock %}
+
+{% block content %}
+    <div id="harvest-form-1">
+        <div class="input-group mb-3">
+            <span class="input-group-text">Harvest</span>
+            {{ harvest.variety }}
+        </div>
+        <div class="input-group mb-3">
+            {{ harvest.begin }}
+            <span class="input-group-text">to</span>
+            {{ harvest.end }}
+            <span class="input-group-text">weeks after planting/transplanting</span>
+        </div>
+    </div>
+{% endblock %}

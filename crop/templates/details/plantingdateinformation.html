@@ -1,16 +1,16 @@
 <div id="all-planting-dates">
-    <h4>Planting Dates</h4>
+    <h4 class="mb-3">Dates</h4>
     <div id="id_plantingdate_set-{{formNum}}-dates">
         <div class="input-group mb-3">
-            {{ form.location }}
-            {{ form.date }}
+            {{ plantingDate.location }}
+            {{ plantingDate.date }}
             <span class="input-group-text">week(s)</span>
-            {{ form.beforeOrAfter }}
-            {{ form.frost }}
+            {{ plantingDate.beforeOrAfter }}
+            {{ plantingDate.frost }}
         </div>
         <div class="input-group mb-3" id="id_plantingdate_set-{{ formNum }}-transplant">
             <span class="input-group-text">Transplant after</span>
-            {{ form.date }}
+            {{ plantingDate.date }}
             <span class="input-group-text">week(s)</span>
         </div>
     </div>

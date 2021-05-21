@@ -3,13 +3,10 @@ from .genus import Genus
 
 
 class Species(models.Model):
-
     class Meta:
         db_table = "species"
         app_label = "taxonomy"
-        unique_together = (
-            "id", "genus"
-        )
+        unique_together = ("id", "genus")
 
     name = models.CharField(max_length=30)
     common_name = models.CharField(max_length=30, null=True)

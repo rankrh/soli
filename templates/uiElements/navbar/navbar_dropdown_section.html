@@ -1,0 +1,7 @@
+{% if section.title %}
+    <h6 class="collapse-header">{{ section.title }}</h6>
+{% endif %}
+{% for subsection in section.subsections %}
+    {% include 'uiElements/navbar/navbar_dropdown_item.html' with item=subsection %}
+{% endfor %}
+<div class="collapse-divider"></div>

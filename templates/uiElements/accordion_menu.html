@@ -1,0 +1,21 @@
+<div id="{{ group }}-details-{{ id }}" class="accordion-item" data-plot="{{ id }}">
+    <h3 class="accordion-header"
+            id="{{ group }}-{{ id }}-heading"
+            data-toggle="collapse"
+            data-target="#{{ group }}-{{ id }}-collapse"
+            aria-expanded="true"
+            aria-controls="{{ group }}-{{ id }}-collapse">
+        <button class="accordion-button" type="button">
+            {% block title %}{% endblock %}
+        </button>
+    </h3>
+    <div id="{{ group }}-{{ id }}-collapse"
+            class="accordion-collapse collapse"
+            aria-labelledby="{{ group }}-{{ id }}-heading"
+            data-parent="#{{ parent }}">
+        <div class="card-body">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+</div>
+<hr/>

@@ -15,10 +15,30 @@ Params:
 
 <div class="{{ size | getColumnSize }}">
     <div class="card mb-4 {% if shadow %}border-left-primary shadow {% endif %}">
-        <div id="{{ id }}-header" class="card-header py-3 ">
+        <div id="{{ id }}-header" class="card-header py-3"
+             {% if accordion %}
+                 data-toggle="collapse"
+                 data-target="#{{ id }}-content"
+                 aria-expanded="true"
+                 aria-controls="{{ id }}-content"
+             {% endif %}>
             {% block header %}{% endblock %}
         </div>
-        <div id="{{ id }}-content" class="card-body">
+        <div id="{{ id }}-content"
+             class="card-body
+                {% if accordion %}
+                    collapse
+                    {% if show %}
+                        show
+                    {% endif %}
+                {% endif %}"
+                {% if accordion %}
+                    aria-labelledby="{{ id }}-header"
+                    {% if parent %}
+                        data-parent="#{{ parent }}"
+                    {% endif %}
+                {% endif %}
+        >
             {% block content %}{% endblock %}
             {% if content %}
                 {{ content }}

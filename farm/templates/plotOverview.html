@@ -35,7 +35,7 @@
         <div class="col-lg-3">
             <div class="accordion" id="plots-sidebar">
                 {% for plot in plots %}
-                    {% include './plotSidebarDetail.html' with plot=plot %}
+                    {% include './plotSidebarDetail.html' with id=plot.id group="plot" plot=plot parent="plots-sidebar" %}
                 {% endfor %}
                 <div id="no-plot-data" {% if plots %}style="display: none"{% endif %}>
                     <h4>No Plot Data</h4>
