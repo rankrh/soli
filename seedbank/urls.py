@@ -1,7 +1,7 @@
 from django.urls import path
 
-from seedbank.views.seedbank import Seedbank
+from seedbank.views.seedbankdetail import SeedbankDetail
 
 urlpatterns = [
-    path("", Seedbank.as_view(), name="seedbank"),
+    path("", SeedbankDetail.as_view(), name="seedbank"),
 ]

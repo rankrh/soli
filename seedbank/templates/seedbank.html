@@ -1,3 +1,9 @@
 {% extends 'pageLayout.html' %}
 {% load static %}
 
+{% block pageContent %}
+    {% for seed in seedbank %}
+        {% include 'seed_details.html' with size="lg" seed=seed %}
+    {% endfor %}
+    {{ crops }}
+{% endblock %}

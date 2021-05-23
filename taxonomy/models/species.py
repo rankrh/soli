@@ -11,6 +11,7 @@ class Species(models.Model):
     name = models.CharField(max_length=30)
     common_name = models.CharField(max_length=30, null=True)
     genus = models.ForeignKey(Genus, on_delete=models.CASCADE)
+    description = models.CharField(max_length=256)
 
     def __str__(self):
         genus = str(self.genus.name)

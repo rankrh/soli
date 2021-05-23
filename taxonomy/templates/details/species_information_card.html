@@ -1,0 +1,29 @@
+{% extends 'uiElements/card.html' %}
+
+{% block header %}
+    <h4>General Information</h4>
+{% endblock %}
+
+{% block content %}
+    <div class="row mb-3">
+        <div class="input-group">
+            <div class="input-group mb-3">
+                {{ speciesForm.genus }}
+                <div class="input-group-append">
+                    <button class="btn btn-primary" data-bs-target="#createGenus" data-bs-toggle="modal" type="button">
+                        Add New
+                        <New></New>
+                    </button>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+            {{ speciesForm.name }}
+            {{ speciesForm.common_name }}
+            {{ subspecies.name }}
+            </div>
+            <div class="input-group mb-3">
+                {{ speciesForm.description }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

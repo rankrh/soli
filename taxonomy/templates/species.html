@@ -7,32 +7,17 @@
 
 {% block pageContent %}
     <div class="container">
-        <div id="like_button_container"></div>
-        <div class="card m-5">
-            <div class="card-body">
-                <form method="POST">
-                    <div class="input-group">
-                        <div class="input-group mb-3">
-                            {{ speciesForm.genus }}
-                            <div class="input-group-append">
-                                <button class="btn btn-secondary" data-target="#createGenus" data-toggle="modal"
-                                        type="button">
-                                    Add New
-                                    <New></New>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="input-group mb-3">
-                            {{ speciesForm.name }}
-                            {{ speciesForm.common_name }}
-                            {{ subspecies.name }}
-                        </div>
-                        <button class="ml-3 btn btn-primary" type="submit">Submit</button>
+        <form class="mb-5" id="species-form" method="POST">
+            <div id="species-information" class="row justify-content-center accordion">
+                {% include 'details/species_information_card.html' with size="lg" id="general-information" %}
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <button class="btn btn-primary" type="submit">Submit</button>
                     </div>
-                    {% csrf_token %}
-                </form>
+                </div>
             </div>
-        </div>
+            {% csrf_token %}
+        </form>
     </div>
     <div aria-hidden="true" aria-labelledby="exampleModalCenterTitle" class="modal" id="createGenus" role="dialog"
          tabindex="-1">

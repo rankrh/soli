@@ -11,13 +11,15 @@
 <div class="container">
     <form class="mb-5" id="crop-form" method="POST">
         <div id="crop-information" class="row justify-content-center accordion">
-            {% include 'details/general_information_card.html' with size="lg" crop=crop id="general-information" accordion=True show=True parent="crop-information" %}
-            {% include 'details/planting_information_card.html' with size="lg" planting=planting.0 plantingDate=plantingDate.0 id="planting-information" accordion=True parent="crop-information" %}
-            {% include 'details/care_information_card.html' with size="lg" care=care.0 id="care-information" accordion=True parent="crop-information" %}
-            {% include 'details/harvest_information_card.html' with size="lg" harvest=harvest.0 id="harvest-information" accordion=True parent="crop-information" %}
-        </div>
-        <div class="row justify-content-center">
-            <button class="btn btn-primary" onclick="$('#crop-form').submit()">Create Crop</button>
+            {% include 'forms/general_information_card.html' with size="lg" id="general-information" accordion=True show=True parent="crop-information" %}
+            {% include 'forms/planting_information_card.html' with size="lg" planting=planting.0 plantingDate=plantingDate.0 id="planting-information" accordion=True parent="crop-information" %}
+            {% include 'forms/care_information_card.html' with size="lg" care=care.0 id="care-information" accordion=True parent="crop-information" %}
+            {% include 'forms/harvest_information_card.html' with size="lg" harvest=harvest.0 id="harvest-information" accordion=True parent="crop-information" %}
+            <div class="col-lg-8">
+                <div class="card mb-4">
+                    <button class="btn btn-primary" onclick="$('#crop-form').submit()">Create Crop</button>
+                </div>
+            </div>
         </div>
         {{ planting.management_form }}
         {{ plantingDate.management_form }}

@@ -1,0 +1,12 @@
+<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
+  {% if header %}
+    <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+      <span class="fs-5 fw-semibold">{{ header }}</span>
+    </div>
+  {% endif %}
+  <div class="list-group list-group-flush border-bottom scrollarea">
+    {% for item in group %}
+      {% include 'uiElements/list_group/list_group_item.html' with title=item description=item.description active=forloop.first%}
+    {% endfor %}
+  </div>
+</div>

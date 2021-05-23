@@ -1,0 +1,12 @@
+{% extends 'uiElements/card.html' %}
+{% block header %}
+    <h4>{{ species }}</h4>
+{% endblock %}
+
+{% block content %}
+  <div id="species-{{ species.id }}" class="accordion">
+    {% for crop in species.crop_set.all %}
+      {% include './crop_details_accordion.html' with id=crop.id group="crop" plot=plot parent="plots-sidebar" %}
+    {% endfor %}
+  </div>
+{% endblock %}
