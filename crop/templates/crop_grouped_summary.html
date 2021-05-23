@@ -1,0 +1,9 @@
+{% extends 'layout/grouped_summary.html' %}
+
+{% block summary %}
+  {% for sp in species %}
+     <div {% if not forloop.first %}style="display: none"{% endif %}>
+        {% include 'details/crops_by_species_card.html' with size="full" species=sp %}
+     </div>
+  {% endfor %}
+{% endblock %}

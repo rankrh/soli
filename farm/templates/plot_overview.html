@@ -1,0 +1,22 @@
+{% extends 'pageLayout.html' %}
+{% load static %}
+{% load common %}
+
+{% block includes %}
+    {% include "maps.html" %}
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static './plot/style/plotColors.js' %}"></script>
+    <script src="{% static 'js/maps/initmap.js' %}" type="text/javascript"></script>
+    <script src="{% static './farm/js/plotOverview.js' %}" type="text/javascript"></script>
+{% endblock %}
+
+{% block pageContent %}
+    {{ farm.location.getCoordinates | json_script:"farm-location" }}
+    {{ farm.id | json_script:"farm-id" }}
+    {{ plots | json_script:"plots-data" }}
+    {% csrf_token %}
+    {% include 'plot_overview_card.html' with size="full" plots=farm.plot_set.all %}
+    {% include 'plot_details_modal.html' with plot=plot %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'uiElements/table/table.html' %}
+
+{% block header %}
+    {% include 'uiElements/table/table_header.html' with columns=seedbank_table_columns %}
+{% endblock %}
+{% block body %}
+    {% for seed in crop.seedbank_set.all|dictsortreversed:"year" %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ seed.year }}</td>
+        <td>{{ seed.company|default:"" }}</td>
+        <td>{{ seed.quantity }}</td>
+      </tr>
+    {% endfor %}
+{% endblock %}

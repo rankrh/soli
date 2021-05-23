@@ -31,7 +31,7 @@ class PlotCreator(AuthenticatedPageView):
         self.context["farm"] = farm
         self.context["plots"] = plots.getParentPlots().jsonify()
 
-        return self.render("plotOverview.html")
+        return self.render("plot_overview.html")
 
     def post(self, request, slug):
         self.params = request.POST
@@ -49,7 +49,7 @@ class PlotCreator(AuthenticatedPageView):
         savePlotDetails(plot, points, shape)
         self.context["plot"] = plot
 
-        return render(self.request, "plotSidebarDetail.html", self.context)
+        return render(self.request, "plot_sidebar_detail.html", self.context)
 
     def plotExists(self):
         return "plot" in self.params

@@ -10,6 +10,6 @@
 {% endblock %}
 
 {% block pageContent %}
-    {{ farm.location.getCoordinates  | json_script:"farm-location" }}
-    {% include "farm/templates/farmCard.html" with size="full" farm=farm cards=cards %}
+    {{ farm.location.getCoordinates | json_script:"farm-location" }}
+    {% include "farm/templates/farm_card.html" with size="full" farm=farm cards=cards %}
 {% endblock %}

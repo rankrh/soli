@@ -1,0 +1,9 @@
+{% extends 'layout/grouped_summary.html' %}
+
+{% block summary %}
+    {% for sp in species %}
+        {% for crop in sp.crop_set.all%}
+            {% include 'seedset.html' with size='full' crop=crop %}
+        {% endfor %}
+    {% endfor %}
+{% endblock %}

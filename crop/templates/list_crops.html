@@ -7,14 +7,5 @@
 {% block name %}Crops{% endblock %}
 
 {% block pageContent %}
-    <div class="row">
-        <div class="col-lg-9">
-            {% for sp in species %}
-                {% include 'details/crops_by_species_card.html' with size="full" species=sp %}
-            {% endfor %}
-        </div>
-        <div class="col-lg-3">
-            {% include 'uiElements/list_group/list_group.html' with header='Species' group=species %}
-        </div>
-    </div>
+    {% include 'crop_grouped_summary.html' with species=species header="Species" group=species %}
 {% endblock %}

@@ -1,18 +1,7 @@
 {% extends 'uiElements/card.html' %}
 
 {% block header %}
-    <a id="{{ farm.name }}" href="{% url 'farmOverview' farm.slug %}" class="text-decoration-none d-sm-flex align-items-center justify-content-between mb-4">
-        {% if farm.logo %}
-            <div class="col-2 mx-auto">
-                <img class="img-fluid" src="{{ farm.logo.url }}" alt="{{ farm.name }} Logo"/>
-            </div>
-        {% endif %}
-        <div class="col-md-12 col-lg-10 text-center text-lg-left align-self-center">
-            <h2>
-                {{ farm }}
-            </h2>
-        </div>
-    </a>
+    {% include 'farm_header.html' with farm=farm %}
 {% endblock %}
 
 {% if cards %}

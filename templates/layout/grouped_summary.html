@@ -1,0 +1,8 @@
+<div class="row">
+  <div class="col-lg-9">
+    {% block summary %}{% endblock %}
+  </div>
+  <div class="col-lg-3">
+    {% include 'uiElements/list_group/list_group.html' with header=header group=group %}
+  </div>
+</div>

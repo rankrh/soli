@@ -2,10 +2,10 @@
 
 {% block header %}
   <h4>
-    {{ seed }}
+    {{ crop }}
   </h4>
 {% endblock %}
 
 {% block content %}
-    {{ seed.quantity }}
+    {% include 'seedset_table.html' with crop=crop %}
 {% endblock %}

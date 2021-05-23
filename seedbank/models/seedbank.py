@@ -17,6 +17,7 @@ class Seedbank(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     quantity = models.IntegerField(validators=[MinValueValidator(0)], default=0)
     year = models.IntegerField(default=datetime.now().year)
+    company = models.CharField(blank=True, null=True, max_length=30)
 
     def __str__(self):
         return f"{self.crop.__str__()} ({self.year})"

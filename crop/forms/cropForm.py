@@ -1,28 +1,28 @@
 from django import forms
 
 from crop.models.crop import Crop
-from crop.models.validation.cropValidation import ORGANIC_CHOICES, HYBRID_CHOICES, TREATED_CHOICES
-from formTemplates.inputFields import createTextInput, createTextArea, createRadioInput, createSelectInput
+from crop.models.validation.cropValidation import (
+    ORGANIC_CHOICES,
+    HYBRID_CHOICES,
+    TREATED_CHOICES,
+)
+from formTemplates.inputFields import (
+    createTextInput,
+    createTextArea,
+    createRadioInput,
+    createSelectInput,
+)
 from taxonomy.models.species import Species
 
 
 class CropForm(forms.ModelForm):
     class Meta:
         model = Crop
-        fields = [
-            "name",
-            "description",
-            "company",
-            "organic",
-            "treated",
-            "hybrid",
-            "species"
-        ]
+        fields = ["name", "description", "organic", "treated", "hybrid", "species"]
 
         widgets = {
             "name": createTextInput("Name"),
             "description": createTextArea("Description"),
-            "company": createTextInput("Company"),
             "organic": createRadioInput(choices=ORGANIC_CHOICES),
             "treated": createRadioInput(choices=TREATED_CHOICES),
             "hybrid": createRadioInput(choices=HYBRID_CHOICES),

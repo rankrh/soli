@@ -1,0 +1,9 @@
+{% extends 'uiElements/card.html' %}
+
+{% block header %}
+    {% include 'farm_header.html' with farm=farm %}
+{% endblock %}
+
+{% block content %}
+  {% include 'plot_grouped_summary.html' with header="My Plots" group=plots %}
+{% endblock %}
