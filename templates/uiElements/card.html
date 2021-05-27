@@ -17,8 +17,8 @@ Params:
     <div class="card mb-4 {% if shadow %}border-left-primary shadow {% endif %}">
         <div id="{{ id }}-header" class="card-header py-3"
              {% if accordion %}
-                 data-toggle="collapse"
-                 data-target="#{{ id }}-content"
+                 data-bs-toggle="collapse"
+                 data-bs-target="#{{ id }}-content"
                  aria-expanded="true"
                  aria-controls="{{ id }}-content"
              {% endif %}>
@@ -35,7 +35,7 @@ Params:
                 {% if accordion %}
                     aria-labelledby="{{ id }}-header"
                     {% if parent %}
-                        data-parent="#{{ parent }}"
+                        data-bs-parent="#{{ parent }}"
                     {% endif %}
                 {% endif %}
         >

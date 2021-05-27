@@ -21,3 +21,18 @@ class Seedbank(models.Model):
 
     def __str__(self):
         return f"{self.crop.__str__()} ({self.year})"
+
+    def get_user_seedbank(self, user):
+        seedbank = {}
+        for seed in Seedbank.objects.filter(user=user, quantity__gt=0):
+            crop = seed.crop
+            species = crop.species
+
+            if species not in seedbank:
+                seedbank[species] = {}
+
+            if crop not in seedbank[species]:
+                seedbank[species][crop] = []
+
+            seedbank[species][crop].append(seed)
+        return seedbank

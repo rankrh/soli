@@ -2,5 +2,6 @@
 {% load static %}
 
 {% block pageContent %}
-    {% include 'seedbank_grouped_summary.html' with species=species header="My Seeds" group=species %}
+    {% include 'seedbank_grouped_summary.html' with seedbank=seedbank header="My Seeds" group=species %}
 {% endblock %}
+

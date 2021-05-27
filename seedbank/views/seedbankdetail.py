@@ -1,3 +1,4 @@
+from seedbank.models.seedbank import Seedbank
 from soli.views.authenticatedPageView import AuthenticatedPageView
 from taxonomy.models.species import Species
 
@@ -6,6 +7,7 @@ class SeedbankDetail(AuthenticatedPageView):
     def get(self, request):
         self.construct(request)
 
+        self.context["seedbank"] = Seedbank().get_user_seedbank(self.user)
         self.context["species"] = Species.objects.filter(
             crop__seedbank__user=self.user, crop__seedbank__quantity__gt=0
         ).distinct()

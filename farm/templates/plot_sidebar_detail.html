@@ -4,6 +4,7 @@
     {{ plot.name }}
 {% endblock %}
 {% block body %}
+    <div id="plot-id-{{ plot.id }}" data-plot-id="{{ plot.id }}"></div>
     {% if plot.description %}
         {{ plot.description }}
     {% endif %}

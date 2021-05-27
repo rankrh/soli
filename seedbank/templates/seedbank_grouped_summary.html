@@ -1,8 +1,8 @@
 {% extends 'layout/grouped_summary.html' %}
 
 {% block summary %}
-    {% for sp in species %}
-        {% for crop in sp.crop_set.all%}
+    {% for species, crops in seedbank.items %}
+        {% for crop in crops %}
             {% include 'seedset.html' with size='full' crop=crop %}
         {% endfor %}
     {% endfor %}

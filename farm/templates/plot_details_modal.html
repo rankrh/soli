@@ -1,4 +1,4 @@
-<div class="modal" id="edit-plot-modal">
+<div class="modal" id="edit-plot-modal" data-plot-id="">
     <input id="edit-plot-id" type="hidden">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" onclick="savePlotDetails({{ plot.id }})" type="button">Save</button>
+                <button class="btn btn-primary" onclick="savePlotDetails()" type="button">Save</button>
             </div>
         </div>
     </div>

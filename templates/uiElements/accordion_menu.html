@@ -1,9 +1,9 @@
-<div id="{{ group }}-details-{{ id }}" class="accordion-item" data-plot="{{ id }}">
+<div id="{{ group }}-details-{{ id }}" class="accordion-item {{ size | getColumnSize }}">
     <h3 class="accordion-header"
             id="{{ group }}-{{ id }}-heading"
             data-bs-toggle="collapse"
             data-bs-target="#{{ group }}-{{ id }}-collapse"
-            aria-expanded="true"
+            aria-expanded="false"
             aria-controls="{{ group }}-{{ id }}-collapse">
         <button class="accordion-button" type="button">
             {% block title %}{% endblock %}

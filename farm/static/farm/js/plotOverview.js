@@ -1,6 +1,7 @@
 var farmId = JSON.parse($("#farm-id").text());
 var coordinates = JSON.parse($("#farm-location").text());
 var plotJSON = JSON.parse($("#plots-data").text());
+var plotDetailsModal = $("#edit-plot-modal");
 
 var map = initializeMap("map", coordinates, 15, false);
 var basePlots = L.featureGroup().addTo(map);
@@ -105,7 +106,6 @@ function setPlotInformation(plotData) {
 function createPlot(plot) {
 	findPlotArea(plot);
 	persistPlot(plot);
-	console.log(plot);
 }
 
 function findPlotArea(plot) {
@@ -142,21 +142,29 @@ function persistPlot(plot) {
 		},
 		success: function(data) {
 			var details = $(data);
-			var plotId = details.find("div[id^='plot-details']").attr("data-plot");
+			var plotId = details.find("div[id^='plot-id-']").data("plot-id");
 
-			if (!(plot in basePlots)) {
+			if (!basePlots.getLayers().includes(plot)) {
 				var plotSidebar = $("#plots-sidebar");
-				var plotDetailsModal = $("#edit-plot-modal");
 
 				$("#no-plot-data").hide();
 				plotSidebar.append(data);
 				plot._leaflet_id = plotId;
 				plot.id = plotId;
 				basePlots.addLayer(plot);
+				setModalPlot(plotId);
 				plotDetailsModal.modal("toggle");
 			}
 		}
 	});
+}
+
+function getModalPlot() {
+    return plotDetailsModal.data("plot-id")
+}
+
+function setModalPlot(id) {
+    plotDetailsModal.data("plot-id", id);
 }
 
 function zoomToBounds(boundedLayer) {
@@ -166,8 +174,12 @@ function zoomToBounds(boundedLayer) {
 	}
 }
 
-function savePlotDetails(plotId) {
+function savePlotDetails() {
 
-    persistPlot(basePlots.getLayer(2));
-    $("#edit-plot-modal").modal("hide");
+    let plot = basePlots.getLayer(getModalPlot());
+    plot.name = $("#edit-plot-name").val();
+    plot.description = $("#edit-plot-description").val();
+    persistPlot(plot);
+    plotDetailsModal.modal("hide");
+    setModalPlot("");
 }
