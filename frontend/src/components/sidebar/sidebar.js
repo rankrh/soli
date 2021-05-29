@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { List } from 'reactstrap'
 import { SidebarSection } from "./sidebar_section"
 import axios from "axios";
-import { faCarrot } from '@fortawesome/free-solid-svg-icons';
+import { faCarrot, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
@@ -11,7 +10,8 @@ export class Sidebar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          sections: []
+          sections: [],
+          expanded: true
         };
       }
 
@@ -30,14 +30,19 @@ export class Sidebar extends Component {
 
     renderSections = () => {
         return this.state.sections.map((section) => (
-            <SidebarSection section={ section } key={ section.id }></SidebarSection> 
+            <SidebarSection section={ section } key={ section.id } expanded={ this.state.expanded }></SidebarSection> 
         ));
     };
+
+    toggleSidebar = () => {
+      this.setState( { expanded: !this.state.expanded });
+    }
     
-    
+    // 
+    // first div was List from reactstrap
     render() {
         return (
-            <List className="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion">
+            <li className={ "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion " + (!this.state.expanded && "toggled")} id="accordionSidebar">
                 <div className="sidebar-brand d-flex align-items-center justify-content-center">
                     <div className="sidebar-brand-icon rotate-n-15">
                         <FontAwesomeIcon icon={ faCarrot } />
@@ -46,7 +51,13 @@ export class Sidebar extends Component {
                 </div>
                 <hr className="sidebar-divider my-0"></hr>
                { this.renderSections() }
-            </List>
+               <hr class="sidebar-divider d-none d-md-block"/>
+               <div class="text-center d-none d-md-inline">
+                    <button class="rounded-circle border-0" id="sidebarToggle" onClick={ this.toggleSidebar }>
+                      <FontAwesomeIcon prefix="fal" icon={ this.state.expanded ? faChevronLeft : faChevronLeft } />
+                    </button>
+                </div>
+            </li>
         )
     }
 }
