@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Sidebar } from "./components/sidebar/sidebar"
-import axios from "axios";
 import {library} from '@fortawesome/fontawesome-svg-core';
 import * as Icons from '@fortawesome/free-solid-svg-icons';
 import bootstrap from 'bootstrap'
-import { Card, CardHeader, CardBody } from "./components/base_elements/card/card";
+import axios from "axios";
 import { Topbar } from "./components/topbar/topbar";
 import { Footer } from "./components/footer/footer";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Home } from "./pages/home/home";
+import { Landing } from "./pages/home/landing";
 
 const iconList = Object.keys(Icons)
   .filter((key) => key !== 'fas' && key !== 'prefix')
@@ -17,18 +17,19 @@ const iconList = Object.keys(Icons)
 library.add(...iconList);
 
 class App extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
       farms: []
     };
-  }
+}
 
-  componentDidMount() {
+componentDidMount() {
     this.refreshFarms();
-  }
+}
 
-  refreshFarms = () => {
+refreshFarms = () => {
     axios
       .get("/myfarms/")
       .then((res) => {
@@ -37,22 +38,16 @@ class App extends Component {
       .catch((err) => console.log(err));
   };
 
-  renderMyFarms = () => {
-    return this.state.farms.map((farm) => (
-      <Card size="lg" key={ farm.id }>
-        <CardHeader className="py-3">{ farm.name } (est. { farm.year })</CardHeader>
-        <CardBody tag="h5">{ farm.owner }</CardBody>
-      </Card>
-    ));
-  };
-
   renderContent() {
     return (
       <div className="container-fluid">
         <BrowserRouter>
           <Switch>
-            <Route path="/">
+            <Route path="/" exact>
               <Home/>
+            </Route>
+            <Route path="/myfarms/create">
+              <Landing/>
             </Route>
           </Switch>
         </BrowserRouter>
@@ -64,7 +59,7 @@ class App extends Component {
   render() {
     return (
       <div id="wrapper">
-        <Sidebar farms={ this.state.farms } />
+        <Sidebar />
         <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <Topbar/>

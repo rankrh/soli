@@ -42,7 +42,7 @@ export class Sidebar extends Component {
     // first div was List from reactstrap
     render() {
         return (
-            <li className={ "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion " + (!this.state.expanded && "toggled")} id="accordionSidebar">
+            <div className={ "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion " + (!this.state.expanded && "toggled")} id="accordionSidebar">
                 <div className="sidebar-brand d-flex align-items-center justify-content-center">
                     <div className="sidebar-brand-icon rotate-n-15">
                         <FontAwesomeIcon icon={ faCarrot } />
@@ -54,10 +54,10 @@ export class Sidebar extends Component {
                <hr class="sidebar-divider d-none d-md-block"/>
                <div class="text-center d-none d-md-inline">
                     <button class="rounded-circle border-0" id="sidebarToggle" onClick={ this.toggleSidebar }>
-                      <FontAwesomeIcon prefix="fal" icon={ this.state.expanded ? faChevronLeft : faChevronLeft } />
+                      <FontAwesomeIcon prefix="fal" icon={ this.state.expanded ? faChevronLeft : faChevronRight } />
                     </button>
                 </div>
-            </li>
+            </div>
         )
     }
 }

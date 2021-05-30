@@ -6,7 +6,7 @@ class Sidebar:
     def __init__(self, user):
         self.user = user
         self.sections = [
-            SidebarSection("Home", "home", "home", url="home"),
+            SidebarSection("Home", "home", "home", url="/"),
             SidebarSection(
                 "Garden Schedule", "garden-schedule", "calendar-alt", url="calendar"
             ),

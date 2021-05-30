@@ -4,14 +4,18 @@ import React, { Component } from 'react'
 export class CardHeader extends Component {
     constructor(props) {
         super(props);
-        this.id = props.id;
-        this.accordion = props.accordion;
+        
+        this.state = {
+            additionalClasses: " " + props.className,
+            id: props.id,
+            accordion: props.accordion
+        }
     }
 
     render() {
         let collapseProps = {}
 
-        if (this.accordion) {
+        if (this.state.accordion) {
             collapseProps["data-bs-toggle"] = "collapse";
             collapseProps["data-bs-target"] = "#" + this.id + "-content";
             collapseProps["aria-expanded"] = "false";
@@ -19,7 +23,7 @@ export class CardHeader extends Component {
         }
 
         return (
-            <div id={this.id + "-header"} className="card-header py-3" {...collapseProps}>
+            <div id={this.state.id + "-header"} className={ "card-header py-3" + this.state.additionalClasses } {...collapseProps}>
                 { this.props.children }
             </div>
         );
@@ -27,9 +31,20 @@ export class CardHeader extends Component {
 }
 
 export class CardBody extends Component {
-    
+    constructor(props) {
+        super(props);
+        this.state = {
+            additionalClasses: " " + this.props.className,
+        }
+
+      }
+
     render() {
-        return <p></p>
+        return (
+            <div className={ "card-body" + this.state.additionalClasses }>
+                { this.props.children }
+            </div>
+        );
     }
 }
 

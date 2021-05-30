@@ -25,7 +25,7 @@ class Farm(models.Model):
     climate = models.ForeignKey(Climate, on_delete=CASCADE, blank=True, null=True)
     year = models.IntegerField(choices=YEAR_CHOICES, default=datetime.now().year)
     slug = models.SlugField(unique=False)
-    phone = models.IntegerField(null=True, blank=True)  # placeholder
+    phone = models.BigIntegerField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     address = models.CharField(max_length=128, null=True, blank=True)
     address2 = models.CharField(max_length=128, null=True, blank=True)

@@ -8,6 +8,7 @@ from farm.views.plotCreator import PlotCreator
 
 urlpatterns = [
     path("", FarmApi.as_view(), name="my-farms"),
+    path("/<slug:slug>", FarmApi.as_view(), name="my-farms"),
     path("old/create", FarmCreator.as_view(), name="createFarm"),
     path("old/<slug:slug>", FarmOverview.as_view(), name="farmOverview"),
     path("old/<slug:slug>/plots", PlotCreator.as_view(), name="plotOverview"),

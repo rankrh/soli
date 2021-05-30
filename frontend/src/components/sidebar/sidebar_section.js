@@ -39,7 +39,8 @@ export class SidebarSection extends Component {
     }
 
     renderSectionHeader(section) {
-        let url = (section.subsections || !section.url) ? "#" :  section.url;
+        let url = section.subsections.length > 0 ? "#" :  section.url;
+        //alert(url);
         let collapseProps = {}
 
         if (section.subsections.length) {
