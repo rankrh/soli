@@ -4,6 +4,7 @@ import { Card, CardHeader, CardBody } from "../../components/base_elements/card/
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Contact } from '../../components/contact';
+import { FarmMap } from '../../components/base_elements/map/farm_map';
 
 export class MemberHome extends Component {
 
@@ -40,7 +41,12 @@ export class MemberHome extends Component {
                     </a>
                 </CardHeader>
                 <CardBody tag="h5">
-                    <Contact location={ farm }/>
+                    <div className="row">
+                        <Card size="lg">
+                            <FarmMap farm={ farm }/>
+                        </Card>
+                        <Contact location={ farm }/>
+                    </div>
                 </CardBody>
             </Card>
         ));

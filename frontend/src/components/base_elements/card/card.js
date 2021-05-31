@@ -6,7 +6,7 @@ export class CardHeader extends Component {
         super(props);
         
         this.state = {
-            additionalClasses: " " + props.className,
+            additionalClasses: props.className ? " " + props.className : "",
             id: props.id,
             accordion: props.accordion
         }
@@ -23,7 +23,7 @@ export class CardHeader extends Component {
         }
 
         return (
-            <div id={this.state.id + "-header"} className={ "card-header py-3" + this.state.additionalClasses } {...collapseProps}>
+            <div className={ "card-header py-3" + this.state.additionalClasses } {...collapseProps}>
                 { this.props.children }
             </div>
         );
@@ -34,7 +34,7 @@ export class CardBody extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            additionalClasses: " " + this.props.className,
+            additionalClasses: props.className ? " " + props.className : "",
         }
 
       }
@@ -53,8 +53,6 @@ export class Card extends Component {
         super(props);
         this.size = this.get_size(props.size);
         this.shadow = " border-left-primary shadow";
-        console.log(props);
-
       }
 
     get_size(size) {

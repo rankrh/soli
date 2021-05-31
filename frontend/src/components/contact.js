@@ -92,7 +92,7 @@ export class Contact extends Component {
 
     render() {
         return (
-            <Card>
+            <Card size="md">
                 <CardHeader className="contact text-center">
                     Get In Touch
                 </CardHeader>
