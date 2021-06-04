@@ -6,9 +6,7 @@ import bootstrap from 'bootstrap'
 import axios from "axios";
 import { Topbar } from "./components/topbar/topbar";
 import { Footer } from "./components/footer/footer";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Home } from "./pages/home/home";
-import { Landing } from "./pages/home/landing";
+import { Directory } from "./Directory";
 
 const iconList = Object.keys(Icons)
   .filter((key) => key !== 'fas' && key !== 'prefix')
@@ -41,16 +39,7 @@ refreshFarms = () => {
   renderContent() {
     return (
       <div className="container-fluid">
-        <BrowserRouter>
-          <Switch>
-            <Route path="/" exact>
-              <Home/>
-            </Route>
-            <Route path="/myfarms/create">
-              <Landing/>
-            </Route>
-          </Switch>
-        </BrowserRouter>
+        <Directory/>
       </div>
     );
   }

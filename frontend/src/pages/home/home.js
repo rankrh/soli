@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { MemberHome } from './member_home';
-import { Landing } from './landing';
+import { MemberHome } from './MemberHome';
+import { Landing } from './Landing';
 
 export class Home extends Component {
 

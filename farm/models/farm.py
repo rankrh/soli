@@ -15,9 +15,9 @@ class Farm(models.Model):
     class Meta:
         db_table = "farm"
         app_label = "farm"
-        unique_together = ["owner", "name"]
+        unique_together = ["farmer", "name"]
 
-    owner = models.ForeignKey(User, on_delete=CASCADE)
+    farmer = models.ForeignKey(User, on_delete=CASCADE)
     location = models.ForeignKey(Point, on_delete=CASCADE, blank=True, null=True)
     description = models.CharField(max_length=500, blank=True, null=True)
     name = models.CharField(max_length=128, default=f"My Farm")

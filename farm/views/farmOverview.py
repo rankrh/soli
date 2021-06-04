@@ -10,7 +10,7 @@ class FarmOverview(AuthenticatedPageView):
     def get(self, request, slug):
 
         self.construct(request)
-        self.context["farm"] = Farm.objects.filter(slug=slug, owner=request.user).get()
+        self.context["farm"] = Farm.objects.filter(slug=slug, farmer=request.user).get()
 
         self.context["cards"] = ["map", "contact", "overview"]
 

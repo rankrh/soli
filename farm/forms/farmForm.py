@@ -12,7 +12,7 @@ from geometry.models.point import Point
 
 class FarmForm(forms.ModelForm):
     location = None
-    owner = None
+    farmer = None
 
     class Meta:
         model = Farm
@@ -28,7 +28,7 @@ class FarmForm(forms.ModelForm):
     def saveFarm(self, climate):
         farm = self.save(commit=False)
         farm.location = self.location
-        farm.owner = self.owner
+        farm.farmer = self.farmer
         farm.climate = climate
         farm.save()
 

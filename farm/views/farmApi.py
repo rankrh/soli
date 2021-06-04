@@ -6,13 +6,13 @@ from farm.serializers.farmSerializer import FarmSerializer
 
 
 class FarmApi(APIView):
-    user = None
+    farmer = None
 
     def get(self, request, format=None):
 
-        self.user = request.user
+        self.farmer = request.farmer
 
-        farms = Farm.objects.filter(owner=self.user)
+        farms = Farm.objects.filter(farmer=self.farmer)
         farm_serializer = FarmSerializer(farms, many=True)
 
         return Response(farm_serializer.data)

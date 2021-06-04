@@ -15,10 +15,18 @@ class PlotDetails:
     coordinates = []
     points = []
     children = []
-    owner = None
+    farmer = None
     farm = None
 
-    def __init__(self, owner=None, farm=None, request=None, plot=None, points=None, children=None):
+    def __init__(
+        self,
+        farmer=None,
+        farm=None,
+        request=None,
+        plot=None,
+        points=None,
+        children=None,
+    ):
 
         self.resetDetails()
 
@@ -28,10 +36,12 @@ class PlotDetails:
                 self.plot = get_object_or_404(Plot, id=plotId)
 
             self.plotForm = PlotForm(request.POST, instance=self.plot)
-            self.coordinates = json.loads(request.POST["points"]) if "points" in request.POST else []
+            self.coordinates = (
+                json.loads(request.POST["points"]) if "points" in request.POST else []
+            )
             self.type = request.POST["type"] if "type" in request.POST else None
-            self.owner = request.user
-            self.farm = Farm.objects.get(owner=self.owner)
+            self.farmer = request.user
+            self.farm = Farm.objects.get(farmer=self.farmer)
         elif plot is not None:
             self.plot = plot
             self.type = plot.type
@@ -42,8 +52,8 @@ class PlotDetails:
         if farm is not None:
             self.farm = farm
 
-        if owner is not None:
-            self.owner = owner
+        if farmer is not None:
+            self.farmer = farmer
 
         self.points = points if points is not None else []
 
@@ -54,7 +64,7 @@ class PlotDetails:
         self.coordinates = []
         self.points = []
         self.children = []
-        self.owner = None
+        self.farmer = None
         self.farm = None
 
     def isValidPlot(self):
@@ -64,7 +74,7 @@ class PlotDetails:
     def savePlotAndPoints(self):
 
         if self.plotForm is not None:
-            self.plot = self.plotForm.savePlot(owner=self.owner, farm=self.farm)
+            self.plot = self.plotForm.savePlot(farmer=self.farmer, farm=self.farm)
         else:
             self.plot.save()
 
@@ -94,7 +104,7 @@ class PlotDetails:
                             set=setNum,
                             order=len(self.points),
                             lat=coordinate["lat"],
-                            long=coordinate["lng"]
+                            long=coordinate["lng"],
                         )
                     )
                 setNum += 1
@@ -112,7 +122,9 @@ class PlotDetails:
                 "area": self.plot.shape.area,
                 "type": self.plot.type,
                 "get_type_display": self.plot.get_type_display(),
-                "children": [child.jsonify() for child in self.children] if self.children else None,
+                "children": [child.jsonify() for child in self.children]
+                if self.children
+                else None,
                 "points": [[point.lat, point.long] for point in self.points],
             }
 

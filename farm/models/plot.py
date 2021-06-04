@@ -15,7 +15,7 @@ class Plot(models.Model):
 
     name = models.CharField(max_length=128, blank=True, default="Unnamed Plot")
     farm = models.ForeignKey(Farm, on_delete=CASCADE)
-    owner = models.ForeignKey(User, on_delete=CASCADE)
+    farmer = models.ForeignKey(User, on_delete=CASCADE)
     shape = models.ForeignKey(Shape, null=True, default=None, on_delete=CASCADE)
     description = models.CharField(max_length=1024, blank=True, default="")
     parent = models.ForeignKey("self", blank=True, null=True, on_delete=CASCADE)

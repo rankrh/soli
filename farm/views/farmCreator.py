@@ -55,4 +55,4 @@ class FarmCreator(AuthenticatedPageView):
     def createFarm(self):
         self.farm = FarmForm(self.request.POST)
         self.farm.setFarmHeadquarters()
-        self.farm.owner = self.request.user
+        self.farm.farmer = self.request.user

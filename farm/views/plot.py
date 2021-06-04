@@ -15,13 +15,13 @@ def createPlot(request):
     context = {}
     if request.user.id is not None:
         plotDetailsList = PlotDetailsList(request.user)
-        farm = Farm.objects.filter(owner=request.user).first()
+        farm = Farm.objects.filter(farmer=request.user).first()
 
         if request.method == "GET":
             page = "plot/create/plot.html"
             context = {
                 "plots": plotDetailsList.getParentPlots().jsonify(),
-                "plot": farm
+                "plot": farm,
             }
 
         elif request.method == "POST":
@@ -32,11 +32,11 @@ def createPlot(request):
 
 def addPlotDetails(request):
     if request.user.id is not None:
-        plotDetailsList = PlotDetailsList(owner=request.user)
+        plotDetailsList = PlotDetailsList(farmer=request.user)
 
         context = {
             "plots": plotDetailsList.getPlotDetailsForUser().jsonify(),
-            "plotTypes": TYPES
+            "plotTypes": TYPES,
         }
     else:
         context = {}
@@ -51,9 +51,7 @@ def createPlotAjax(request):
         response["plot"] = plotDetails.plot.id
 
         if "returnPage" in request.POST:
-            context = {
-                "child": plotDetails.plot
-            }
+            context = {"child": plotDetails.plot}
 
             return render(request, request.POST["returnPage"] + ".html", context)
         else:

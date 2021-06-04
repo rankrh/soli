@@ -9,4 +9,4 @@ class Calendar(models.Model):
         db_table = "calendar"
         app_label = "schedule"
 
-    owner = models.ForeignKey(User, on_delete=CASCADE)
+    farmer = models.OneToOneField(User, on_delete=CASCADE)

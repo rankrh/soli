@@ -1,11 +1,16 @@
-from soli.views.authenticatedPageView import AuthenticatedPageView
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
-class Calendar(AuthenticatedPageView):
-    def get(self, request):
-        self.construct(request)
+class Calendar(APIView):
 
-        return self.render("calendar.html")
+    farmer = None
 
-    def post(self):
-        pass
+    def get(self, request, format=None):
+
+        self.farmer = request.farmer
+
+        calendar = Calendar.objects.filter(farmer=self.farmer).get()
+        calendar_serializer = Calendar(calendar, many=True)
+
+        return Response(calendar_serializer.data)

@@ -11,30 +11,19 @@ class PlantingForm(forms.ModelForm):
         model = Planting
 
         fields = [
-            "pattern",
-            "rowSpacingMin",
-            "rowSpacingMax",
-            "interRowSpacingMin",
-            "interRowSpacingMax",
             "soilTemperatureMin",
             "soilTemperatureMax",
             "germinationStart",
             "germinationEnd",
-            "depth"
+            "depth",
         ]
 
         widgets = {
-            "pattern": createSelectInput(),
-            "rowSpacingMin": createNumberInput(),
-            "rowSpacingMax": createNumberInput(),
-            "interRowSpacingMin": createNumberInput(),
-            "interRowSpacingMax": createNumberInput(),
             "temperatureMin": createNumberInput(),
             "temperatureMax": createNumberInput(),
             "germinationStart": createNumberInput(0),
             "germinationEnd": createNumberInput(0),
             "depth": createNumberInput(0),
-
         }
 
     def savePlanting(self, crop):
