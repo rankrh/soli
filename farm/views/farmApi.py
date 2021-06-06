@@ -10,7 +10,7 @@ class FarmApi(APIView):
 
     def get(self, request, format=None):
 
-        self.farmer = request.farmer
+        self.farmer = request.user
 
         farms = Farm.objects.filter(farmer=self.farmer)
         farm_serializer = FarmSerializer(farms, many=True)

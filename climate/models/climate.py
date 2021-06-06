@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models import CASCADE
 
 from climate.models.hardinessZone import HardinessZone
+from schedule.models.event import Event
 
 
 class Climate(models.Model):
@@ -13,5 +14,4 @@ class Climate(models.Model):
         HardinessZone, null=True, blank=True, on_delete=CASCADE, default=13
     )
 
-    firstFrost = models.DateField(null=True, blank=True)
-    lastFrost = models.DateField(null=True, blank=True)
+    growing_season = models.ForeignKey(Event, on_delete=CASCADE, null=True, blank=True)

@@ -5,6 +5,6 @@
 
 {% block content %}
   {% for crop in species.crop_set.all %}
-    {% include './crop_details_accordion.html' with id=crop.id group="crop" plot=plot parent="plots-sidebar" %}
+    {% include './crop_details_accordion.html' with id=crop.id group="crop" size="full" plot=plot parent="plots-sidebar" %}
   {% endfor %}
 {% endblock %}

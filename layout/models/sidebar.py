@@ -38,7 +38,7 @@ class Sidebar:
 
     def _set_farm_sections(self):
 
-        for farm in Farm.objects.filter(owner=self.user):
+        for farm in Farm.objects.filter(farmer=self.user):
             self.sections.append(
                 SidebarSection(
                     farm.name,

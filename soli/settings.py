@@ -43,11 +43,12 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "account",
     "animal",
-    "crop",
     "climate",
+    "crop",
     "farm",
     "geometry",
     "herd",
+    "landuse",
     "plot",
     "schedule",
     "seedbank",
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
+    "django_extensions",
 ]
 
 MIDDLEWARE = [

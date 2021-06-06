@@ -41,4 +41,4 @@ class AuthenticatedPageView(PageView):
         self.context["sidebar"] = Sidebar(self)
 
     def set_farms(self):
-        self.farms = Farm.objects.filter(owner=self.user)
+        self.farms = Farm.objects.filter(farmer=self.user)

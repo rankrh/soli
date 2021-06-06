@@ -38,8 +38,6 @@ export class Sidebar extends Component {
       this.setState( { expanded: !this.state.expanded });
     }
     
-    // 
-    // first div was List from reactstrap
     render() {
         return (
             <div className={ "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion " + (!this.state.expanded && "toggled")} id="accordionSidebar">
