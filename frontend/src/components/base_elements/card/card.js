@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Column } from '../grid/Grid';
 
 
 export class CardHeader extends Component {
@@ -49,12 +50,15 @@ export class CardBody extends Component {
 }
 
 export class Card extends Component {
+
     constructor(props) {
         super(props);
-        this.size = this.get_size(props.size);
-        this.shadow = " border-left-primary shadow";
-        console.log(props);
+        this.state = {
+            size: this.get_size(props.size),
+            shadow: false
+        }
 
+        const shadowClass = " border-left-primary shadow";
       }
 
     get_size(size) {
@@ -70,7 +74,7 @@ export class Card extends Component {
 
     render() {
         return (
-            <div className={this.size}>
+            <div className={ this.state.size }>
                 <div className="card mb-4">
                     { this.props.children }
                 </div>

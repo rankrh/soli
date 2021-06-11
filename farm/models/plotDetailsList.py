@@ -9,6 +9,7 @@ class PlotDetailsList:
     plotDetails = []
 
     def __init__(self, farmer, farm=None):
+        print("here")
         self.plotDetails = []
         self.farmer = farmer
         self.farm = (
@@ -34,7 +35,7 @@ class PlotDetailsList:
         return self
 
     def getParentPlots(self):
-        if self.famer is not None:
+        if self.farmer is not None:
             plots = Plot.objects.filter(farmer=self.farmer, parent__isnull=True)
             self.setPlotDetailsFromPlots(plots)
 

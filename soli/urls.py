@@ -17,6 +17,7 @@ urlpatterns = [
     path("seedbank/", include("seedbank.urls")),
     path("herd/", include("herd.urls")),
     path("admin/crop/", include("crop.urls")),
+    path("crop/", include("crop.urls")),
     path("layout/", include(("layout.urls"))),
     path("admin/", admin.site.urls),
 ]
